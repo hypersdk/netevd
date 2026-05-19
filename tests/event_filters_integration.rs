@@ -1,3 +1,5 @@
+#![cfg(target_os = "linux")]
+
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
 use tempfile::TempDir;
