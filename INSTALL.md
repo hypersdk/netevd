@@ -2,16 +2,18 @@
 
 # Installation
 
+This page covers building from source, using prebuilt binaries, and common package manager installs.
+
 ## Requirements
 
 - Linux kernel 3.10+ with netlink support
 - One of: systemd-networkd, NetworkManager, or dhclient
-- **Build only:** Rust 1.70+, pkg-config, C compiler
+- Build-only: Rust 1.70+, pkg-config, a C compiler
 
-## From Source (Recommended)
+## From source (recommended)
 
 ```bash
-# Install Rust if needed
+# Install Rust toolchain (if needed)
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source $HOME/.cargo/env
 
@@ -20,68 +22,48 @@ git clone https://github.com/ssahani/netevd.git
 cd netevd
 cargo build --release
 
-# Install
+# Install binary and service
 sudo install -Dm755 target/release/netevd /usr/bin/netevd
 sudo install -Dm644 systemd/netevd.service /lib/systemd/system/netevd.service
 sudo install -Dm644 examples/netevd.yaml /etc/netevd/netevd.yaml
 
-# Create user and directories
-sudo useradd -r -M -s /usr/bin/nologin -d /nonexistent netevd
+# Create runtime user and directories
+sudo useradd -r -M -s /usr/bin/nologin netevd || true
 sudo mkdir -p /etc/netevd/{carrier.d,no-carrier.d,configured.d,degraded.d,routable.d,activated.d,disconnected.d,manager.d,routes.d}
 
-# Start
+# Start the service
 sudo systemctl daemon-reload
 sudo systemctl enable --now netevd
 ```
 
-## Binary Release
+Notes:
+- The `useradd` command may fail on some systems if the user already exists; this is safe to ignore.
+- The example config installed to `/etc/netevd/netevd.yaml` should be reviewed and adapted.
+
+## Binary releases
+
+Download a prebuilt tarball from the GitHub releases page, extract, and install the `netevd` binary as above.
 
 ```bash
-# Download from GitHub releases (replace version)
 wget https://github.com/ssahani/netevd/releases/download/vX.Y.Z/netevd-x86_64-unknown-linux-gnu.tar.gz
 tar xzf netevd-x86_64-unknown-linux-gnu.tar.gz
 sudo install -Dm755 netevd /usr/bin/netevd
 ```
 
-Then install the service file, config, user, and directories as shown above.
+## Package managers
 
-## Package Managers
+Where available, prefer distro packages. Examples:
 
-```bash
-# crates.io
-cargo install netevd
+- crates.io: `cargo install netevd`
+- Arch (AUR): `yay -S netevd`
+- Fedora/RHEL: `sudo dnf install netevd-X.Y.Z-1.x86_64.rpm`
+- Debian/Ubuntu: `sudo dpkg -i netevd_X.Y.Z_amd64.deb && sudo apt-get install -f`
 
-# Arch Linux (AUR)
-yay -S netevd
+## Post-install checklist
 
-# Fedora/RHEL
-sudo dnf install netevd-X.Y.Z-1.x86_64.rpm
-
-# Debian/Ubuntu
-sudo dpkg -i netevd_X.Y.Z_amd64.deb
-sudo apt-get install -f    # resolve dependencies if needed
-```
-
-## Post-Install Configuration
-
-Edit `/etc/netevd/netevd.yaml` to match your setup:
-
-```yaml
-system:
-  log_level: "info"
-  backend: "systemd-networkd"    # or "NetworkManager" or "dhclient"
-
-monitoring:
-  interfaces:
-    - eth0
-    - eth1
-```
-
-Ensure your backend is running:
-
-```bash
-sudo systemctl status systemd-networkd    # or NetworkManager
-```
+- Verify the backend (systemd-networkd/NetworkManager/dhclient) is running.
+- Review `/etc/netevd/netevd.yaml` and adjust `system.backend` and `routing.policy_rules` as needed.
+- Ensure scripts under `/etc/netevd/*.d/` are executable.
 
 ## Verify
 
@@ -91,48 +73,25 @@ sudo journalctl -u netevd -f
 netevd --version
 ```
 
-## Upgrade
+## Upgrade & uninstall
 
-```bash
-# From source
-cd netevd && git pull && cargo build --release
-sudo systemctl stop netevd
-sudo install -Dm755 target/release/netevd /usr/bin/netevd
-sudo systemctl start netevd
-
-# Package managers
-yay -Syu netevd            # Arch
-sudo dnf upgrade netevd     # Fedora
-sudo apt-get upgrade netevd # Debian
-```
-
-## Uninstall
+Follow the same install steps to upgrade (build/install new binary and restart service). To uninstall:
 
 ```bash
 sudo systemctl stop netevd && sudo systemctl disable netevd
-sudo rm /usr/bin/netevd /lib/systemd/system/netevd.service
+sudo rm -f /usr/bin/netevd /lib/systemd/system/netevd.service
 sudo systemctl daemon-reload
-sudo userdel netevd
-
-# Optional: remove config (back up first)
-sudo cp -r /etc/netevd /etc/netevd.backup
-sudo rm -rf /etc/netevd
+sudo userdel netevd || true
+sudo mv /etc/netevd /etc/netevd.backup || true
 ```
 
 ## Troubleshooting
 
-**Service won't start:**
+If the service fails to start:
+
 ```bash
 sudo systemctl status netevd -l
-sudo journalctl -u netevd -n 50 --no-pager
+sudo journalctl -u netevd -n 200 --no-pager
 ```
 
-Common causes: user `netevd` doesn't exist, YAML syntax error, missing capabilities.
-
-**Build errors:**
-```bash
-rustup update stable
-cargo clean && cargo build --release
-```
-
-See [Troubleshooting Guide](docs/TROUBLESHOOTING.md) for more.
+Common causes: missing `netevd` user, YAML syntax error in `/etc/netevd/netevd.yaml`, missing capabilities. See docs/TROUBLESHOOTING.md for guidance.
