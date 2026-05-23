@@ -8,6 +8,6 @@ No git clone. No compile on this machine (unless noted for Python venv bundles).
   3. ./install.sh
   4. ./test-package.sh
 
-Web UI footer shows Zyvor branding: https://zyvor.dev · © @zyvor 2026
+Web UI footer shows Zyvor branding: zyvor.dev · HyperSDK · © 2026
 
 Questions: https://zyvor.dev
