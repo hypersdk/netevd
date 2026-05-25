@@ -24,7 +24,7 @@ It bridges **systemd-networkd**, **NetworkManager**, and **dhclient** into a sin
 ### GitHub Release (recommended)
 
 ```bash
-curl -LO https://github.com/hypersdk/netevd/releases/download/v0.2.1/netevd-0.2.1-linux-amd64.tar.gz
+curl -LO https://github.com/hypersdk/netevd/releases/download/v0.2.2/netevd-0.2.2-linux-amd64.tar.gz
 tar xzf netevd-*-linux-amd64.tar.gz && cd netevd-*-linux-amd64
 sudo ./install.sh
 sudo systemctl enable --now netevd
@@ -198,7 +198,7 @@ curl http://localhost:9090/metrics              # Prometheus metrics
 curl http://localhost:9090/health               # Health check
 ```
 
-Full reference: **[API Documentation](docs/API.md)**
+REST API and metrics are exposed on the daemon HTTP port (default `9090`); see [Configuration](CONFIGURATION.md) for endpoints and options.
 
 ## Documentation
 
@@ -207,11 +207,6 @@ Full reference: **[API Documentation](docs/API.md)**
 | **[Quick Start](docs/QUICKSTART.md)** | Up and running in 5 minutes |
 | **[Installation](INSTALL.md)** | All platforms and package managers |
 | **[Configuration](CONFIGURATION.md)** | Complete YAML reference |
-| **[Examples](docs/EXAMPLES.md)** | Multi-homing, VPN, HA, DDNS, containers |
-| **[REST API](docs/API.md)** | HTTP endpoints and data models |
-| **[Metrics](docs/METRICS.md)** | Prometheus metrics and Grafana dashboards |
-| **[Architecture](docs/ARCHITECTURE.md)** | Internals, concurrency, event pipeline |
-| **[Troubleshooting](docs/TROUBLESHOOTING.md)** | Diagnosis and common fixes |
 | **[Security](SECURITY.md)** | Threat model and hardening |
 | **[Contributing](CONTRIBUTING.md)** | Dev setup and PR guidelines |
 | **[Changelog](CHANGELOG.md)** | Release history |
