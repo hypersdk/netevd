@@ -2,10 +2,10 @@
 
 // SPDX-License-Identifier: LGPL-3.0-or-later
 
-use tempfile::TempDir;
 use std::collections::HashMap;
 use std::fs;
 use std::io::Read;
+use tempfile::TempDir;
 use uuid::Uuid;
 
 #[tokio::test]
@@ -15,12 +15,14 @@ async fn test_execute_scripts_respected_by_filters() {
     let script_dir = td.path().to_str().unwrap().to_string();
 
     // Output path (no dots to avoid validation pitfalls in the daemon)
-    let output = format!("/tmp/netevd_test_{}", Uuid::new_v4().to_simple());
+    let output = format!("/tmp/netevd_test_{}", Uuid::new_v4().as_simple());
 
     // Create a simple script that writes ADDRESSES to the output file
     let script_path = td.path().join("01-test.sh");
     let script_content = format!("#!/bin/bash\necho \"$ADDRESSES\" > {}\nexit 0\n", output);
-    tokio::fs::write(&script_path, script_content).await.expect("write script");
+    tokio::fs::write(&script_path, script_content)
+        .await
+        .expect("write script");
 
     // Make it executable
     let mut perms = fs::metadata(&script_path).expect("meta").permissions();
@@ -44,7 +46,10 @@ async fn test_execute_scripts_respected_by_filters() {
 
     // Verify output file was created and contains the expected value
     let mut buf = String::new();
-    fs::File::open(&output).expect("open out").read_to_string(&mut buf).expect("read out");
+    fs::File::open(&output)
+        .expect("open out")
+        .read_to_string(&mut buf)
+        .expect("read out");
     assert!(buf.trim() == "1.2.3.4");
 
     // Cleanup
