@@ -6,8 +6,14 @@ Based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). This project 
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-05-25
+
+### Added
+- **GitHub Release customer bundles** — `netevd-<version>-linux-amd64.tar.gz` and `linux-arm64` with install scripts, systemd unit, and sample config
+- **`scripts/package-binary-release.sh`** for local and CI packaging
+
 ### Changed
-- Rewrote all documentation for clarity and conciseness
+- Release workflow modernized (`softprops/action-gh-release`) — ships install bundles instead of bare binaries
 
 ## [0.2.0] - 2026-01-21
 
