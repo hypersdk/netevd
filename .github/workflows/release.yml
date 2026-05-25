@@ -50,10 +50,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - target: x86_64-unknown-linux-gnu
-            arch_suffix: linux-amd64
-          - target: aarch64-unknown-linux-gnu
-            arch_suffix: linux-arm64
+          - arch_suffix: linux-amd64
+            target: ""
+          - arch_suffix: linux-arm64
+            target: aarch64-unknown-linux-gnu
 
     runs-on: ubuntu-latest
     steps:
@@ -62,7 +62,7 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: ${{ matrix.target }}
+          targets: ${{ matrix.target != '' && matrix.target || 'x86_64-unknown-linux-gnu' }}
 
       - name: Install dependencies
         run: |
@@ -78,12 +78,15 @@ jobs:
       - name: Build and package customer bundle
         env:
           NETEVD_PACKAGE_VERSION: ${{ needs.create-release.outputs.version }}
-          CARGO_TARGET: ${{ matrix.target }}
           CARGO_PROFILE_RELEASE_LTO: 'false'
           CARGO_PROFILE_RELEASE_CODEGEN_UNITS: '16'
         run: |
           chmod +x scripts/package-binary-release.sh
-          ./scripts/package-binary-release.sh --build --target "${CARGO_TARGET}" --out-dir dist
+          args=(--build --out-dir dist)
+          if [ -n "${{ matrix.target }}" ]; then
+            args+=(--target "${{ matrix.target }}")
+          fi
+          ./scripts/package-binary-release.sh "${args[@]}"
 
       - name: Upload release assets
         uses: softprops/action-gh-release@v2
