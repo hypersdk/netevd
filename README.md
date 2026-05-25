@@ -1,9 +1,9 @@
 # netevd
 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
-[![CI](https://github.com/ssahani/netevd/actions/workflows/ci.yml/badge.svg)](https://github.com/ssahani/netevd/actions/workflows/ci.yml)
-[![Functional Tests](https://github.com/ssahani/netevd/actions/workflows/functional-tests.yml/badge.svg)](https://github.com/ssahani/netevd/actions/workflows/functional-tests.yml)
-[![codecov](https://codecov.io/gh/ssahani/netevd/branch/main/graph/badge.svg)](https://codecov.io/gh/ssahani/netevd)
+[![CI](https://github.com/hypersdk/netevd/actions/workflows/ci.yml/badge.svg)](https://github.com/hypersdk/netevd/actions/workflows/ci.yml)
+[![Functional Tests](https://github.com/hypersdk/netevd/actions/workflows/functional-tests.yml/badge.svg)](https://github.com/hypersdk/netevd/actions/workflows/functional-tests.yml)
+[![codecov](https://codecov.io/gh/hypersdk/netevd/branch/main/graph/badge.svg)](https://codecov.io/gh/hypersdk/netevd)
 
 **netevd** is a network event daemon that watches your Linux network interfaces and runs scripts when things change. Think of it as systemd path units, but purpose-built for networking: when an interface gets an IP, loses its link, or routes change, netevd executes your scripts with full context about what happened.
 
@@ -21,24 +21,20 @@ It bridges **systemd-networkd**, **NetworkManager**, and **dhclient** into a sin
 
 ## Quick Start
 
+### GitHub Release (recommended)
+
 ```bash
-# Build and install
-git clone https://github.com/ssahani/netevd.git && cd netevd
-cargo build --release
-sudo install -Dm755 target/release/netevd /usr/bin/netevd
-sudo install -Dm644 systemd/netevd.service /lib/systemd/system/netevd.service
-sudo install -Dm644 examples/netevd.yaml /etc/netevd/netevd.yaml
-
-# Set up
-sudo useradd -r -M -s /usr/bin/nologin netevd
-sudo mkdir -p /etc/netevd/{carrier.d,no-carrier.d,configured.d,degraded.d,routable.d,activated.d,disconnected.d,manager.d,routes.d}
-
-# Start
-sudo systemctl daemon-reload
+curl -LO https://github.com/hypersdk/netevd/releases/download/v0.2.1/netevd-0.2.1-linux-amd64.tar.gz
+tar xzf netevd-*-linux-amd64.tar.gz && cd netevd-*-linux-amd64
+sudo ./install.sh
 sudo systemctl enable --now netevd
 ```
 
-Create your first script -- this runs whenever an interface becomes fully routable:
+See [INSTALL.md](INSTALL.md) for arm64, source builds, and package managers.
+
+### First hook script
+
+Create your first script — this runs whenever an interface becomes fully routable:
 
 ```bash
 cat <<'EOF' | sudo tee /etc/netevd/routable.d/01-notify.sh && sudo chmod +x /etc/netevd/routable.d/01-notify.sh
@@ -218,13 +214,12 @@ Full reference: **[API Documentation](docs/API.md)**
 | **[Troubleshooting](docs/TROUBLESHOOTING.md)** | Diagnosis and common fixes |
 | **[Security](SECURITY.md)** | Threat model and hardening |
 | **[Contributing](CONTRIBUTING.md)** | Dev setup and PR guidelines |
-| **[Roadmap](ROADMAP.md)** | Planned features and priorities |
 | **[Changelog](CHANGELOG.md)** | Release history |
 
 ## Contributing
 
 ```bash
-git clone https://github.com/ssahani/netevd.git && cd netevd
+git clone https://github.com/hypersdk/netevd.git && cd netevd
 cargo build && cargo test && cargo clippy -- -D warnings
 ```
 

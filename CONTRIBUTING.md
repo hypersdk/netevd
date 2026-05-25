@@ -7,7 +7,7 @@
 ```bash
 git clone https://github.com/YOUR_USERNAME/netevd.git
 cd netevd
-git remote add upstream https://github.com/ssahani/netevd.git
+git remote add upstream https://github.com/hypersdk/netevd.git
 
 rustup component add rustfmt clippy
 cargo build && cargo test && cargo clippy -- -D warnings
@@ -82,11 +82,11 @@ src/
 
 ## What to Work On
 
-Check the [issue tracker](https://github.com/ssahani/netevd/issues) for:
+Check the [issue tracker](https://github.com/hypersdk/netevd/issues) for:
 - `good first issue` -- newcomer-friendly tasks
 - `help wanted` -- community contributions welcome
 
-See [ROADMAP.md](ROADMAP.md) for planned features and priorities.
+See [CHANGELOG.md](CHANGELOG.md) for release history and planned work.
 
 ## Pull Request Checklist
 

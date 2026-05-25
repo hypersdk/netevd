@@ -22,7 +22,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source $HOME/.cargo/env
 
 # Build and install
-git clone https://github.com/ssahani/netevd.git && cd netevd
+git clone https://github.com/hypersdk/netevd.git && cd netevd
 cargo build --release
 sudo install -Dm755 target/release/netevd /usr/bin/netevd
 sudo install -Dm644 systemd/netevd.service /lib/systemd/system/netevd.service
