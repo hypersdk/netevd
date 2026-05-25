@@ -6,6 +6,7 @@
 //! executes scripts on network state changes, and manages routing policy rules.
 
 use anyhow::{Context, Result};
+use clap::Parser;
 use rtnetlink::Handle;
 use std::sync::Arc;
 use tokio::signal::unix::{signal, SignalKind};
