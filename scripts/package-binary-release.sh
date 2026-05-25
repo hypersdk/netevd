@@ -26,6 +26,7 @@ done
 
 VERSION="${NETEVD_PACKAGE_VERSION:-$(sed -n 's/^version = "\(.*\)"/\1/p' "${REPO_DIR}/Cargo.toml" | head -1)}"
 VERSION="${VERSION:-0.2.0}"
+BUILD_PROFILE="${NETEVD_BUILD_PROFILE:-release}"
 
 case "${TARGET:-x86_64-unknown-linux-gnu}" in
     x86_64-unknown-linux-gnu|"") ARCH_SUFFIX="linux-amd64" ;;
@@ -41,18 +42,17 @@ TARGET_DIR="${REPO_DIR}/target"
 if [[ -n "${TARGET}" ]]; then
     TARGET_DIR="${TARGET_DIR}/${TARGET}"
 fi
-BINARY="${NETEVD_BINARY:-${TARGET_DIR}/release/netevd}"
+BINARY="${NETEVD_BINARY:-${TARGET_DIR}/${BUILD_PROFILE}/netevd}"
 
 if $DO_BUILD; then
     cd "${REPO_DIR}"
-    export CARGO_PROFILE_RELEASE_LTO="${CARGO_PROFILE_RELEASE_LTO:-false}"
-    export CARGO_PROFILE_RELEASE_CODEGEN_UNITS="${CARGO_PROFILE_RELEASE_CODEGEN_UNITS:-16}"
+    build_args=(--profile "${BUILD_PROFILE}" --bin netevd)
     if [[ -n "${TARGET}" && "${TARGET}" != "x86_64-unknown-linux-gnu" ]]; then
-        cargo build --release --target "${TARGET}" --bin netevd
+        cargo build "${build_args[@]}" --target "${TARGET}"
     else
-        cargo build --release --bin netevd
+        cargo build "${build_args[@]}"
         TARGET_DIR="${REPO_DIR}/target"
-        BINARY="${NETEVD_BINARY:-${TARGET_DIR}/release/netevd}"
+        BINARY="${NETEVD_BINARY:-${TARGET_DIR}/${BUILD_PROFILE}/netevd}"
     fi
 fi
 
