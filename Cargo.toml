@@ -1,6 +1,6 @@
 [package]
 name = "netevd"
-version = "0.2.2"
+version = "0.2.3"
 edition = "2021"
 authors = ["Susant Sahani <ssahani@redhat.com>"]
 license = "LGPL-3.0-or-later"
@@ -34,7 +34,7 @@ futures = "0.3"
 
 # Netlink operations
 rtnetlink = "0.21"
-netlink-packet-route = "0.28"  # Match rtnetlink version
+netlink-packet-route = "0.30"
 netlink-packet-core = "0.8"
 netlink-sys = "0.8"
 netlink-proto = "0.12"

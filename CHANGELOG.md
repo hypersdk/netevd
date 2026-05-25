@@ -6,6 +6,11 @@ Based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). This project 
 
 ## [Unreleased]
 
+## [0.2.3] - 2026-05-25
+
+### Changed
+- **build(deps):** bump `netlink-packet-route` from 0.28 to 0.30 (supersedes dependabot #51)
+
 ## [0.2.2] - 2026-05-25
 
 ### Changed
