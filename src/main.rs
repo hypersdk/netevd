@@ -15,6 +15,7 @@ use tracing_subscriber::EnvFilter;
 
 mod audit;
 mod bus;
+mod cli;
 mod config;
 mod filters;
 mod listeners;
@@ -23,6 +24,7 @@ mod network;
 mod system;
 
 use audit::AuditLogger;
+use cli::{handler, Cli, Commands};
 use config::Config;
 use metrics::{Metrics, MetricsHandle};
 use network::{link, watcher, NetworkState};
@@ -33,8 +35,19 @@ const DEFAULT_USER: &str = "netevd";
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // Parse configuration first (before logging init so we can apply log level)
-    let config = Config::parse().context("Failed to parse configuration")?;
+    let cli = Cli::parse();
+
+    if let Some(ref cmd) = cli.command {
+        if !matches!(cmd, Commands::Start { .. }) {
+            return handler::handle_command(cli).await;
+        }
+    }
+
+    let config_path = cli
+        .config
+        .to_str()
+        .context("Invalid configuration path")?;
+    let config = Config::parse_from_path(config_path).context("Failed to parse configuration")?;
 
     // Initialize logging with config level (RUST_LOG env takes precedence)
     init_logging(&config.system.log_level);

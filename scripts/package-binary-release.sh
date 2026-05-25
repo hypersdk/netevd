@@ -70,6 +70,7 @@ export NETEVD_BINARY="${BINARY}"
 echo "Assemble customer bundle → ${OUT_DIR}/${ARTIFACT}.tar.gz"
 package_netevd_client_bundle "${STAGE}" "${REPO_DIR}" "${VERSION}"
 package_netevd_client_tarball "${OUT_DIR}" "${ARTIFACT}" "${STAGE}"
-"${BINARY}" --version 2>/dev/null || true
+ls -lh "${BINARY}"
+"${BINARY}" --version
 ls -lh "${OUT_DIR}/${ARTIFACT}.tar.gz"
 echo "Done: ${OUT_DIR}/${ARTIFACT}.tar.gz"

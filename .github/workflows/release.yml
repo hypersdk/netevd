@@ -46,7 +46,7 @@ jobs:
   build-and-upload:
     name: Build and Upload Assets (${{ matrix.arch_suffix }})
     needs: create-release
-    timeout-minutes: 25
+    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
