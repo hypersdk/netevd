@@ -10,28 +10,20 @@ This page covers building from source, using prebuilt binaries, and common packa
 - One of: systemd-networkd, NetworkManager, or dhclient
 - Build-only: Rust 1.70+, pkg-config, a C compiler
 
-## From source (recommended)
+## From source
 
 ```bash
-# Install Rust toolchain (if needed)
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-source $HOME/.cargo/env
-
-# Build
-git clone https://github.com/ssahani/netevd.git
+git clone https://github.com/hypersdk/netevd.git
 cd netevd
 cargo build --release
 
-# Install binary and service
 sudo install -Dm755 target/release/netevd /usr/bin/netevd
 sudo install -Dm644 systemd/netevd.service /lib/systemd/system/netevd.service
 sudo install -Dm644 examples/netevd.yaml /etc/netevd/netevd.yaml
 
-# Create runtime user and directories
 sudo useradd -r -M -s /usr/bin/nologin netevd || true
 sudo mkdir -p /etc/netevd/{carrier.d,no-carrier.d,configured.d,degraded.d,routable.d,activated.d,disconnected.d,manager.d,routes.d}
 
-# Start the service
 sudo systemctl daemon-reload
 sudo systemctl enable --now netevd
 ```
@@ -40,15 +32,18 @@ Notes:
 - The `useradd` command may fail on some systems if the user already exists; this is safe to ignore.
 - The example config installed to `/etc/netevd/netevd.yaml` should be reviewed and adapted.
 
-## Binary releases
+## Binary releases (GitHub)
 
-Download a prebuilt tarball from the GitHub releases page, extract, and install the `netevd` binary as above.
+Download a customer bundle from [Releases](https://github.com/hypersdk/netevd/releases):
 
 ```bash
-wget https://github.com/ssahani/netevd/releases/download/vX.Y.Z/netevd-x86_64-unknown-linux-gnu.tar.gz
-tar xzf netevd-x86_64-unknown-linux-gnu.tar.gz
-sudo install -Dm755 netevd /usr/bin/netevd
+curl -LO https://github.com/hypersdk/netevd/releases/download/v0.2.1/netevd-0.2.1-linux-amd64.tar.gz
+tar xzf netevd-*-linux-amd64.tar.gz && cd netevd-*-linux-amd64
+sudo ./install.sh
+sudo systemctl enable --now netevd
 ```
+
+Arm64: `netevd-0.2.1-linux-arm64.tar.gz`. Each tarball includes `install.sh`, systemd unit, and sample config.
 
 ## Package managers
 
