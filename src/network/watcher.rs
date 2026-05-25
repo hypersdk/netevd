@@ -202,10 +202,8 @@ pub async fn watch_routes(_handle: Handle, state: Arc<RwLock<NetworkState>>) -> 
     info!("Starting route watcher (real-time netlink events)");
 
     // Subscribe to route change notifications via multicast groups
-    let (connection, mut messages) = new_event_receiver(&[
-        libc::RTNLGRP_IPV4_ROUTE,
-        libc::RTNLGRP_IPV6_ROUTE,
-    ])?;
+    let (connection, mut messages) =
+        new_event_receiver(&[libc::RTNLGRP_IPV4_ROUTE, libc::RTNLGRP_IPV6_ROUTE])?;
     tokio::spawn(connection);
 
     info!("Route watcher subscribed to netlink multicast groups");
