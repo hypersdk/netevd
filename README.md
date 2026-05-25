@@ -1,3 +1,11 @@
+<p align="center">
+  <a href="https://zyvor.dev/?utm_source=github&utm_medium=netevd">
+    <img src="docs/img/zyvor-logo.webp" alt="Zyvor AI Labs — HyperSDK Platform" width="220">
+  </a>
+</p>
+
+<p align="center"><sub>Linux network events · Policy routing · Part of the HyperSDK networking stack by Zyvor AI Labs</sub></p>
+
 # netevd
 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
@@ -8,6 +16,8 @@
 **netevd** is a network event daemon that watches your Linux network interfaces and runs scripts when things change. Think of it as systemd path units, but purpose-built for networking: when an interface gets an IP, loses its link, or routes change, netevd executes your scripts with full context about what happened.
 
 It bridges **systemd-networkd**, **NetworkManager**, and **dhclient** into a single, unified event system -- with automatic policy routing, a REST API, Prometheus metrics, and a defense-in-depth security model.
+
+> **Enterprise & production:** [zyvor.dev](https://zyvor.dev/?utm_source=github&utm_medium=netevd) · [Contact sales](https://zyvor.dev/contact?utm_source=github&utm_medium=netevd) · [sales@zyvor.dev](mailto:sales@zyvor.dev)
 
 ## Why netevd?
 
@@ -210,6 +220,8 @@ REST API and metrics are exposed on the daemon HTTP port (default `9090`); see [
 | **[Security](SECURITY.md)** | Threat model and hardening |
 | **[Contributing](CONTRIBUTING.md)** | Dev setup and PR guidelines |
 | **[Changelog](CHANGELOG.md)** | Release history |
+| **[Enterprise](docs/zyvor-enterprise.md)** | Zyvor contact & platform |
+| **[CE vs Enterprise](docs/ce-vs-enterprise.md)** | Open source vs production |
 
 ## Contributing
 
@@ -219,6 +231,50 @@ cargo build && cargo test && cargo clippy -- -D warnings
 ```
 
 See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the full guide.
+
+## Support
+
+<p align="center">
+  <a href="https://zyvor.dev/">
+    <img src="docs/img/zyvor-logo.webp" alt="Zyvor AI Labs" width="220">
+  </a>
+</p>
+
+**netevd** is the open-source network event daemon in the [HyperSDK Platform](https://zyvor.dev/) (Zeus suite), engineered by [Zyvor AI Labs](https://zyvor.dev/).
+
+### Open source (this repository)
+
+- **GitHub Issues**: [Report bugs](https://github.com/hypersdk/netevd/issues)
+- **Documentation**: [docs/](docs/)
+
+### Enterprise — approach [zyvor.dev](https://zyvor.dev/)
+
+**Production workloads, SLAs, and platform integration are provided by Zyvor — not via GitHub Issues.**
+
+| | |
+|---|---|
+| **Platform** | **[zyvor.dev](https://zyvor.dev/)** |
+| **Sales & demos** | [sales@zyvor.dev](mailto:sales@zyvor.dev) |
+| **General inquiries** | [info@zyvor.dev](mailto:info@zyvor.dev) |
+| **Contact form** | [zyvor.dev/contact](https://zyvor.dev/contact) |
+
+#### Related networking products
+
+| Product | Focus |
+|---------|--------|
+| **[netevd](https://github.com/hypersdk/netevd)** (this repo) | Event hooks, policy routing, metrics |
+| **[netctl](https://github.com/hypersdk/netctl)** | Network configuration CLI |
+| **[cloud-netconfig](https://github.com/hypersdk/cloud-netconfig)** | Cloud metadata networking |
+| **[PacketWolf](https://zyvor.dev/packetwolf)** | eBPF observability |
+| **[HyperSDK Platform](https://zyvor.dev/hypersdk)** | VM export & migration |
+
+→ [Watch demo](https://zyvor.dev/demo?utm_source=github&utm_medium=netevd) · [Compare products](https://zyvor.dev/docs/products) · [Contact sales](https://zyvor.dev/contact?utm_source=github&utm_medium=netevd)
+
+📄 [Open source vs Enterprise](docs/ce-vs-enterprise.md) · [Enterprise guide](docs/zyvor-enterprise.md)
+
+### Security
+
+Report vulnerabilities privately using [SECURITY.md](SECURITY.md).
 
 ## License
 
