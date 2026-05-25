@@ -14,7 +14,7 @@ const DEFAULT_CONFIG_PATH: &str = "/etc/netevd/netevd.yaml";
 const DEFAULT_LOG_LEVEL: &str = "info";
 const DEFAULT_BACKEND: &str = "systemd-networkd";
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Default, Deserialize, Clone)]
 pub struct Config {
     #[serde(default)]
     pub system: SystemConfig,
@@ -51,14 +51,14 @@ pub struct SystemConfig {
     pub backend: String,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Default, Deserialize, Clone)]
 #[serde(rename_all = "snake_case")]
 pub struct MonitoringConfig {
     #[serde(default)]
     pub interfaces: Vec<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Default, Deserialize, Clone)]
 #[serde(rename_all = "snake_case")]
 pub struct RoutingConfig {
     #[serde(default)]
@@ -85,7 +85,7 @@ pub struct SystemdNetworkdConfig {
     pub emit_json: bool,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Default, Deserialize, Clone)]
 #[serde(rename_all = "snake_case")]
 pub struct DhclientConfig {
     #[serde(default)]
@@ -98,7 +98,7 @@ pub struct DhclientConfig {
     pub use_hostname: bool,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Default, Deserialize, Clone)]
 #[serde(rename_all = "snake_case")]
 pub struct NetworkManagerConfig {
     // Placeholder for future NetworkManager-specific options
@@ -120,7 +120,7 @@ pub struct ApiConfig {
     pub tls: TlsConfig,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Default, Deserialize, Clone)]
 #[serde(rename_all = "snake_case")]
 pub struct TlsConfig {
     #[serde(default)]
@@ -165,22 +165,6 @@ impl Default for SystemConfig {
     }
 }
 
-impl Default for MonitoringConfig {
-    fn default() -> Self {
-        Self {
-            interfaces: Vec::new(),
-        }
-    }
-}
-
-impl Default for RoutingConfig {
-    fn default() -> Self {
-        Self {
-            policy_rules: Vec::new(),
-        }
-    }
-}
-
 impl Default for BackendsConfig {
     fn default() -> Self {
         Self {
@@ -197,22 +181,6 @@ impl Default for SystemdNetworkdConfig {
     }
 }
 
-impl Default for DhclientConfig {
-    fn default() -> Self {
-        Self {
-            use_dns: false,
-            use_domain: false,
-            use_hostname: false,
-        }
-    }
-}
-
-impl Default for NetworkManagerConfig {
-    fn default() -> Self {
-        Self {}
-    }
-}
-
 impl Default for ApiConfig {
     fn default() -> Self {
         Self {
@@ -220,16 +188,6 @@ impl Default for ApiConfig {
             bind_address: "127.0.0.1".to_string(),
             port: 9090,
             tls: TlsConfig::default(),
-        }
-    }
-}
-
-impl Default for TlsConfig {
-    fn default() -> Self {
-        Self {
-            enabled: false,
-            cert_file: None,
-            key_file: None,
         }
     }
 }
@@ -399,21 +357,6 @@ impl Config {
     /// Get use_hostname setting
     pub fn get_use_hostname(&self) -> bool {
         self.backends.dhclient.use_hostname
-    }
-}
-
-impl Default for Config {
-    fn default() -> Self {
-        Self {
-            system: SystemConfig::default(),
-            monitoring: MonitoringConfig::default(),
-            routing: RoutingConfig::default(),
-            backends: BackendsConfig::default(),
-            api: ApiConfig::default(),
-            metrics: MetricsConfig::default(),
-            audit: AuditConfig::default(),
-            filters: Vec::new(),
-        }
     }
 }
 

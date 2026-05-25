@@ -20,7 +20,6 @@ use crate::system::execute;
 use crate::system::paths::get_script_dir;
 
 const NM_SERVICE: &str = "org.freedesktop.NetworkManager";
-const NM_PATH: &str = "/org/freedesktop/NetworkManager";
 
 // NetworkManager device states
 const NM_DEVICE_STATE_UNKNOWN: u32 = 0;
@@ -105,6 +104,7 @@ pub async fn listen_networkmanager(
 }
 
 /// Handle device StateChanged signal
+#[allow(clippy::too_many_arguments)]
 async fn handle_device_state_changed(
     config: &Config,
     handle: &Handle,

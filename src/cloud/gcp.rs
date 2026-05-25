@@ -8,7 +8,6 @@ use std::net::IpAddr;
 /// - Firewall rule management
 /// - Instance network configuration
 /// - External IP association
-
 pub struct GcpClient {
     project_id: String,
     zone: String,

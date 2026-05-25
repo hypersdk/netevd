@@ -66,32 +66,33 @@ pub fn parse_link_state_file(ifindex: u32) -> Result<LinkState> {
 
     let kv = parse_key_value_file(&path)?;
 
-    let mut state = LinkState::default();
-
-    state.admin_state = kv.get("ADMIN_STATE").cloned().unwrap_or_default();
-    state.oper_state = kv.get("OPER_STATE").cloned().unwrap_or_default();
-    state.carrier_state = kv.get("CARRIER_STATE").cloned().unwrap_or_default();
-    state.address_state = kv.get("ADDRESS_STATE").cloned().unwrap_or_default();
-    state.ipv4_address_state = kv.get("IPV4_ADDRESS_STATE").cloned().unwrap_or_default();
-    state.ipv6_address_state = kv.get("IPV6_ADDRESS_STATE").cloned().unwrap_or_default();
-    state.online_state = kv.get("ONLINE_STATE").cloned().unwrap_or_default();
-
-    // Parse DNS servers (space-separated on a single line)
+    let mut dns = Vec::new();
     if let Some(dns_str) = kv.get("DNS") {
-        state.dns = dns_str.split_whitespace().map(|s| s.to_string()).collect();
+        dns = dns_str.split_whitespace().map(|s| s.to_string()).collect();
     }
 
-    // Parse domains (space-separated on a single line)
+    let mut domains = Vec::new();
     if let Some(domains_str) = kv.get("DOMAINS") {
-        state.domains = domains_str
+        domains = domains_str
             .split_whitespace()
             .map(|s| s.to_string())
             .collect();
     }
 
-    // Parse gateways
-    state.gateway = kv.get("GATEWAY").cloned().filter(|s| !s.is_empty());
-    state.gateway6 = kv.get("GATEWAY6").cloned().filter(|s| !s.is_empty());
+    let mut state = LinkState {
+        admin_state: kv.get("ADMIN_STATE").cloned().unwrap_or_default(),
+        oper_state: kv.get("OPER_STATE").cloned().unwrap_or_default(),
+        carrier_state: kv.get("CARRIER_STATE").cloned().unwrap_or_default(),
+        address_state: kv.get("ADDRESS_STATE").cloned().unwrap_or_default(),
+        ipv4_address_state: kv.get("IPV4_ADDRESS_STATE").cloned().unwrap_or_default(),
+        ipv6_address_state: kv.get("IPV6_ADDRESS_STATE").cloned().unwrap_or_default(),
+        online_state: kv.get("ONLINE_STATE").cloned().unwrap_or_default(),
+        dns,
+        domains,
+        gateway: kv.get("GATEWAY").cloned().filter(|s| !s.is_empty()),
+        gateway6: kv.get("GATEWAY6").cloned().filter(|s| !s.is_empty()),
+        ..Default::default()
+    };
 
     debug!("Parsed link state for ifindex {}: {:?}", ifindex, state);
     Ok(state)
@@ -108,14 +109,15 @@ pub fn parse_manager_state_file() -> Result<ManagerState> {
 
     let kv = parse_key_value_file(&path)?;
 
-    let mut state = ManagerState::default();
-
-    state.operational_state = kv.get("OPER_STATE").cloned().unwrap_or_default();
-    state.carrier_state = kv.get("CARRIER_STATE").cloned().unwrap_or_default();
-    state.address_state = kv.get("ADDRESS_STATE").cloned().unwrap_or_default();
-    state.ipv4_address_state = kv.get("IPV4_ADDRESS_STATE").cloned().unwrap_or_default();
-    state.ipv6_address_state = kv.get("IPV6_ADDRESS_STATE").cloned().unwrap_or_default();
-    state.online_state = kv.get("ONLINE_STATE").cloned().unwrap_or_default();
+    let state = ManagerState {
+        operational_state: kv.get("OPER_STATE").cloned().unwrap_or_default(),
+        carrier_state: kv.get("CARRIER_STATE").cloned().unwrap_or_default(),
+        address_state: kv.get("ADDRESS_STATE").cloned().unwrap_or_default(),
+        ipv4_address_state: kv.get("IPV4_ADDRESS_STATE").cloned().unwrap_or_default(),
+        ipv6_address_state: kv.get("IPV6_ADDRESS_STATE").cloned().unwrap_or_default(),
+        online_state: kv.get("ONLINE_STATE").cloned().unwrap_or_default(),
+        ..Default::default()
+    };
 
     debug!("Parsed manager state: {:?}", state);
     Ok(state)

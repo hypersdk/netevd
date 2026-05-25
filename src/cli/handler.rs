@@ -176,7 +176,7 @@ fn handle_validate(config_path: &Path) -> Result<()> {
         Err(e) => {
             eprintln!("✗ Configuration validation failed:");
             eprintln!("  {}", e);
-            Err(e.into())
+            Err(e)
         }
     }
 }

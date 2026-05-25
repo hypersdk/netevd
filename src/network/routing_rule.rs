@@ -167,10 +167,7 @@ mod tests {
 
     #[test]
     fn test_route_table_base() {
-        assert!(
-            ROUTE_TABLE_BASE > 255,
-            "table base must be above reserved range"
-        );
+        const { assert!(ROUTE_TABLE_BASE > 255) };
     }
 
     #[test]
