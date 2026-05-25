@@ -79,6 +79,8 @@ jobs:
         env:
           NETEVD_PACKAGE_VERSION: ${{ needs.create-release.outputs.version }}
           CARGO_TARGET: ${{ matrix.target }}
+          CARGO_PROFILE_RELEASE_LTO: 'false'
+          CARGO_PROFILE_RELEASE_CODEGEN_UNITS: '16'
         run: |
           chmod +x scripts/package-binary-release.sh
           ./scripts/package-binary-release.sh --build --target "${CARGO_TARGET}" --out-dir dist
