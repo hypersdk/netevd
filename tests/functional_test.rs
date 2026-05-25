@@ -19,10 +19,7 @@ const TEST_INTERFACE: &str = "dummy-test0";
 fn test_output_path() -> std::path::PathBuf {
     let dir = std::env::temp_dir().join("netevd-tests");
     let _ = std::fs::create_dir_all(&dir);
-    dir.join(format!(
-        "output-{}.txt",
-        std::process::id(),
-    ))
+    dir.join(format!("output-{}.txt", std::process::id(),))
 }
 
 /// Helper to check if running as root
@@ -238,7 +235,9 @@ echo "CARRIER: $LINK" >> {}
 echo "STATE: $STATE" >> {}
 echo "BACKEND: $BACKEND" >> {}
 "#,
-        &test_output_path().to_str().unwrap(), &test_output_path().to_str().unwrap(), &test_output_path().to_str().unwrap()
+        &test_output_path().to_str().unwrap(),
+        &test_output_path().to_str().unwrap(),
+        &test_output_path().to_str().unwrap()
     );
 
     create_test_script(&carrier_dir, "01-test.sh", &script_content)
@@ -265,13 +264,19 @@ echo "BACKEND: $BACKEND" >> {}
         .output()
         .expect("Failed to execute test script");
 
-    assert!(output.status.success(), "Script should execute successfully");
+    assert!(
+        output.status.success(),
+        "Script should execute successfully"
+    );
 
     // Verify script output
     if Path::new(&test_output_path().to_str().unwrap()).exists() {
         let content = fs::read_to_string(&test_output_path().to_str().unwrap())
             .expect("Failed to read output file");
-        assert!(content.contains(TEST_INTERFACE), "Output should contain interface name");
+        assert!(
+            content.contains(TEST_INTERFACE),
+            "Output should contain interface name"
+        );
         assert!(content.contains("carrier"), "Output should contain state");
     }
 
@@ -300,7 +305,8 @@ async fn test_routable_with_ip() {
 echo "ROUTABLE: $LINK" >> {}
 echo "ADDRESSES: $ADDRESSES" >> {}
 "#,
-        &test_output_path().to_str().unwrap(), &test_output_path().to_str().unwrap()
+        &test_output_path().to_str().unwrap(),
+        &test_output_path().to_str().unwrap()
     );
 
     create_test_script(&routable_dir, "01-test.sh", &script_content)
@@ -326,14 +332,23 @@ echo "ADDRESSES: $ADDRESSES" >> {}
         .output()
         .expect("Failed to execute test script");
 
-    assert!(output.status.success(), "Script should execute successfully");
+    assert!(
+        output.status.success(),
+        "Script should execute successfully"
+    );
 
     // Verify output
     if Path::new(&test_output_path().to_str().unwrap()).exists() {
         let content = fs::read_to_string(&test_output_path().to_str().unwrap())
             .expect("Failed to read output file");
-        assert!(content.contains(TEST_INTERFACE), "Output should contain interface name");
-        assert!(content.contains("10.0.0.1"), "Output should contain IP address");
+        assert!(
+            content.contains(TEST_INTERFACE),
+            "Output should contain interface name"
+        );
+        assert!(
+            content.contains("10.0.0.1"),
+            "Output should contain IP address"
+        );
     }
 
     // Cleanup
@@ -402,7 +417,16 @@ fn test_veth_pair() {
 
     // Create veth pair
     let output = Command::new("ip")
-        .args(["link", "add", "veth-test0", "type", "veth", "peer", "name", "veth-test1"])
+        .args([
+            "link",
+            "add",
+            "veth-test0",
+            "type",
+            "veth",
+            "peer",
+            "name",
+            "veth-test1",
+        ])
         .output()
         .expect("Failed to create veth pair");
 
@@ -474,11 +498,14 @@ echo "ADDRESSES=$ADDRESSES" >> {}
         .output()
         .expect("Failed to execute script");
 
-    assert!(output.status.success(), "Script should execute successfully");
+    assert!(
+        output.status.success(),
+        "Script should execute successfully"
+    );
 
     // Verify all environment variables were passed
-    let content = fs::read_to_string(&test_output_path().to_str().unwrap())
-        .expect("Failed to read output");
+    let content =
+        fs::read_to_string(&test_output_path().to_str().unwrap()).expect("Failed to read output");
 
     assert!(content.contains("LINK=eth0"));
     assert!(content.contains("LINKINDEX=2"));
@@ -545,11 +572,7 @@ fn test_ipv6_addresses() {
     bring_interface_up(TEST_INTERFACE).expect("Failed to bring up interface");
 
     // Add IPv6 addresses
-    let ipv6_addrs = [
-        "2001:db8::1/64",
-        "fe80::1/64",
-        "fd00::1/64",
-    ];
+    let ipv6_addrs = ["2001:db8::1/64", "fe80::1/64", "fd00::1/64"];
 
     for addr in &ipv6_addrs {
         add_ip_address(TEST_INTERFACE, addr).expect("Failed to add IPv6");
@@ -673,7 +696,8 @@ async fn test_script_execution_order() {
             r#"#!/bin/bash
 echo "Script {}: $LINK" >> {}
 "#,
-            i, &test_output_path().to_str().unwrap()
+            i,
+            &test_output_path().to_str().unwrap()
         );
         let script_name = format!("{:02}-script.sh", i);
         create_test_script(&script_dir, &script_name, &script_content)
@@ -697,8 +721,8 @@ echo "Script {}: $LINK" >> {}
     }
 
     // Verify execution order
-    let content = fs::read_to_string(&test_output_path().to_str().unwrap())
-        .expect("Failed to read output");
+    let content =
+        fs::read_to_string(&test_output_path().to_str().unwrap()).expect("Failed to read output");
 
     let lines: Vec<&str> = content.lines().collect();
     assert_eq!(lines.len(), 5, "Should have 5 script outputs");
@@ -742,7 +766,10 @@ exit 1
         .output()
         .expect("Failed to execute script");
 
-    assert!(!output.status.success(), "Script should fail with exit code 1");
+    assert!(
+        !output.status.success(),
+        "Script should fail with exit code 1"
+    );
     assert_eq!(output.status.code(), Some(1), "Exit code should be 1");
 }
 
@@ -991,7 +1018,11 @@ fn test_many_interfaces() {
 
     let output_str = String::from_utf8_lossy(&output.stdout);
     for iface in &interfaces {
-        assert!(output_str.contains(iface), "Interface {} should exist", iface);
+        assert!(
+            output_str.contains(iface),
+            "Interface {} should exist",
+            iface
+        );
     }
 
     // Cleanup all

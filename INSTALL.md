@@ -37,13 +37,13 @@ Notes:
 Download a customer bundle from [Releases](https://github.com/hypersdk/netevd/releases):
 
 ```bash
-curl -LO https://github.com/hypersdk/netevd/releases/download/v0.2.2/netevd-0.2.2-linux-amd64.tar.gz
+curl -LO https://github.com/hypersdk/netevd/releases/download/v0.2.3/netevd-0.2.3-linux-amd64.tar.gz
 tar xzf netevd-*-linux-amd64.tar.gz && cd netevd-*-linux-amd64
 sudo ./install.sh
 sudo systemctl enable --now netevd
 ```
 
-Arm64: `netevd-0.2.2-linux-arm64.tar.gz`. Each tarball includes `install.sh`, systemd unit, and sample config.
+Arm64: `netevd-0.2.3-linux-arm64.tar.gz`. Each tarball includes `install.sh`, systemd unit, and sample config.
 
 ## Package managers
 

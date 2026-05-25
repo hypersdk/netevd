@@ -83,7 +83,10 @@ pub fn parse_link_state_file(ifindex: u32) -> Result<LinkState> {
 
     // Parse domains (space-separated on a single line)
     if let Some(domains_str) = kv.get("DOMAINS") {
-        state.domains = domains_str.split_whitespace().map(|s| s.to_string()).collect();
+        state.domains = domains_str
+            .split_whitespace()
+            .map(|s| s.to_string())
+            .collect();
     }
 
     // Parse gateways
@@ -117,4 +120,3 @@ pub fn parse_manager_state_file() -> Result<ManagerState> {
     debug!("Parsed manager state: {:?}", state);
     Ok(state)
 }
-

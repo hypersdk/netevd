@@ -396,7 +396,8 @@ system:
 
         fs::write(&config_path, config_content).unwrap();
 
-        let config = netevd::config::Config::parse_from_path(config_path.to_str().unwrap()).unwrap();
+        let config =
+            netevd::config::Config::parse_from_path(config_path.to_str().unwrap()).unwrap();
 
         assert_eq!(config.system.log_level, *log_level);
     }
@@ -419,7 +420,8 @@ system:
 
         fs::write(&config_path, config_content).unwrap();
 
-        let config = netevd::config::Config::parse_from_path(config_path.to_str().unwrap()).unwrap();
+        let config =
+            netevd::config::Config::parse_from_path(config_path.to_str().unwrap()).unwrap();
 
         assert_eq!(config.system.backend, *backend);
     }

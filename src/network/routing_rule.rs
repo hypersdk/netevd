@@ -15,15 +15,8 @@ use tracing::{debug, info, warn};
 pub const ROUTE_TABLE_BASE: u32 = 1000;
 
 /// Add a routing policy rule (from address -> table)
-pub async fn add_routing_rule_from(
-    handle: &Handle,
-    address: IpAddr,
-    table: u32,
-) -> Result<()> {
-    info!(
-        "Adding routing rule: from {} table {}",
-        address, table
-    );
+pub async fn add_routing_rule_from(handle: &Handle, address: IpAddr, table: u32) -> Result<()> {
+    info!("Adding routing rule: from {} table {}", address, table);
 
     match address {
         IpAddr::V4(ipv4) => {
@@ -37,7 +30,10 @@ pub async fn add_routing_rule_from(
                 .execute()
                 .await
                 .with_context(|| {
-                    format!("Failed to add IPv4 routing rule: from {} table {}", address, table)
+                    format!(
+                        "Failed to add IPv4 routing rule: from {} table {}",
+                        address, table
+                    )
                 })?;
         }
         IpAddr::V6(ipv6) => {
@@ -51,7 +47,10 @@ pub async fn add_routing_rule_from(
                 .execute()
                 .await
                 .with_context(|| {
-                    format!("Failed to add IPv6 routing rule: from {} table {}", address, table)
+                    format!(
+                        "Failed to add IPv6 routing rule: from {} table {}",
+                        address, table
+                    )
                 })?;
         }
     }
@@ -61,15 +60,8 @@ pub async fn add_routing_rule_from(
 }
 
 /// Add a routing policy rule (to address -> table)
-pub async fn add_routing_rule_to(
-    handle: &Handle,
-    address: IpAddr,
-    table: u32,
-) -> Result<()> {
-    info!(
-        "Adding routing rule: to {} table {}",
-        address, table
-    );
+pub async fn add_routing_rule_to(handle: &Handle, address: IpAddr, table: u32) -> Result<()> {
+    info!("Adding routing rule: to {} table {}", address, table);
 
     match address {
         IpAddr::V4(ipv4) => {
@@ -83,7 +75,10 @@ pub async fn add_routing_rule_to(
                 .execute()
                 .await
                 .with_context(|| {
-                    format!("Failed to add IPv4 routing rule: to {} table {}", address, table)
+                    format!(
+                        "Failed to add IPv4 routing rule: to {} table {}",
+                        address, table
+                    )
                 })?;
         }
         IpAddr::V6(ipv6) => {
@@ -97,7 +92,10 @@ pub async fn add_routing_rule_to(
                 .execute()
                 .await
                 .with_context(|| {
-                    format!("Failed to add IPv6 routing rule: to {} table {}", address, table)
+                    format!(
+                        "Failed to add IPv6 routing rule: to {} table {}",
+                        address, table
+                    )
                 })?;
         }
     }
@@ -107,11 +105,7 @@ pub async fn add_routing_rule_to(
 }
 
 /// Remove routing policy rules for an address
-pub async fn remove_routing_rules(
-    handle: &Handle,
-    address: IpAddr,
-    table: u32,
-) -> Result<()> {
+pub async fn remove_routing_rules(handle: &Handle, address: IpAddr, table: u32) -> Result<()> {
     info!(
         "Removing routing rules for address {} in table {}",
         address, table
@@ -125,11 +119,7 @@ pub async fn remove_routing_rules(
     let mut rules = handle.rule().get(ip_version).execute();
 
     let mut removed_count = 0;
-    while let Some(rule) = rules
-        .try_next()
-        .await
-        .context("Failed to get next rule")?
-    {
+    while let Some(rule) = rules.try_next().await.context("Failed to get next rule")? {
         if rule_matches(&rule, &address, table) {
             // Delete this rule
             if let Err(e) = handle.rule().del(rule).execute().await {
@@ -177,7 +167,10 @@ mod tests {
 
     #[test]
     fn test_route_table_base() {
-        assert!(ROUTE_TABLE_BASE > 255, "table base must be above reserved range");
+        assert!(
+            ROUTE_TABLE_BASE > 255,
+            "table base must be above reserved range"
+        );
     }
 
     #[test]

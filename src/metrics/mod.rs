@@ -1,6 +1,4 @@
-use prometheus::{
-    Counter, CounterVec, Gauge, HistogramOpts, HistogramVec, Opts, Registry,
-};
+use prometheus::{Counter, CounterVec, Gauge, HistogramOpts, HistogramVec, Opts, Registry};
 use std::sync::Arc;
 
 pub struct Metrics {
@@ -45,7 +43,10 @@ impl Metrics {
         registry.register(Box::new(uptime_seconds.clone()))?;
 
         let events_total = CounterVec::new(
-            Opts::new("netevd_events_total", "Total number of network events processed"),
+            Opts::new(
+                "netevd_events_total",
+                "Total number of network events processed",
+            ),
             &["type", "interface", "backend"],
         )?;
         registry.register(Box::new(events_total.clone()))?;

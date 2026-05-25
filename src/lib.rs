@@ -4,11 +4,11 @@
 //!
 //! Library components for network event monitoring and handling
 
+pub mod bus;
 pub mod config;
+pub mod listeners;
 pub mod network;
 pub mod system;
-pub mod bus;
-pub mod listeners;
 
 // New modules for enhanced functionality
 pub mod api;

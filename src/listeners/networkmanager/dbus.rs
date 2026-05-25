@@ -90,7 +90,10 @@ pub async fn listen_networkmanager(
                         )
                         .await
                         {
-                            warn!("Error handling NetworkManager device signal for path {}: {}", path, e);
+                            warn!(
+                                "Error handling NetworkManager device signal for path {}: {}",
+                                path, e
+                            );
                         }
                     }
                 }
@@ -173,17 +176,10 @@ async fn handle_device_state_changed(
     }
 
     // Log audit event
-    audit.log_network_event(
-        &interface,
-        &state_name,
-        AuditResult::Success,
-        None,
-    );
+    audit.log_network_event(&interface, &state_name, AuditResult::Success, None);
 
     // Get addresses
-    let addresses = get_all_addresses(handle, ifindex)
-        .await
-        .unwrap_or_default();
+    let addresses = get_all_addresses(handle, ifindex).await.unwrap_or_default();
     let address_strings: Vec<String> = addresses.iter().map(|a| a.to_string()).collect();
 
     // Execute scripts for this state (with filtering)
@@ -223,7 +219,10 @@ async fn handle_device_state_changed(
                 warn!("Failed to execute scripts in {}: {}", &script_dir, e);
             }
         } else {
-            debug!("Event filtered out, skipping script execution for {}", interface);
+            debug!(
+                "Event filtered out, skipping script execution for {}",
+                interface
+            );
         }
     }
 

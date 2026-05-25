@@ -16,11 +16,7 @@ pub async fn acquire_links(state: &mut NetworkState, handle: &Handle) -> Result<
 
     let mut links = handle.link().get().execute();
 
-    while let Some(link) = links
-        .try_next()
-        .await
-        .context("Failed to get next link")?
-    {
+    while let Some(link) = links.try_next().await.context("Failed to get next link")? {
         let index = link.header.index;
         let name = link
             .attributes
@@ -44,8 +40,8 @@ pub async fn acquire_links(state: &mut NetworkState, handle: &Handle) -> Result<
 
 /// Get a netlink handle
 pub async fn get_netlink_handle() -> Result<Handle> {
-    let (connection, handle, _) = rtnetlink::new_connection()
-        .context("Failed to create netlink connection")?;
+    let (connection, handle, _) =
+        rtnetlink::new_connection().context("Failed to create netlink connection")?;
 
     // Spawn the connection in the background
     tokio::spawn(connection);

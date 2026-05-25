@@ -13,7 +13,11 @@ use tracing::debug;
 /// Get all IPv4 addresses for a specific interface
 pub async fn get_ipv4_addresses(handle: &Handle, ifindex: u32) -> Result<Vec<IpAddr>> {
     let mut addresses = Vec::new();
-    let mut addr_stream = handle.address().get().set_link_index_filter(ifindex).execute();
+    let mut addr_stream = handle
+        .address()
+        .get()
+        .set_link_index_filter(ifindex)
+        .execute();
 
     while let Some(msg) = addr_stream
         .try_next()
@@ -43,7 +47,11 @@ pub async fn get_ipv4_addresses(handle: &Handle, ifindex: u32) -> Result<Vec<IpA
 /// Get all addresses (IPv4 and IPv6) for a specific interface
 pub async fn get_all_addresses(handle: &Handle, ifindex: u32) -> Result<Vec<IpAddr>> {
     let mut addresses = Vec::new();
-    let mut addr_stream = handle.address().get().set_link_index_filter(ifindex).execute();
+    let mut addr_stream = handle
+        .address()
+        .get()
+        .set_link_index_filter(ifindex)
+        .execute();
 
     while let Some(msg) = addr_stream
         .try_next()
@@ -90,7 +98,9 @@ mod tests {
     #[test]
     fn test_is_link_local_ipv4() {
         assert!(is_link_local(&IpAddr::V4(Ipv4Addr::new(169, 254, 1, 1))));
-        assert!(is_link_local(&IpAddr::V4(Ipv4Addr::new(169, 254, 255, 255))));
+        assert!(is_link_local(&IpAddr::V4(Ipv4Addr::new(
+            169, 254, 255, 255
+        ))));
         assert!(!is_link_local(&IpAddr::V4(Ipv4Addr::new(192, 168, 1, 1))));
         assert!(!is_link_local(&IpAddr::V4(Ipv4Addr::new(10, 0, 0, 1))));
     }

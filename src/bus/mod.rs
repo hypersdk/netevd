@@ -2,5 +2,5 @@
 
 //! DBus operations for systemd services
 
-pub mod resolved;
 pub mod hostnamed;
+pub mod resolved;

@@ -47,12 +47,7 @@ pub async fn discover_gateway(handle: &Handle, ifindex: u32) -> Result<Option<Ip
 }
 
 /// Add a default route via gateway to a custom routing table
-pub async fn add_route(
-    handle: &Handle,
-    ifindex: u32,
-    gateway: IpAddr,
-    table: u32,
-) -> Result<()> {
+pub async fn add_route(handle: &Handle, ifindex: u32, gateway: IpAddr, table: u32) -> Result<()> {
     info!(
         "Adding route: ifindex={}, gateway={}, table={}",
         ifindex, gateway, table
@@ -89,7 +84,10 @@ pub async fn add_route(
         }
         Err(e) => {
             return Err(e).with_context(|| {
-                format!("Failed to add route for interface {} via {} in table {}", ifindex, gateway, table)
+                format!(
+                    "Failed to add route for interface {} via {} in table {}",
+                    ifindex, gateway, table
+                )
             });
         }
     }

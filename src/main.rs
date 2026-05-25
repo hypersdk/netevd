@@ -44,10 +44,7 @@ async fn main() -> Result<()> {
         }
     }
 
-    let config_path = cli
-        .config
-        .to_str()
-        .context("Invalid configuration path")?;
+    let config_path = cli.config.to_str().context("Invalid configuration path")?;
     let config = Config::parse_from_path(config_path).context("Failed to parse configuration")?;
 
     // Initialize logging with config level (RUST_LOG env takes precedence)
@@ -71,7 +68,10 @@ async fn main() -> Result<()> {
                 Some(metrics_handle)
             }
             Err(e) => {
-                warn!("Failed to initialize metrics: {}, continuing without metrics", e);
+                warn!(
+                    "Failed to initialize metrics: {}, continuing without metrics",
+                    e
+                );
                 None
             }
         }
@@ -93,9 +93,11 @@ async fn main() -> Result<()> {
 
     // Drop privileges if running as root
     if user::is_root() {
-        info!("Running as root, attempting to drop privileges to user '{}'", DEFAULT_USER);
-        user::drop_privileges(DEFAULT_USER)
-            .context("Failed to drop privileges")?;
+        info!(
+            "Running as root, attempting to drop privileges to user '{}'",
+            DEFAULT_USER
+        );
+        user::drop_privileges(DEFAULT_USER).context("Failed to drop privileges")?;
     } else {
         info!("Not running as root, continuing with current user");
     }
@@ -136,10 +138,9 @@ async fn main() -> Result<()> {
     let audit_listener = audit_logger.clone();
 
     // Set up signal handlers
-    let mut sigterm = signal(SignalKind::terminate())
-        .context("Failed to set up SIGTERM handler")?;
-    let mut sigint = signal(SignalKind::interrupt())
-        .context("Failed to set up SIGINT handler")?;
+    let mut sigterm =
+        signal(SignalKind::terminate()).context("Failed to set up SIGTERM handler")?;
+    let mut sigint = signal(SignalKind::interrupt()).context("Failed to set up SIGINT handler")?;
 
     info!("netevd initialized successfully, waiting for events...");
 
@@ -171,8 +172,8 @@ async fn main() -> Result<()> {
 
 /// Initialize logging with the given default level (RUST_LOG env takes precedence)
 fn init_logging(default_level: &str) {
-    let env_filter = EnvFilter::try_from_default_env()
-        .unwrap_or_else(|_| EnvFilter::new(default_level));
+    let env_filter =
+        EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new(default_level));
 
     tracing_subscriber::fmt()
         .with_env_filter(env_filter)
@@ -196,7 +197,8 @@ async fn spawn_listener(
         }
         "NetworkManager" => {
             info!("Starting NetworkManager listener");
-            listeners::networkmanager::listen_networkmanager(config, handle, state, metrics, audit).await
+            listeners::networkmanager::listen_networkmanager(config, handle, state, metrics, audit)
+                .await
         }
         "dhclient" => {
             info!("Starting dhclient listener");

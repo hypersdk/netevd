@@ -158,27 +158,29 @@ async fn handle_link_signal(
             .with_label_values(&[link_name.as_str(), current_state.as_str()])
             .inc();
         m.events_total
-            .with_label_values(&[current_state.as_str(), link_name.as_str(), "systemd-networkd"])
+            .with_label_values(&[
+                current_state.as_str(),
+                link_name.as_str(),
+                "systemd-networkd",
+            ])
             .inc();
     }
 
     // Log audit event
-    audit.log_network_event(
-        &link_name,
-        &current_state,
-        AuditResult::Success,
-        None,
-    );
+    audit.log_network_event(&link_name, &current_state, AuditResult::Success, None);
 
     // Get addresses for this interface
-    let addresses = get_all_addresses(handle, ifindex)
-        .await
-        .unwrap_or_default();
+    let addresses = get_all_addresses(handle, ifindex).await.unwrap_or_default();
     let address_strings: Vec<String> = addresses.iter().map(|a| a.to_string()).collect();
 
     // Build JSON once if enabled, reuse for logging and env var
     let json_value = if config.get_emit_json() {
-        match build_link_describe_json(ifindex, link_name.clone(), &link_state, address_strings.clone()) {
+        match build_link_describe_json(
+            ifindex,
+            link_name.clone(),
+            &link_state,
+            address_strings.clone(),
+        ) {
             Ok(json) => {
                 debug!("Link describe JSON: {}", json);
                 Some(json)
@@ -234,7 +236,9 @@ async fn handle_link_signal(
             backend: "systemd-networkd".to_string(),
             addresses: addresses.clone(),
             has_gateway: link_state.oper_state == "routable",
-            dns_servers: link_state.dns.iter()
+            dns_servers: link_state
+                .dns
+                .iter()
                 .filter_map(|s| s.parse().ok())
                 .collect(),
         };
@@ -261,7 +265,10 @@ async fn handle_link_signal(
                 warn!("Failed to execute scripts in {}: {}", &script_dir, e);
             }
         } else {
-            debug!("Event filtered out, skipping script execution for {}", link_name);
+            debug!(
+                "Event filtered out, skipping script execution for {}",
+                link_name
+            );
         }
     }
 

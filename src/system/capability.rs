@@ -38,8 +38,8 @@ pub fn apply_capabilities() -> Result<()> {
     tracing::info!("Applied capabilities: {:?}", capabilities);
 
     // Verify the capability was actually acquired
-    let effective = caps::read(None, CapSet::Effective)
-        .context("Failed to read effective capabilities")?;
+    let effective =
+        caps::read(None, CapSet::Effective).context("Failed to read effective capabilities")?;
 
     if !effective.contains(&Capability::CAP_NET_ADMIN) {
         anyhow::bail!("Failed to acquire CAP_NET_ADMIN capability");
@@ -50,15 +50,13 @@ pub fn apply_capabilities() -> Result<()> {
 
 /// Enable keeping capabilities across setuid
 pub fn keep_capabilities() -> Result<()> {
-    prctl::set_keepcaps(true)
-        .context("Failed to set PR_SET_KEEPCAPS to true")?;
+    prctl::set_keepcaps(true).context("Failed to set PR_SET_KEEPCAPS to true")?;
     Ok(())
 }
 
 /// Disable keeping capabilities (should be called after setuid)
 pub fn clear_keep_capabilities() -> Result<()> {
-    prctl::set_keepcaps(false)
-        .context("Failed to set PR_SET_KEEPCAPS to false")?;
+    prctl::set_keepcaps(false).context("Failed to set PR_SET_KEEPCAPS to false")?;
     Ok(())
 }
 

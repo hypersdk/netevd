@@ -3,11 +3,11 @@
 //! Network state management and operations
 
 pub mod address;
+pub mod ipv6;
 pub mod link;
 pub mod route;
 pub mod routing_rule;
 pub mod watcher;
-pub mod ipv6;
 
 use std::collections::HashMap;
 use std::net::IpAddr;

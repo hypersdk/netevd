@@ -113,16 +113,8 @@ impl GcpClient {
     }
 
     /// Update instance tags (for firewall targeting)
-    pub async fn update_instance_tags(
-        &self,
-        instance_name: &str,
-        tags: Vec<String>,
-    ) -> Result<()> {
-        tracing::info!(
-            "GCP: Updating instance {} tags: {:?}",
-            instance_name,
-            tags
-        );
+    pub async fn update_instance_tags(&self, instance_name: &str, tags: Vec<String>) -> Result<()> {
+        tracing::info!("GCP: Updating instance {} tags: {:?}", instance_name, tags);
 
         // TODO: Implement GCP SDK call
         // compute_client.instances().set_tags()
