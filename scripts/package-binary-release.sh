@@ -71,6 +71,8 @@ echo "Assemble customer bundle → ${OUT_DIR}/${ARTIFACT}.tar.gz"
 package_netevd_client_bundle "${STAGE}" "${REPO_DIR}" "${VERSION}"
 package_netevd_client_tarball "${OUT_DIR}" "${ARTIFACT}" "${STAGE}"
 ls -lh "${BINARY}"
-"${BINARY}" --version
+if [[ "${ARCH_SUFFIX}" == "linux-amd64" ]]; then
+    "${BINARY}" --version
+fi
 ls -lh "${OUT_DIR}/${ARTIFACT}.tar.gz"
 echo "Done: ${OUT_DIR}/${ARTIFACT}.tar.gz"
