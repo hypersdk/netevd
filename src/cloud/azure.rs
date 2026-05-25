@@ -8,8 +8,8 @@ use std::net::IpAddr;
 /// - Network Security Group (NSG) management
 /// - Virtual network configuration
 /// - Public IP association
-
 pub struct AzureClient {
+    #[allow(dead_code)]
     subscription_id: String,
     resource_group: String,
 }

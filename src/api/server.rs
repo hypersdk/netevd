@@ -23,7 +23,7 @@ impl ApiServer {
     pub async fn run(self) -> Result<()> {
         let cors = CorsLayer::new()
             .allow_origin(AllowOrigin::predicate(|origin: &HeaderValue, _| {
-                origin.to_str().map_or(false, |s| {
+                origin.to_str().is_ok_and(|s| {
                     s == "http://127.0.0.1"
                         || s.starts_with("http://127.0.0.1:")
                         || s == "http://localhost"

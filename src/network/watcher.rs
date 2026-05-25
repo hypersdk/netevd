@@ -26,15 +26,15 @@ use super::{
     NetworkState,
 };
 
+type NetlinkEventReceiver =
+    UnboundedReceiver<(NetlinkMessage<RouteNetlinkMessage>, NetlinkSocketAddr)>;
+
 /// Create a netlink event receiver subscribed to the specified multicast groups.
 /// This only returns a message receiver (no Handle), since the event watchers
 /// only need to receive multicast notifications, not send requests.
 fn new_event_receiver(
     groups: &[u32],
-) -> std::io::Result<(
-    impl std::future::Future<Output = ()>,
-    UnboundedReceiver<(NetlinkMessage<RouteNetlinkMessage>, NetlinkSocketAddr)>,
-)> {
+) -> std::io::Result<(impl std::future::Future<Output = ()>, NetlinkEventReceiver)> {
     use std::os::unix::io::{AsRawFd, FromRawFd};
 
     let mut socket = netlink_sys::Socket::new(NETLINK_ROUTE)?;
@@ -79,7 +79,7 @@ pub async fn watch_addresses(
 
     // Subscribe to IPv4 address change notifications only
     // (IPv6 policy routing is handled separately via the ipv6 module)
-    let (connection, mut messages) = new_event_receiver(&[libc::RTNLGRP_IPV4_IFADDR as u32])?;
+    let (connection, mut messages) = new_event_receiver(&[libc::RTNLGRP_IPV4_IFADDR])?;
     tokio::spawn(connection);
 
     info!("Address watcher subscribed to netlink multicast groups");
@@ -203,8 +203,8 @@ pub async fn watch_routes(_handle: Handle, state: Arc<RwLock<NetworkState>>) -> 
 
     // Subscribe to route change notifications via multicast groups
     let (connection, mut messages) = new_event_receiver(&[
-        libc::RTNLGRP_IPV4_ROUTE as u32,
-        libc::RTNLGRP_IPV6_ROUTE as u32,
+        libc::RTNLGRP_IPV4_ROUTE,
+        libc::RTNLGRP_IPV6_ROUTE,
     ])?;
     tokio::spawn(connection);
 
@@ -279,7 +279,7 @@ pub async fn watch_links(_handle: Handle, state: Arc<RwLock<NetworkState>>) -> R
     info!("Starting link watcher (real-time netlink events)");
 
     // Subscribe to link change notifications via multicast groups
-    let (connection, mut messages) = new_event_receiver(&[libc::RTNLGRP_LINK as u32])?;
+    let (connection, mut messages) = new_event_receiver(&[libc::RTNLGRP_LINK])?;
     tokio::spawn(connection);
 
     info!("Link watcher subscribed to netlink multicast groups");

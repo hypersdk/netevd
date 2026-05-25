@@ -8,9 +8,10 @@ use std::net::IpAddr;
 /// - Elastic IP association
 /// - Security group management
 /// - VPC networking
-
 pub struct AwsClient {
+    #[allow(dead_code)]
     region: String,
+    #[allow(dead_code)]
     instance_id: Option<String>,
 }
 
