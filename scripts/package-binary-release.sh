@@ -45,10 +45,14 @@ BINARY="${NETEVD_BINARY:-${TARGET_DIR}/release/netevd}"
 
 if $DO_BUILD; then
     cd "${REPO_DIR}"
-    if [[ -n "${TARGET}" ]]; then
-        cargo build --release --target "${TARGET}"
+    export CARGO_PROFILE_RELEASE_LTO="${CARGO_PROFILE_RELEASE_LTO:-false}"
+    export CARGO_PROFILE_RELEASE_CODEGEN_UNITS="${CARGO_PROFILE_RELEASE_CODEGEN_UNITS:-16}"
+    if [[ -n "${TARGET}" && "${TARGET}" != "x86_64-unknown-linux-gnu" ]]; then
+        cargo build --release --target "${TARGET}" --bin netevd
     else
-        cargo build --release
+        cargo build --release --bin netevd
+        TARGET_DIR="${REPO_DIR}/target"
+        BINARY="${NETEVD_BINARY:-${TARGET_DIR}/release/netevd}"
     fi
 fi
 
