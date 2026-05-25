@@ -5,9 +5,7 @@ use std::path::Path;
 
 pub async fn handle_command(cli: Cli) -> Result<()> {
     match cli.command {
-        Some(Commands::Status { format, endpoint }) => {
-            handle_status(format, &endpoint).await
-        }
+        Some(Commands::Status { format, endpoint }) => handle_status(format, &endpoint).await,
         Some(Commands::List {
             resource,
             format,
@@ -28,9 +26,11 @@ pub async fn handle_command(cli: Cli) -> Result<()> {
             endpoint,
         }) => handle_events(follow, interface, event_type, tail, format, &endpoint).await,
         Some(Commands::Reload { endpoint }) => handle_reload(&endpoint).await,
-        Some(Commands::Validate { config }) => {
-            handle_validate(config.as_deref().unwrap_or(Path::new("/etc/netevd/netevd.yaml")))
-        }
+        Some(Commands::Validate { config }) => handle_validate(
+            config
+                .as_deref()
+                .unwrap_or(Path::new("/etc/netevd/netevd.yaml")),
+        ),
         Some(Commands::Test {
             script,
             interface,
@@ -167,7 +167,10 @@ fn handle_validate(config_path: &Path) -> Result<()> {
             println!("  Log level: {}", config.system.log_level);
             println!("  Backend: {}", config.system.backend);
             println!("  Interfaces: {}", config.monitoring.interfaces.join(", "));
-            println!("  Routing policy rules: {}", config.routing.policy_rules.join(", "));
+            println!(
+                "  Routing policy rules: {}",
+                config.routing.policy_rules.join(", ")
+            );
             Ok(())
         }
         Err(e) => {
@@ -270,10 +273,7 @@ async fn get_scripts(_endpoint: &str) -> Result<Vec<serde_json::Value>> {
     Ok(vec![])
 }
 
-async fn get_interface_details(
-    _endpoint: &str,
-    _name: &str,
-) -> Result<serde_json::Value> {
+async fn get_interface_details(_endpoint: &str, _name: &str) -> Result<serde_json::Value> {
     // TODO: Implement
     Ok(serde_json::json!({}))
 }
@@ -310,11 +310,7 @@ async fn send_reload_request(_endpoint: &str) -> Result<ReloadResponse> {
     })
 }
 
-fn print_list(
-    _title: &str,
-    _items: &[serde_json::Value],
-    _format: OutputFormat,
-) -> Result<()> {
+fn print_list(_title: &str, _items: &[serde_json::Value], _format: OutputFormat) -> Result<()> {
     // TODO: Implement
     Ok(())
 }

@@ -83,11 +83,7 @@ impl AzureClient {
     }
 
     /// Associate public IP with network interface
-    pub async fn associate_public_ip(
-        &self,
-        public_ip_name: &str,
-        nic_name: &str,
-    ) -> Result<()> {
+    pub async fn associate_public_ip(&self, public_ip_name: &str, nic_name: &str) -> Result<()> {
         tracing::info!(
             "Azure: Associating public IP {} with NIC {}",
             public_ip_name,
@@ -101,16 +97,8 @@ impl AzureClient {
     }
 
     /// Attach network interface to VM
-    pub async fn attach_network_interface(
-        &self,
-        vm_name: &str,
-        nic_name: &str,
-    ) -> Result<()> {
-        tracing::info!(
-            "Azure: Attaching NIC {} to VM {}",
-            nic_name,
-            vm_name
-        );
+    pub async fn attach_network_interface(&self, vm_name: &str, nic_name: &str) -> Result<()> {
+        tracing::info!("Azure: Attaching NIC {} to VM {}", nic_name, vm_name);
 
         // TODO: Implement Azure SDK call
         // compute_client.virtual_machines().create_or_update()

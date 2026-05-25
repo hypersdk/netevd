@@ -9,7 +9,10 @@ Based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). This project 
 ## [0.2.3] - 2026-05-25
 
 ### Changed
-- **build(deps):** bump `netlink-packet-route` from 0.28 to 0.30 (supersedes dependabot #51)
+- **build(deps):** bump `netlink-packet-route` from 0.28 to 0.30, `uuid` to 1.23, `hyper` to 1.9 (dependabot)
+
+### Fixed
+- Integration tests: use `netevd::` paths and `Uuid::as_simple()` for uuid 1.23
 
 ## [0.2.2] - 2026-05-25
 

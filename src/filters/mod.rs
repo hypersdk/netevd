@@ -114,9 +114,9 @@ impl Filter {
 
         // Check interface pattern match (escape regex metacharacters, anchor pattern)
         if let Some(ref pattern) = self.match_rule.interface_pattern {
-            use std::sync::OnceLock;
             use std::collections::HashMap;
             use std::sync::Mutex;
+            use std::sync::OnceLock;
 
             static PATTERN_CACHE: OnceLock<Mutex<HashMap<String, Regex>>> = OnceLock::new();
             let cache = PATTERN_CACHE.get_or_init(|| Mutex::new(HashMap::new()));
@@ -221,7 +221,10 @@ impl Filter {
         }
 
         // Unrecognized condition: warn and reject to avoid unintended matches
-        tracing::warn!("Unrecognized filter condition: '{}', treating as false", condition);
+        tracing::warn!(
+            "Unrecognized filter condition: '{}', treating as false",
+            condition
+        );
         false
     }
 }

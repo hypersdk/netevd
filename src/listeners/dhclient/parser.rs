@@ -19,8 +19,8 @@ pub struct Lease {
 
 /// Parse dhclient lease file and return map of interface -> lease
 pub fn parse_lease_file(path: &str) -> Result<HashMap<String, Lease>> {
-    let contents = fs::read_to_string(path)
-        .with_context(|| format!("Failed to read lease file: {}", path))?;
+    let contents =
+        fs::read_to_string(path).with_context(|| format!("Failed to read lease file: {}", path))?;
 
     let mut leases: HashMap<String, Lease> = HashMap::new();
     let mut current_lease: Option<Lease> = None;

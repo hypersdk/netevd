@@ -20,16 +20,18 @@ pub async fn get_status(State(state): State<AppState>) -> Json<ApiResponse<Daemo
         uptime_seconds: 0, // TODO: Track actual uptime
         interfaces_count: state.links_by_name.len(),
         routing_rules_count: state.routing_rules_from.len() + state.routing_rules_to.len(),
-        events_processed: 0, // TODO: Track events
+        events_processed: 0,                     // TODO: Track events
         backend: "systemd-networkd".to_string(), // TODO: Get from config
-        dry_run: false, // TODO: Get from config
+        dry_run: false,                          // TODO: Get from config
     };
 
     Json(ApiResponse::success(status))
 }
 
 /// GET /api/v1/interfaces
-pub async fn list_interfaces(State(state): State<AppState>) -> Json<ApiResponse<Vec<InterfaceInfo>>> {
+pub async fn list_interfaces(
+    State(state): State<AppState>,
+) -> Json<ApiResponse<Vec<InterfaceInfo>>> {
     let state = state.read().await;
 
     let interfaces: Vec<InterfaceInfo> = state
@@ -39,10 +41,10 @@ pub async fn list_interfaces(State(state): State<AppState>) -> Json<ApiResponse<
             name: name.clone(),
             index: *index,
             state: "up".to_string(), // TODO: Get actual state
-            addresses: vec![], // TODO: Get addresses
-            mac_address: None, // TODO: Get MAC
-            mtu: None, // TODO: Get MTU
-            flags: vec![], // TODO: Get flags
+            addresses: vec![],       // TODO: Get addresses
+            mac_address: None,       // TODO: Get MAC
+            mtu: None,               // TODO: Get MTU
+            flags: vec![],           // TODO: Get flags
         })
         .collect();
 
@@ -56,18 +58,15 @@ pub async fn get_interface(
 ) -> Result<Json<ApiResponse<InterfaceInfo>>, StatusCode> {
     let state = state.read().await;
 
-    let interface = state
-        .links_by_name
-        .get(&name)
-        .map(|index| InterfaceInfo {
-            name: name.clone(),
-            index: *index,
-            state: "up".to_string(),
-            addresses: vec![],
-            mac_address: None,
-            mtu: None,
-            flags: vec![],
-        });
+    let interface = state.links_by_name.get(&name).map(|index| InterfaceInfo {
+        name: name.clone(),
+        index: *index,
+        state: "up".to_string(),
+        addresses: vec![],
+        mac_address: None,
+        mtu: None,
+        flags: vec![],
+    });
 
     match interface {
         Some(iface) => Ok(Json(ApiResponse::success(iface))),

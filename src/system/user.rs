@@ -38,34 +38,31 @@ pub fn drop_privileges(username: &str) -> Result<()> {
     info!("Dropping privileges to user '{}'", username);
 
     // Lookup user
-    let (uid, gid) = lookup_user(username)
-        .with_context(|| format!("Failed to lookup user '{}'", username))?;
+    let (uid, gid) =
+        lookup_user(username).with_context(|| format!("Failed to lookup user '{}'", username))?;
 
     // Step 1: Enable keeping capabilities across setuid
-    keep_capabilities()
-        .context("Failed to enable capability retention")?;
+    keep_capabilities().context("Failed to enable capability retention")?;
 
     // Step 2: Drop group privileges first (must be done before setuid)
-    setgid(gid)
-        .with_context(|| format!("Failed to setgid to {}", gid))?;
+    setgid(gid).with_context(|| format!("Failed to setgid to {}", gid))?;
 
     // Step 2b: Clear supplementary groups to prevent privilege retention
-    setgroups(&[gid])
-        .context("Failed to clear supplementary groups")?;
+    setgroups(&[gid]).context("Failed to clear supplementary groups")?;
 
     // Step 3: Drop user privileges
-    setuid(uid)
-        .with_context(|| format!("Failed to setuid to {}", uid))?;
+    setuid(uid).with_context(|| format!("Failed to setuid to {}", uid))?;
 
     // Step 4: Disable PR_SET_KEEPCAPS
-    clear_keep_capabilities()
-        .context("Failed to clear capability retention flag")?;
+    clear_keep_capabilities().context("Failed to clear capability retention flag")?;
 
     // Step 5: Apply necessary capabilities
-    apply_capabilities()
-        .context("Failed to apply capabilities after privilege drop")?;
+    apply_capabilities().context("Failed to apply capabilities after privilege drop")?;
 
-    info!("Successfully dropped privileges to user '{}' (uid={}, gid={})", username, uid, gid);
+    info!(
+        "Successfully dropped privileges to user '{}' (uid={}, gid={})",
+        username, uid, gid
+    );
 
     // Verify we're no longer root
     if is_root() {
@@ -107,7 +104,10 @@ mod tests {
         // If not running as root, drop_privileges should skip
         if !is_root() {
             let result = drop_privileges("netevd");
-            assert!(result.is_ok(), "drop_privileges should succeed when not root");
+            assert!(
+                result.is_ok(),
+                "drop_privileges should succeed when not root"
+            );
         }
     }
 

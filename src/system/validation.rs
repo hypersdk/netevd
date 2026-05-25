@@ -116,8 +116,8 @@ pub fn validate_ip_list(list: &str) -> bool {
 pub fn sanitize_env_value(value: &str) -> Option<String> {
     // Reject values with shell metacharacters
     const DANGEROUS_CHARS: &[char] = &[
-        '$', '`', '\\', '"', '\'', ';', '&', '|', '<', '>', '\n', '\r', '\0',
-        '(', ')', '{', '}', '[', ']', '!', '~', '?', '*', '#', '%',
+        '$', '`', '\\', '"', '\'', ';', '&', '|', '<', '>', '\n', '\r', '\0', '(', ')', '{', '}',
+        '[', ']', '!', '~', '?', '*', '#', '%',
     ];
 
     if value.chars().any(|c| DANGEROUS_CHARS.contains(&c)) {

@@ -21,10 +21,7 @@ const SCRIPT_TIMEOUT: Duration = Duration::from_secs(30);
 use crate::system::validation;
 
 /// Execute all scripts in a directory with provided environment variables
-pub async fn execute_scripts(
-    directory: &str,
-    env_vars: HashMap<String, String>,
-) -> Result<()> {
+pub async fn execute_scripts(directory: &str, env_vars: HashMap<String, String>) -> Result<()> {
     let dir_path = Path::new(directory);
 
     if !dir_path.exists() {
@@ -169,15 +166,19 @@ async fn execute_script(script_path: &Path, env_vars: &HashMap<String, String>) 
 
     // Spawn the child with kill_on_drop so it is killed if we bail on timeout
     cmd.kill_on_drop(true);
-    let child = cmd.spawn()
+    let child = cmd
+        .spawn()
         .with_context(|| format!("Failed to spawn script: {:?}", script_path))?;
 
     let output = tokio::time::timeout(SCRIPT_TIMEOUT, child.wait_with_output())
         .await
-        .map_err(|_| anyhow::anyhow!(
-            "Script {:?} timed out after {}s (process killed)",
-            script_path, SCRIPT_TIMEOUT.as_secs()
-        ))?
+        .map_err(|_| {
+            anyhow::anyhow!(
+                "Script {:?} timed out after {}s (process killed)",
+                script_path,
+                SCRIPT_TIMEOUT.as_secs()
+            )
+        })?
         .with_context(|| format!("Failed to execute script: {:?}", script_path))?;
 
     // Log output

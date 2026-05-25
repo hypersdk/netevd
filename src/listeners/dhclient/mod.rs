@@ -37,7 +37,10 @@ pub async fn watch_lease_file(
     metrics: Option<MetricsHandle>,
     audit: Arc<AuditLogger>,
 ) -> Result<()> {
-    info!("Starting dhclient lease file watcher: {}", DHCLIENT_LEASE_FILE);
+    info!(
+        "Starting dhclient lease file watcher: {}",
+        DHCLIENT_LEASE_FILE
+    );
 
     // Check if lease file exists
     if !Path::new(DHCLIENT_LEASE_FILE).exists() {
@@ -122,8 +125,7 @@ async fn process_lease_file(
     debug!("Processing lease file: {}", DHCLIENT_LEASE_FILE);
 
     // Parse lease file
-    let leases = parse_lease_file(DHCLIENT_LEASE_FILE)
-        .context("Failed to parse lease file")?;
+    let leases = parse_lease_file(DHCLIENT_LEASE_FILE).context("Failed to parse lease file")?;
 
     if leases.is_empty() {
         debug!("No active leases found");
@@ -132,7 +134,10 @@ async fn process_lease_file(
 
     // Process each lease
     for (interface, lease) in leases.iter() {
-        info!("Processing DHCP lease for interface {}: {}", interface, lease.address);
+        info!(
+            "Processing DHCP lease for interface {}: {}",
+            interface, lease.address
+        );
 
         // Record metrics for DHCP lease event
         if let Some(ref m) = &metrics {
@@ -145,12 +150,7 @@ async fn process_lease_file(
         }
 
         // Log audit event
-        audit.log_network_event(
-            interface,
-            "routable",
-            AuditResult::Success,
-            None,
-        );
+        audit.log_network_event(interface, "routable", AuditResult::Success, None);
 
         // Get interface index
         let ifindex_opt = {
@@ -211,12 +211,10 @@ async fn process_lease_file(
         };
 
         // Parse address and DNS servers
-        let addresses: Vec<std::net::IpAddr> = lease.address
-            .parse()
-            .ok()
-            .into_iter()
-            .collect();
-        let dns_servers: Vec<std::net::IpAddr> = lease.dns_servers.iter()
+        let addresses: Vec<std::net::IpAddr> = lease.address.parse().ok().into_iter().collect();
+        let dns_servers: Vec<std::net::IpAddr> = lease
+            .dns_servers
+            .iter()
             .filter_map(|s| s.parse().ok())
             .collect();
 
@@ -269,7 +267,10 @@ async fn process_lease_file(
                 warn!("Failed to execute scripts in {}: {}", script_dir, e);
             }
         } else {
-            debug!("Event filtered out, skipping script execution for {}", interface);
+            debug!(
+                "Event filtered out, skipping script execution for {}",
+                interface
+            );
         }
 
         // Handle routing policy rules if configured

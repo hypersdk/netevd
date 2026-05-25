@@ -40,7 +40,7 @@ async fn test_execute_scripts_respected_by_filters() {
     env_vars.insert("STATE".to_string(), "routable".to_string());
 
     // Execute scripts in the directory (this should run our script)
-    crate::system::execute::execute_scripts(&script_dir, env_vars)
+    netevd::system::execute::execute_scripts(&script_dir, env_vars)
         .await
         .expect("execute scripts");
 
@@ -66,9 +66,9 @@ filters:
     action: ignore
 "#;
 
-    let filter = crate::filters::EventFilter::from_yaml(filter_yaml).expect("parse filter");
+    let filter = netevd::filters::EventFilter::from_yaml(filter_yaml).expect("parse filter");
 
-    let event = crate::filters::NetworkEvent {
+    let event = netevd::filters::NetworkEvent {
         interface: "eth0".to_string(),
         event_type: "routable".to_string(),
         backend: "systemd-networkd".to_string(),
