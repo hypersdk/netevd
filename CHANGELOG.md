@@ -6,6 +6,12 @@ Based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/). This project 
 
 ## [Unreleased]
 
+## [0.2.2] - 2026-05-25
+
+### Changed
+- Documentation trimmed to a minimal professional set (README, INSTALL, CONFIGURATION, quick start)
+- Zyvor enterprise support links retained in README
+
 ## [0.2.1] - 2026-05-25
 
 ### Added
