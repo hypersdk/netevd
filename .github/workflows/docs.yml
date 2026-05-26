@@ -49,11 +49,8 @@ jobs:
           files: |
             ./src
             ./README.md
-            ./CONTRIBUTING.md
-            ./CONFIGURATION.md
-            ./INSTALL.md
-            ./CHANGELOG.md
             ./SECURITY.md
+            ./config
 
   links:
     name: Link Check

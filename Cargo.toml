@@ -15,7 +15,7 @@ exclude = [
     "packaging/*",
     ".github/*",
     "tests/*",
-    "examples/*.sh",
+    "config/*.yaml",
 ]
 
 [[bin]]

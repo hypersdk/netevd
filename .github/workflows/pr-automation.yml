@@ -88,7 +88,7 @@ jobs:
             👋 Thanks for opening your first pull request!
 
             Please make sure you've:
-            - [ ] Read our [Contributing Guide](CONTRIBUTING.md)
+            - [ ] `cargo test` and `cargo clippy` pass locally
             - [ ] Run `cargo test` locally
             - [ ] Run `cargo clippy` and fixed any warnings
             - [ ] Run `cargo fmt` to format your code

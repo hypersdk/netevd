@@ -16,7 +16,7 @@ override_dh_auto_install:
 	install -Dm644 systemd/netevd.service debian/netevd/lib/systemd/system/netevd.service
 
 	# Install default configuration
-	install -Dm644 examples/netevd.yaml debian/netevd/etc/netevd/netevd.yaml
+	install -Dm644 config/netevd.example.yaml debian/netevd/etc/netevd/netevd.yaml
 
 	# Create script directories
 	install -dm755 debian/netevd/etc/netevd/carrier.d
