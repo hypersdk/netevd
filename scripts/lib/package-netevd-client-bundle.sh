@@ -19,7 +19,7 @@ package_netevd_client_bundle() {
     chmod +x "${stage}/netevd"
     cp "${build_dir}/LICENSE" "${stage}/" 2>/dev/null || true
     cp "${build_dir}/systemd/netevd.service" "${stage}/netevd.service"
-    cp "${build_dir}/examples/netevd.yaml" "${stage}/config.example.yaml"
+    cp "${build_dir}/config/netevd.example.yaml" "${stage}/config.example.yaml"
 
     cat > "${stage}/netevd.env.example" <<'ENV_EOF'
 # Optional — copy to /etc/netevd/netevd.yaml after install

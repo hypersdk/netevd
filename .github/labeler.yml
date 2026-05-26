@@ -10,7 +10,7 @@
   - changed-files:
     - any-glob-to-any-file:
       - 'src/config/**'
-      - 'examples/*.yaml'
+      - 'config/*.yaml'
       - '**/*.toml'
 
 'area: network':

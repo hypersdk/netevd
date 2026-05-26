@@ -39,7 +39,7 @@ RUN useradd --system --no-create-home --shell /usr/sbin/nologin netevd
 COPY --from=builder /build/target/release/netevd /usr/bin/netevd
 
 # Copy default configuration
-COPY examples/netevd.yaml /etc/netevd/netevd.yaml
+COPY config/netevd.example.yaml /etc/netevd/netevd.yaml
 
 # Create script directories
 RUN mkdir -p /etc/netevd/{carrier.d,no-carrier.d,configured.d,degraded.d,routable.d,activated.d,disconnected.d,manager.d,routes.d}

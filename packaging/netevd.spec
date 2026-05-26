@@ -41,7 +41,7 @@ install -Dm755 target/release/%{name} %{buildroot}%{_bindir}/%{name}
 install -Dm644 systemd/%{name}.service %{buildroot}%{_unitdir}/%{name}.service
 
 # Install default configuration
-install -Dm644 examples/%{name}.yaml %{buildroot}%{_sysconfdir}/%{name}/%{name}.yaml
+install -Dm644 config/%{name}.example.yaml %{buildroot}%{_sysconfdir}/%{name}/%{name}.yaml
 
 # Create script directories
 install -dm755 %{buildroot}%{_sysconfdir}/%{name}/carrier.d
@@ -56,7 +56,6 @@ install -dm755 %{buildroot}%{_sysconfdir}/%{name}/routes.d
 
 # Install documentation
 install -Dm644 README.md %{buildroot}%{_docdir}/%{name}/README.md
-install -Dm644 INSTALL.md %{buildroot}%{_docdir}/%{name}/INSTALL.md
 install -Dm644 LICENSE %{buildroot}%{_docdir}/%{name}/LICENSE
 
 %pre
@@ -78,7 +77,7 @@ exit 0
 
 %files
 %license LICENSE
-%doc README.md INSTALL.md
+%doc README.md
 %{_bindir}/%{name}
 %{_unitdir}/%{name}.service
 %dir %{_sysconfdir}/%{name}

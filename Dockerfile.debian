@@ -42,7 +42,7 @@ RUN useradd -r -M -s /usr/sbin/nologin -d /nonexistent netevd
 COPY --from=builder /build/target/release/netevd /usr/bin/netevd
 
 # Copy configuration
-COPY examples/netevd.yaml /etc/netevd/netevd.yaml
+COPY config/netevd.example.yaml /etc/netevd/netevd.yaml
 
 # Create script directories
 RUN mkdir -p /etc/netevd/{carrier.d,no-carrier.d,configured.d,degraded.d,routable.d,activated.d,disconnected.d,manager.d,routes.d}
