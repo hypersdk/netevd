@@ -1,0 +1,20 @@
+blank_issues_enabled: false
+contact_links:
+  - name: "Watch platform demo"
+    url: https://zyvor.dev/demo?utm_source=github&utm_medium=netevd
+    about: Migration video and live dashboard — HyperSDK platform overview
+  - name: "Enterprise, sales and SLAs (Zyvor)"
+    url: https://zyvor.dev/contact?utm_source=github&utm_medium=netevd
+    about: Production SLAs and platform integration — not for GitHub Issues
+  - name: "Email sales"
+    url: mailto:sales@zyvor.dev
+    about: sales@zyvor.dev — enterprise quotes
+  - name: "ROI calculator"
+    url: https://zyvor.dev/roi?utm_source=github&utm_medium=netevd
+    about: Estimate migration and infrastructure savings
+  - name: "Discussions"
+    url: https://github.com/hypersdk/netevd/discussions
+    about: Community questions and ideas
+  - name: "Security"
+    url: https://github.com/hypersdk/netevd/blob/main/SECURITY.md
+    about: Report vulnerabilities privately
