@@ -5,7 +5,9 @@
 [![Functional Tests](https://github.com/hypersdk/netevd/actions/workflows/functional-tests.yml/badge.svg)](https://github.com/hypersdk/netevd/actions/workflows/functional-tests.yml)
 [![codecov](https://codecov.io/gh/hypersdk/netevd/branch/main/graph/badge.svg)](https://codecov.io/gh/hypersdk/netevd)
 
-**netevd** is a network event daemon that watches your Linux network interfaces and runs scripts when things change. Think of it as systemd path units, but purpose-built for networking: when an interface gets an IP, loses its link, or routes change, netevd executes your scripts with full context about what happened.
+**netevd** is a network event daemon that watches your Linux network interfaces and runs scripts when things change.
+
+> **Enterprise:** production SLAs and platform integration — [zyvor.dev/contact](https://zyvor.dev/contact?utm_source=github&utm_medium=netevd) · [demo](https://zyvor.dev/demo?utm_source=github&utm_medium=netevd) Think of it as systemd path units, but purpose-built for networking: when an interface gets an IP, loses its link, or routes change, netevd executes your scripts with full context about what happened.
 
 It bridges **systemd-networkd**, **NetworkManager**, and **dhclient** into a single, unified event system -- with automatic policy routing, a REST API, Prometheus metrics, and a defense-in-depth security model.
 
@@ -214,6 +216,10 @@ REST API and metrics use the daemon HTTP port (default `9090`). Tune behavior in
 ```bash
 cargo build && cargo test && cargo clippy -- -D warnings
 ```
+
+## Enterprise
+
+Open source covers self-hosted event hooks and policy routing. For production SLAs, supported deployments, and the full HyperSDK platform, see [zyvor.dev/contact](https://zyvor.dev/contact?utm_source=github&utm_medium=netevd).
 
 Security: [SECURITY.md](SECURITY.md).
 
