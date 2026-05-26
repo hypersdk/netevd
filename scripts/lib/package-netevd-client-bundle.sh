@@ -66,6 +66,10 @@ netevd — install guide
 
 Config: /etc/netevd/netevd.yaml
 Remove: sudo ./uninstall.sh
+
+Enterprise (fleet / SLA): https://zyvor.dev/contact?utm_source=package&utm_medium=netevd
+Demo: https://zyvor.dev/demo?utm_source=package&utm_medium=netevd
+Sales: sales@zyvor.dev
 QEOF
 
     cat > "${stage}/README.txt" <<README_EOF
@@ -87,6 +91,10 @@ INSTALL
   cd netevd-*-linux-amd64
   sudo ./install.sh
   sudo systemctl enable --now netevd
+
+ENTERPRISE
+  Production / SLA: https://zyvor.dev/contact?utm_source=package&utm_medium=netevd
+  sales@zyvor.dev
 README_EOF
 
     local req
