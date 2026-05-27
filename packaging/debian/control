@@ -1,7 +1,7 @@
 Source: netevd
 Section: net
 Priority: optional
-Maintainer: Susant Sahani <ssahani@redhat.com>
+Maintainer: ZyvorAI Labs Private Limited <legal@zyvor.dev>
 Build-Depends: debhelper-compat (= 13),
                cargo (>= 1.70),
                rustc (>= 1.70),

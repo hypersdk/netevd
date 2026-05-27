@@ -6,7 +6,7 @@
 
 **Do not** open public issues for security vulnerabilities.
 
-Email **ssahani@redhat.com** with subject `[SECURITY] netevd vulnerability report`. Include:
+Email **legal@zyvor.dev** with subject `[SECURITY] netevd vulnerability report`. Include:
 
 1. Description and impact
 2. Steps to reproduce
@@ -126,5 +126,5 @@ cargo clippy -- -D warnings                   # Lint with security checks
 
 ## Contact
 
-- **Security issues:** ssahani@redhat.com
+- **Security issues:** legal@zyvor.dev
 - **General issues:** https://github.com/ssahani/netevd/issues
