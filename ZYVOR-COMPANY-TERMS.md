@@ -1,6 +1,6 @@
 # Zyvor company terms — netevd distribution
 
-**Supplemental agreement — does not replace [LICENSE](LICENSE) (LGPL-3.0-or-later).**
+**Supplemental agreement — read together with [LICENSE](LICENSE) (LGPL-3.0-or-later).**
 
 **Company:** ZyvorAI Labs Private Limited · [zyvor.dev](https://zyvor.dev)  
 **Product:** netevd  
@@ -12,10 +12,10 @@
 
 | Layer | Governs |
 |-------|---------|
-| **[LICENSE](LICENSE)** | netevd **source code** — LGPL-3.0-or-later |
-| **This document** | **Zyvor-branded** builds, binaries, and zyvor.dev distribution |
+| **[LICENSE](LICENSE)** | netevd **software** — LGPL-3.0-or-later (proprietary; all rights reserved) |
+| **This document** | **Zyvor-branded** builds, binaries, customer bundles, and zyvor.dev distribution |
 
-You must comply with **both**. Open-source/free-software terms control the **source code**; this document covers **brand, distribution, and commercial relationship** with Zyvor.
+You must comply with **both**. The proprietary license controls use of the **software**; this document covers **brand, distribution, and commercial relationship** with Zyvor.
 
 ## 2. Acceptance
 
@@ -23,7 +23,7 @@ By downloading, building, deploying, installing, or using netevd binaries or cus
 
 ## 3. Company identity
 
-**ZyvorAI Labs Private Limited** — incorporated under the Companies Act, 2013 (India), registered office Pune, Maharashtra, India.
+**ZyvorAI Labs Private Limited** — incorporated under the Companies Act, 2013 (India).
 
 netevd is distributed under the **zyvor.dev** / **HyperSDK** product family.
 
