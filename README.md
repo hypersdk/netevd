@@ -237,4 +237,9 @@ Related: [netctl](https://github.com/hypersdk/netctl) · [cloud-netconfig](https
 
 ## License
 
-[LGPL-3.0-or-later](https://www.gnu.org/licenses/lgpl-3.0.html) -- Copyright 2026 Susant Sahani <<ssahani@redhat.com>>
+| Document | Purpose |
+|----------|---------|
+| [LICENSE](LICENSE) | **LGPL-3.0-or-later** — source code |
+| [ZYVOR-COMPANY-TERMS.md](ZYVOR-COMPANY-TERMS.md) | Zyvor distribution (accept on package/install) |
+
+Enterprise: [sales@zyvor.dev](mailto:sales@zyvor.dev) · General: [info@zyvor.dev](mailto:info@zyvor.dev).

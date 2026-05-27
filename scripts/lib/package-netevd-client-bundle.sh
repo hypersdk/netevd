@@ -18,6 +18,18 @@ package_netevd_client_bundle() {
     cp "${binary}" "${stage}/netevd"
     chmod +x "${stage}/netevd"
     cp "${build_dir}/LICENSE" "${stage}/" 2>/dev/null || true
+    cp "${build_dir}/ZYVOR-COMPANY-TERMS.md" "${stage}/" 2>/dev/null || true
+    mkdir -p "${stage}/docs/legal" "${stage}/.package-lib"
+    cp "${build_dir}/docs/legal/"*.md "${stage}/docs/legal/" 2>/dev/null || true
+    cp "${build_dir}/scripts/lib/zyvor-company-accept.sh" "${stage}/.package-lib/" 2>/dev/null || true
+    chmod +x "${stage}/.package-lib/zyvor-company-accept.sh" 2>/dev/null || true
+    cat > "${stage}/LEGAL-INDEX.txt" <<'LEGAL_EOF'
+netevd legal
+  LICENSE — LGPL-3.0-or-later (source)
+  ZYVOR-COMPANY-TERMS.md — Zyvor distribution (ACCEPT on install)
+ZyvorAI Labs · sales@zyvor.dev · info@zyvor.dev · https://zyvor.dev
+LEGAL_EOF
+
     cp "${build_dir}/systemd/netevd.service" "${stage}/netevd.service"
     cp "${build_dir}/config/netevd.example.yaml" "${stage}/config.example.yaml"
 
