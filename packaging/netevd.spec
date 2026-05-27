@@ -93,7 +93,7 @@ exit 0
 %dir %{_sysconfdir}/%{name}/routes.d
 
 %changelog
-* Tue Jan 21 2026 Susant Sahani <ssahani@redhat.com> - 0.1.0-1
+* Tue Jan 21 2026 ZyvorAI Labs Private Limited <legal@zyvor.dev> - 0.1.0-1
 - Initial RPM release
 - Support for systemd-networkd, NetworkManager, and dhclient
 - Routing policy rules for multi-interface setups

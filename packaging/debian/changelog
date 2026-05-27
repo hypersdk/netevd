@@ -7,4 +7,4 @@ netevd (0.1.0-1) unstable; urgency=medium
   * Real-time network event monitoring via netlink
   * Script execution on network state changes
 
- -- Susant Sahani <ssahani@redhat.com>  Tue, 21 Jan 2026 00:00:00 +0000
+ -- ZyvorAI Labs Private Limited <legal@zyvor.dev>  Tue, 21 Jan 2026 00:00:00 +0000

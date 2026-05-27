@@ -2,7 +2,7 @@
 name = "netevd"
 version = "0.2.3"
 edition = "2021"
-authors = ["Susant Sahani <ssahani@redhat.com>"]
+authors = ["ZyvorAI Labs Private Limited <legal@zyvor.dev>"]
 license = "LGPL-3.0-or-later"
 description = "High-performance network event daemon for systemd-networkd, NetworkManager, and dhclient with routing policy rules and script execution"
 repository = "https://github.com/hypersdk/netevd"

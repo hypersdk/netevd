@@ -1,10 +1,10 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: netevd
-Upstream-Contact: Susant Sahani <ssahani@redhat.com>
+Upstream-Contact: ZyvorAI Labs Private Limited <legal@zyvor.dev>
 Source: https://github.com/ssahani/netevd
 
 Files: *
-Copyright: 2026 Susant Sahani <ssahani@redhat.com>
+Copyright: 2026 ZyvorAI Labs Private Limited <legal@zyvor.dev>
 License: LGPL-3.0-or-later
 
 License: LGPL-3.0-or-later
