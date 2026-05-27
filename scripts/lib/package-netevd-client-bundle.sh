@@ -17,18 +17,9 @@ package_netevd_client_bundle() {
 
     cp "${binary}" "${stage}/netevd"
     chmod +x "${stage}/netevd"
-    cp "${build_dir}/LICENSE" "${stage}/" 2>/dev/null || true
-    cp "${build_dir}/ZYVOR-COMPANY-TERMS.md" "${stage}/" 2>/dev/null || true
-    mkdir -p "${stage}/docs/legal" "${stage}/.package-lib"
-    cp "${build_dir}/docs/legal/"*.md "${stage}/docs/legal/" 2>/dev/null || true
-    cp "${build_dir}/scripts/lib/zyvor-company-accept.sh" "${stage}/.package-lib/" 2>/dev/null || true
-    chmod +x "${stage}/.package-lib/zyvor-company-accept.sh" 2>/dev/null || true
-    cat > "${stage}/LEGAL-INDEX.txt" <<'LEGAL_EOF'
-netevd legal
-  LICENSE — LGPL-3.0-or-later (source)
-  ZYVOR-COMPANY-TERMS.md — Zyvor distribution (ACCEPT on install)
-ZyvorAI Labs · sales@zyvor.dev · info@zyvor.dev · https://zyvor.dev
-LEGAL_EOF
+    local lib="${build_dir}/scripts/lib"
+    chmod +x "${lib}/copy-zyvor-legal-to-bundle.sh"
+    "${lib}/copy-zyvor-legal-to-bundle.sh" "${stage}" "${build_dir}" --with-accept
 
     cp "${build_dir}/systemd/netevd.service" "${stage}/netevd.service"
     cp "${build_dir}/config/netevd.example.yaml" "${stage}/config.example.yaml"
@@ -42,6 +33,11 @@ ENV_EOF
 #!/usr/bin/env bash
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
+if [[ -f "${ROOT}/.package-lib/zyvor-company-accept.sh" ]]; then
+  # shellcheck source=/dev/null
+  source "${ROOT}/.package-lib/zyvor-company-accept.sh"
+  require_zyvor_company_accept "${ROOT}"
+fi
 SUDO=""
 [[ "$(id -u)" -ne 0 ]] && command -v sudo &>/dev/null && SUDO=sudo
 $SUDO install -Dm755 "${ROOT}/netevd" /usr/bin/netevd
@@ -89,6 +85,7 @@ netevd ${version} — Linux amd64 client bundle
 ==============================================
 
 FILES
+  LICENSE, ZYVOR-COMPANY-TERMS.md, LEGAL-INDEX.txt, docs/legal/
   netevd              Main daemon binary
   netevd.service      systemd unit
   config.example.yaml Sample configuration
@@ -110,7 +107,8 @@ ENTERPRISE
 README_EOF
 
     local req
-    for req in install.sh uninstall.sh README.txt QUICKSTART.txt netevd netevd.service config.example.yaml; do
+    for req in install.sh uninstall.sh README.txt QUICKSTART.txt netevd netevd.service config.example.yaml \
+        LICENSE ZYVOR-COMPANY-TERMS.md LEGAL-INDEX.txt; do
         if [[ ! -e "${stage}/${req}" ]]; then
             echo "package_netevd_client_bundle: bundle missing ${req}" >&2
             return 1
