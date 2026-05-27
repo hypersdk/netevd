@@ -37,7 +37,7 @@ No license to use **Zyvor**, **zyvor.dev**, **HyperSDK**, **netevd**, or related
 
 ## 6. Disclaimer
 
-Software is **as is** without warranty. Liability limited to INR 10,000 or fees paid under a written enterprise agreement.
+Software is **as is** without warranty. Liability is limited to **100% of fees paid** in the twelve (12) months before a claim.
 
 ## 7. Governing law
 
