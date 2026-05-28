@@ -25,7 +25,7 @@ jobs:
         run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           name: v${{ steps.get_version.outputs.version }}
           draft: false
@@ -89,7 +89,7 @@ jobs:
           ./scripts/package-binary-release.sh "${args[@]}"
 
       - name: Upload release assets
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: |
             dist/netevd-${{ needs.create-release.outputs.version }}-${{ matrix.arch_suffix }}.tar.gz
