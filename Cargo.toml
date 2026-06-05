@@ -2,7 +2,7 @@
 name = "netevd"
 version = "0.2.3"
 edition = "2021"
-authors = ["ZyvorAI Labs Private Limited <legal@zyvor.dev>"]
+authors = ["ZyvorAI Labs Private Limited <info@zyvor.dev>"]
 license = "Apache-2.0"
 description = "High-performance network event daemon for systemd-networkd, NetworkManager, and dhclient with routing policy rules and script execution"
 repository = "https://github.com/hypersdk/netevd"
