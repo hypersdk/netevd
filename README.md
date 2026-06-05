@@ -1,6 +1,6 @@
 # netevd
 
-[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![CI](https://github.com/hypersdk/netevd/actions/workflows/ci.yml/badge.svg)](https://github.com/hypersdk/netevd/actions/workflows/ci.yml)
 [![Functional Tests](https://github.com/hypersdk/netevd/actions/workflows/functional-tests.yml/badge.svg)](https://github.com/hypersdk/netevd/actions/workflows/functional-tests.yml)
 [![codecov](https://codecov.io/gh/hypersdk/netevd/branch/main/graph/badge.svg)](https://codecov.io/gh/hypersdk/netevd)
@@ -237,9 +237,8 @@ Related: [netctl](https://github.com/hypersdk/netctl) · [cloud-netconfig](https
 
 ## License
 
-| Document | Purpose |
-|----------|---------|
-| [LICENSE](LICENSE) | **LGPL-3.0-or-later** — source code |
-| [ZYVOR-COMPANY-TERMS.md](ZYVOR-COMPANY-TERMS.md) | Zyvor distribution (accept on package/install) |
+netevd Community Edition is licensed under the Apache License 2.0.
+netevd Enterprise Edition includes additional proprietary features and is licensed
+separately under a commercial license from Zyvor AI Labs Private Limited.
 
 Enterprise: [sales@zyvor.dev](mailto:sales@zyvor.dev) · General: [info@zyvor.dev](mailto:info@zyvor.dev).
