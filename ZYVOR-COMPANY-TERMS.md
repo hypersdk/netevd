@@ -1,6 +1,6 @@
 # Zyvor company terms — netevd distribution
 
-**Supplemental agreement — read together with [LICENSE](LICENSE) (LGPL-3.0-or-later).**
+**Supplemental agreement — read together with [LICENSE](LICENSE) (Apache-2.0).**
 
 **Company:** ZyvorAI Labs Private Limited · [zyvor.dev](https://zyvor.dev)  
 **Product:** netevd  
@@ -12,10 +12,10 @@
 
 | Layer | Governs |
 |-------|---------|
-| **[LICENSE](LICENSE)** | netevd **software** — LGPL-3.0-or-later (proprietary; all rights reserved) |
+| **[LICENSE](LICENSE)** | netevd **software** — Apache-2.0 (Community Edition; open source) |
 | **This document** | **Zyvor-branded** builds, binaries, customer bundles, and zyvor.dev distribution |
 
-You must comply with **both**. The proprietary license controls use of the **software**; this document covers **brand, distribution, and commercial relationship** with Zyvor.
+You must comply with **both**. The Apache license controls use of the **Community Edition software**; this document covers **brand, distribution, and commercial relationship** with Zyvor.
 
 ## 2. Acceptance
 

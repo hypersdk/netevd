@@ -1,6 +1,11 @@
 netevd
+
 Copyright 2026 Zyvor AI Labs Private Limited
-This product includes software developed by Zyvor AI Labs Private Limited.
-netevd may integrate with third-party open-source projects including Kubernetes,
-KubeVirt, Cilium, Hubble, Tetragon, libvirt, QEMU, and other ecosystem components.
-Those projects remain governed by their respective licenses.
+
+Licensed under the Apache License, Version 2.0.
+
+This repository contains the netevd Community Edition developed by Zyvor AI Labs Private Limited.
+
+Third-party software, trademarks, projects, and technologies referenced by netevd remain the property of their respective owners and are governed by their respective licenses.
+
+Commercial products and enterprise offerings from Zyvor AI Labs Private Limited are separate works and are not covered by the Apache License applicable to this repository.

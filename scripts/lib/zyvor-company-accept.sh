@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Zyvor company terms — does not replace LICENSE (LGPL-3.0-or-later).
+# Zyvor company terms — does not replace LICENSE (Apache-2.0).
 set -euo pipefail
 PRODUCT="netevd"
-CODE_LICENSE="LGPL-3.0-or-later"
+CODE_LICENSE="Apache-2.0"
 LICENSE_FILE="LICENSE"
 ENV_PREFIX="NETEVD"
 RECORD_DIR="netevd"
