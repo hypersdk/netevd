@@ -237,8 +237,12 @@ Related: [netctl](https://github.com/hypersdk/netctl) · [cloud-netconfig](https
 
 ## License
 
-netevd Community Edition is licensed under the Apache License 2.0.
-netevd Enterprise Edition includes additional proprietary features and is licensed
-separately under a commercial license from Zyvor AI Labs Private Limited.
+netevd is licensed under the Apache License, Version 2.0.
+
+Copyright © 2026 Zyvor AI Labs Private Limited.
+
+This repository contains only the netevd Community Edition source code.
+
+Other Zyvor products, platforms, services, and commercial offerings are separate works and may be governed by different licenses and terms.
 
 Enterprise: [sales@zyvor.dev](mailto:sales@zyvor.dev) · General: [info@zyvor.dev](mailto:info@zyvor.dev).

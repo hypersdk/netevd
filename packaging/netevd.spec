@@ -3,7 +3,7 @@ Version:        0.1.0
 Release:        1%{?dist}
 Summary:        Network event daemon for systemd-networkd and NetworkManager
 
-License:        LGPL-3.0-or-later
+License:        Apache-2.0
 URL:            https://github.com/ssahani/netevd
 Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 
