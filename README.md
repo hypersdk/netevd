@@ -5,6 +5,12 @@
 [![Functional Tests](https://github.com/hypersdk/netevd/actions/workflows/functional-tests.yml/badge.svg)](https://github.com/hypersdk/netevd/actions/workflows/functional-tests.yml)
 [![codecov](https://codecov.io/gh/hypersdk/netevd/branch/main/graph/badge.svg)](https://codecov.io/gh/hypersdk/netevd)
 
+<p align="center">
+  <a href="https://zyvor.dev/demo?utm_source=github&utm_medium=netevd"><img src="https://img.shields.io/badge/Demo-F97316?style=flat-square" alt="Demo"/></a>
+  <a href="https://zyvor.dev/contact?utm_source=github&utm_medium=netevd"><img src="https://img.shields.io/badge/Contact_sales-22C55E?style=flat-square" alt="Contact"/></a>
+  <a href="https://github.com/sponsors/ssahani?utm_source=github&utm_medium=netevd"><img src="https://img.shields.io/badge/Sponsor-ssahani-ea4aaa?style=flat-square&logo=github-sponsors&logoColor=white" alt="Sponsor"/></a>
+</p>
+
 **netevd** is a network event daemon that watches your Linux network interfaces and runs scripts when things change. Think of it as systemd path units, but purpose-built for networking: when an interface gets an IP, loses its link, or routes change, netevd executes your scripts with full context about what happened.
 
 It bridges **systemd-networkd**, **NetworkManager**, and **dhclient** into a single, unified event system -- with automatic policy routing, a REST API, Prometheus metrics, and a defense-in-depth security model.
@@ -226,14 +232,17 @@ cargo build && cargo test && cargo clippy -- -D warnings
 
 Community Edition covers self-hosted event hooks and policy routing. Production SLAs, supported deployments, and the full HyperSDK platform → contact Zyvor (not GitHub Issues). Details: [docs/enterprise.md](docs/enterprise.md).
 
-## Support
+## Support the project
 
-| | |
-|---|---|
-| **Issues** | [github.com/hypersdk/netevd/issues](https://github.com/hypersdk/netevd/issues) |
-| **Security** | [SECURITY.md](SECURITY.md) |
+netevd Community Edition is free and open source. If it saves you time, consider sponsoring ongoing development:
 
-Related: [netctl](https://github.com/hypersdk/netctl) · [cloud-netconfig](https://github.com/hypersdk/cloud-netconfig) · [hypersdk](https://github.com/hypersdk/hypersdk)
+[![Sponsor on GitHub](https://img.shields.io/badge/Sponsor-ssahani-ea4aaa?logo=github-sponsors&logoColor=white)](https://github.com/sponsors/ssahani?utm_source=github&utm_medium=netevd)
+
+Maintained by **Susant Sahani** · [Zyvor AI Labs](https://zyvor.dev?utm_source=github&utm_medium=netevd)
+
+- **Sponsor:** [github.com/sponsors/ssahani](https://github.com/sponsors/ssahani?utm_source=github&utm_medium=netevd)
+- **Enterprise / production:** [zyvor.dev/contact](https://zyvor.dev/contact?utm_source=github&utm_medium=netevd) · [sales@zyvor.dev](mailto:sales@zyvor.dev)
+- **Community help:** [GitHub Issues](https://github.com/hypersdk/netevd/issues) · [SECURITY.md](SECURITY.md)
 
 ## License
 
@@ -246,3 +255,5 @@ This repository contains only the netevd Community Edition source code.
 Other Zyvor products, platforms, services, and commercial offerings are separate works and may be governed by different licenses and terms.
 
 Enterprise: [sales@zyvor.dev](mailto:sales@zyvor.dev) · General: [info@zyvor.dev](mailto:info@zyvor.dev).
+
+Related: [netctl](https://github.com/hypersdk/netctl) · [cloud-netconfig](https://github.com/hypersdk/cloud-netconfig) · [hypersdk](https://github.com/hypersdk/hypersdk)
