@@ -8,7 +8,7 @@
 <p align="center">
   <a href="https://zyvor.dev/demo?utm_source=github&utm_medium=netevd"><img src="https://img.shields.io/badge/Demo-F97316?style=flat-square" alt="Demo"/></a>
   <a href="https://zyvor.dev/contact?utm_source=github&utm_medium=netevd"><img src="https://img.shields.io/badge/Contact_sales-22C55E?style=flat-square" alt="Contact"/></a>
-  <a href="https://github.com/sponsors/ssahani?utm_source=github&utm_medium=netevd"><img src="https://img.shields.io/badge/Sponsor-ssahani-ea4aaa?style=flat-square&logo=github-sponsors&logoColor=white" alt="Sponsor"/></a>
+  <a href="https://razorpay.me/@zyvorAILabs"><img src="https://img.shields.io/badge/Sponsor-Zyvor%20AI%20Labs-0c2451?style=flat-square&logo=razorpay&logoColor=white" alt="Sponsor"/></a>
 </p>
 
 **netevd** is a network event daemon that watches your Linux network interfaces and runs scripts when things change. Think of it as systemd path units, but purpose-built for networking: when an interface gets an IP, loses its link, or routes change, netevd executes your scripts with full context about what happened.
@@ -236,11 +236,11 @@ Community Edition covers self-hosted event hooks and policy routing. Production 
 
 netevd Community Edition is free and open source. If it saves you time, consider sponsoring ongoing development:
 
-[![Sponsor on GitHub](https://img.shields.io/badge/Sponsor-ssahani-ea4aaa?logo=github-sponsors&logoColor=white)](https://github.com/sponsors/ssahani?utm_source=github&utm_medium=netevd)
+[![Sponsor on Razorpay](https://img.shields.io/badge/Sponsor-Zyvor%20AI%20Labs-0c2451?logo=razorpay&logoColor=white)](https://razorpay.me/@zyvorAILabs)
 
 Maintained by **Susant Sahani** · [Zyvor AI Labs](https://zyvor.dev?utm_source=github&utm_medium=netevd)
 
-- **Sponsor:** [github.com/sponsors/ssahani](https://github.com/sponsors/ssahani?utm_source=github&utm_medium=netevd)
+- **Sponsor:** [razorpay.me/@zyvorAILabs](https://razorpay.me/@zyvorAILabs)
 - **Enterprise / production:** [zyvor.dev/contact](https://zyvor.dev/contact?utm_source=github&utm_medium=netevd) · [sales@zyvor.dev](mailto:sales@zyvor.dev)
 - **Community help:** [GitHub Issues](https://github.com/hypersdk/netevd/issues) · [SECURITY.md](SECURITY.md)
 
