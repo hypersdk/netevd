@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
-  - name: "Sponsor development (GitHub Sponsors)"
-    url: https://github.com/sponsors/ssahani?utm_source=github&utm_medium=netevd
+  - name: "Sponsor development (Razorpay)"
+    url: https://razorpay.me/@zyvorAILabs
     about: Support open-source maintenance by Susant Sahani — not required to use CE
   - name: "Watch platform demo"
     url: https://zyvor.dev/demo?utm_source=github&utm_medium=netevd
