@@ -2,7 +2,7 @@
 # Smaller size, minimal footprint
 
 # Build stage
-FROM rust:1.70-alpine as builder
+FROM rust:1.82-alpine as builder
 
 WORKDIR /build
 
