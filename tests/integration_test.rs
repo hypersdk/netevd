@@ -3,7 +3,6 @@
 //! Integration tests for netevd daemon
 
 use std::fs;
-use std::path::PathBuf;
 use tempfile::TempDir;
 
 /// Test configuration loading and validation
@@ -116,10 +115,10 @@ system:
 async fn test_network_state_initialization() {
     use netevd::network::NetworkState;
 
-    let state = NetworkState::new();
+    let _state = NetworkState::new();
 
-    // State should be created (field access is private, just test creation)
-    assert!(true); // State created successfully
+    // State should be created (field access is private, just test creation);
+    // reaching this point without panicking is the test.
 }
 
 /// Test script directory creation
