@@ -5,6 +5,12 @@
 //! A daemon that monitors systemd-networkd and dhclient events,
 //! executes scripts on network state changes, and manages routing policy rules.
 
+// main.rs re-declares the same modules as lib.rs (its own separate crate
+// root), so lib.rs's #![allow(dead_code)] doesn't cover this compilation —
+// see the identical note there for why this is a real library API surface,
+// not sloppy dead code.
+#![allow(dead_code)]
+
 use anyhow::{Context, Result};
 use clap::Parser;
 use rtnetlink::Handle;
