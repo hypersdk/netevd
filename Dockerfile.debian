@@ -2,7 +2,7 @@
 # Larger size but better compatibility
 
 # Build stage
-FROM rust:1.82-bookworm as builder
+FROM rust:1-bookworm as builder
 
 WORKDIR /build
 

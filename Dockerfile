@@ -1,7 +1,7 @@
 # Multi-stage build for netevd
 
 # Builder stage
-FROM rust:1.75-slim AS builder
+FROM rust:1-slim AS builder
 
 WORKDIR /build
 
