@@ -242,14 +242,15 @@ cargo build && cargo test && cargo clippy -- -D warnings
 
 ## Enterprise
 
-| | |
-|---|---|
-| **Demo** | [zyvor.dev/demo](https://zyvor.dev/demo?utm_source=github&utm_medium=netevd) |
-| **ROI** | [zyvor.dev/roi](https://zyvor.dev/roi?utm_source=github&utm_medium=netevd) |
-| **Pricing** | [zyvor.dev/pricing](https://zyvor.dev/pricing?utm_source=github&utm_medium=netevd) |
-| **Contact** | [zyvor.dev/contact](https://zyvor.dev/contact?utm_source=github&utm_medium=netevd) · [sales@zyvor.dev](mailto:sales@zyvor.dev) |
+| | Community Edition (this repo) | Enterprise ([zyvor.dev](https://zyvor.dev/?utm_source=github&utm_medium=netevd)) |
+|---|------------------------------|-------------------------------------------------------------------------------------|
+| **Support** | [GitHub Issues](https://github.com/hypersdk/netevd/issues) | SLA, [sales@zyvor.dev](mailto:sales@zyvor.dev), professional services |
+| **Scope** | Self-hosted event hooks | Production rollouts, platform integration |
+| **Platform** | netevd daemon | Full networking stack with netctl, cloud-netconfig, HyperSDK |
 
-Community Edition covers self-hosted event hooks and policy routing. Production SLAs, supported deployments, and the full HyperSDK platform → contact Zyvor (not GitHub Issues). Details: [docs/enterprise.md](docs/enterprise.md).
+**Next steps:** [Demo](https://zyvor.dev/demo?utm_source=github&utm_medium=netevd) · [ROI](https://zyvor.dev/roi?utm_source=github&utm_medium=netevd) · [Pricing](https://zyvor.dev/pricing?utm_source=github&utm_medium=netevd) · [Contact](https://zyvor.dev/contact?utm_source=github&utm_medium=netevd) · [sales@zyvor.dev](mailto:sales@zyvor.dev)
+
+Community Edition covers self-hosted event hooks and policy routing. Production SLAs, supported deployments, and the full HyperSDK platform → contact Zyvor (not GitHub Issues). Full detail: [docs/enterprise.md](docs/enterprise.md).
 
 ## Support the project
 
