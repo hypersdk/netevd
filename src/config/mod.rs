@@ -65,7 +65,7 @@ pub struct RoutingConfig {
     pub policy_rules: Vec<String>,
 }
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Default, Deserialize, Clone)]
 #[serde(rename_all = "snake_case")]
 pub struct BackendsConfig {
     #[serde(default)]
@@ -161,16 +161,6 @@ impl Default for SystemConfig {
         Self {
             log_level: DEFAULT_LOG_LEVEL.to_string(),
             backend: DEFAULT_BACKEND.to_string(),
-        }
-    }
-}
-
-impl Default for BackendsConfig {
-    fn default() -> Self {
-        Self {
-            systemd_networkd: SystemdNetworkdConfig::default(),
-            dhclient: DhclientConfig::default(),
-            networkmanager: NetworkManagerConfig::default(),
         }
     }
 }
