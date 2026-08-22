@@ -1,9 +1,14 @@
+<div align="center">
+  <img src="scripts/zyvor-branding/zyvor-logo.png" alt="Zyvor" width="240">
+</div>
+
 # netevd
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![CI](https://github.com/hypersdk/netevd/actions/workflows/ci.yml/badge.svg)](https://github.com/hypersdk/netevd/actions/workflows/ci.yml)
 [![Functional Tests](https://github.com/hypersdk/netevd/actions/workflows/functional-tests.yml/badge.svg)](https://github.com/hypersdk/netevd/actions/workflows/functional-tests.yml)
 [![codecov](https://codecov.io/gh/hypersdk/netevd/branch/main/graph/badge.svg)](https://codecov.io/gh/hypersdk/netevd)
+[![Release](https://img.shields.io/github/v/release/hypersdk/netevd?sort=semver)](https://github.com/hypersdk/netevd/releases)
 
 <p align="center">
   <a href="https://zyvor.dev/demo?utm_source=github&utm_medium=netevd"><img src="https://img.shields.io/badge/Demo-F97316?style=flat-square" alt="Demo"/></a>
@@ -14,6 +19,20 @@
 **netevd** is a network event daemon that watches your Linux network interfaces and runs scripts when things change. Think of it as systemd path units, but purpose-built for networking: when an interface gets an IP, loses its link, or routes change, netevd executes your scripts with full context about what happened.
 
 It bridges **systemd-networkd**, **NetworkManager**, and **dhclient** into a single, unified event system -- with automatic policy routing, a REST API, Prometheus metrics, and a defense-in-depth security model.
+
+## Table of contents
+
+- [Why netevd?](#why-netevd)
+- [Quick Start](#quick-start)
+- [How It Works](#how-it-works)
+- [Configuration](#configuration)
+- [Script Directories](#script-directories)
+- [Automatic Policy Routing](#automatic-policy-routing)
+- [Security](#security)
+- [Performance](#performance)
+- [REST API](#rest-api)
+- [Enterprise](#enterprise)
+- [License](#license)
 
 ## Why netevd?
 
