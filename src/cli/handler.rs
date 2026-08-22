@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 use crate::cli::{Cli, Commands, ListResource, OutputFormat, ShowResource};
 use crate::config::Config;
 use anyhow::Result;

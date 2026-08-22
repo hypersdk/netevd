@@ -1,4 +1,5 @@
 # shellcheck shell=bash
+# SPDX-License-Identifier: Apache-2.0
 # Assemble netevd customer tarball (GitHub release / local pack).
 #
 # Usage: package_netevd_client_bundle STAGE BUILD_DIR VERSION

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 pub mod handler;
 
 use clap::{Parser, Subcommand};

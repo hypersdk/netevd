@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 use crate::api::handlers::AppState;
 use crate::api::routes::create_api_routes;
 use crate::network::NetworkState;

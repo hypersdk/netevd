@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 use anyhow::Result;
 use rtnetlink::Handle;
 use std::net::Ipv6Addr;

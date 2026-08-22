@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: Apache-2.0
+
 use prometheus::{Counter, CounterVec, Gauge, HistogramOpts, HistogramVec, Opts, Registry};
 use std::sync::Arc;
 
