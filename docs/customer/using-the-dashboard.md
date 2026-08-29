@@ -1,6 +1,6 @@
 # Using the operator surfaces
 
-netevd has **no browser console**. Day-2 work uses hooks, the CLI, REST/Prometheus, and journals.
+netevd has **no shipped browser console** for day-2 work. Operators use hook directories, the CLI, REST/Prometheus, and systemd journals. A static dashboard HTML exists in the repo for future embedding but is not the primary surface.
 
 ## Mental model
 
@@ -23,7 +23,15 @@ Kernel / managers  →  netevd watchers  →  NetworkState
 | `/etc/netevd/netevd.yaml` | Backend, filters, API bind, metrics |
 | `netevd status\|list\|show\|events` | Live inspection via API |
 | `journalctl -u netevd` | Daemon + hook exit logs |
-| `:9090` / `:9091` | Fleet scrape / status |
+| `:9090` / `:9091` | Automation scrape / status on `<host>` |
+
+## Operate from CLI
+
+1. **Hooks first:** add executable scripts under the event directory that matches your backend ([Page guides](pages/README.md)).
+2. **Validate:** `netevd validate -c /etc/netevd/netevd.yaml`
+3. **Observe:** `netevd events -f` while bouncing a link (`ip link set eth0 down/up`).
+4. **Inspect state:** `netevd list interfaces`, `netevd list rules`, `netevd status -f json`.
+5. **Fleet:** scrape `http://<host>:9091/metrics` or curl `http://<host>:9090/api/v1/status` over SSH tunnel.
 
 ## Tips
 

@@ -1,1 +1,13 @@
-{}
+{
+  "/events": "Tail normalized carrier, routable, routes, and manager events from the daemon API.",
+  "/list-show": "Inspect interfaces, routes, policy rules, and registered hook scripts.",
+  "/status": "Show daemon health, uptime, and counters via the REST API.",
+  "/validate-reload": "Validate YAML offline; reload config or dry-run hook scripts safely.",
+  "/carrier": "Run scripts when link layer goes UP (carrier.d) or DOWN (no-carrier.d).",
+  "/manager": "React to NetworkManager device activation, disconnect, and manager state.",
+  "/routable": "Fire when an interface has full L3 connectivity (systemd-networkd or dhclient).",
+  "/routes": "React to routing-table changes via routes.d hooks.",
+  "/config-yaml": "Tune backend, monitored interfaces, policy routing, API/metrics, filters, and audit.",
+  "/prometheus": "Scrape hook and event health metrics for fleet observability.",
+  "/rest-api": "Query status, interfaces, routes, rules, and events without SSH or ip(8)."
+}

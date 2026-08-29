@@ -12,8 +12,8 @@
 | Privilege | Drops to `netevd` user; retains `CAP_NET_ADMIN`; hooks inherit no caps |
 | Dry-run | `netevd --dry-run …` skips script execution / mutations |
 | Validate | `netevd validate` against the config file |
-| Reload | `netevd reload` (API) after config/hook changes when supported |
-| Security | See repo `SECURITY.md`; restrict YAML permissions |
+| Reload | `netevd reload` (API) or `systemctl restart netevd` after YAML/hook changes |
+| Security | See repo `SECURITY.md`; restrict YAML permissions (`chmod 640`) |
 
 ## Hook environment (common)
 
@@ -26,6 +26,17 @@
 | `$ADDRESSES` | Address / gateway / DNS summary |
 | `$JSON` | Full payload (systemd-networkd when enabled) |
 | `$DHCP_*` | dhclient lease fields |
+
+## Operate from CLI
+
+1. **Config check:** `netevd validate && netevd status`
+2. **Hook inventory:** `ls -la /etc/netevd/routable.d/ && netevd list scripts`
+3. **Live debug:** `netevd events -f` + `journalctl -u netevd -f`
+4. **Policy routing:** `netevd list rules` and `ip rule list`
+5. **Remote API (tunnel):** `ssh -L 9090:127.0.0.1:9090 root@<host>` then `curl http://127.0.0.1:9090/health`
+6. **Metrics scrape:** `curl http://<host>:9091/metrics | grep netevd_info`
+
+Use `<host>` in runbooks — never hard-code lab IPs.
 
 ## Support
 

@@ -46,9 +46,19 @@ Prefer `routable.d` when you need L3 connectivity; use `carrier.d` only for link
 ```bash
 systemctl status netevd
 journalctl -u netevd -f
+netevd validate
 netevd status
-curl -s http://127.0.0.1:9090/status | head
+curl -sf http://127.0.0.1:9090/api/v1/status | jq .
+curl -sf http://127.0.0.1:9090/health | jq .
 ```
+
+## Operate from CLI
+
+1. Confirm unit active: `systemctl is-active netevd`
+2. Validate YAML before edits: `netevd validate -c /etc/netevd/netevd.yaml`
+3. Smoke-test API: `netevd status -f json`
+4. Bounce an interface and tail events: `netevd events -f -i eth0 -t routable`
+5. Remote host: `ssh root@<host> netevd status --endpoint http://127.0.0.1:9090`
 
 ## Troubleshooting
 
@@ -60,6 +70,6 @@ curl -s http://127.0.0.1:9090/status | head
 
 ## Next
 
-- [Using the Dashboard](using-the-dashboard.md)
+- [Using the operator surfaces](using-the-dashboard.md)
 - [Admin basics](admin-basics.md)
 - [Workflows](workflows.md)

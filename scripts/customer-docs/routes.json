@@ -1,1 +1,15 @@
-{"routes":[]}
+{
+  "routes": [
+    { "path": "/events", "label": "CLI: events", "category": "CLI" },
+    { "path": "/list-show", "label": "CLI: list / show", "category": "CLI" },
+    { "path": "/status", "label": "CLI: status", "category": "CLI" },
+    { "path": "/validate-reload", "label": "CLI: validate / reload / test", "category": "CLI" },
+    { "path": "/carrier", "label": "Hook: carrier / no-carrier", "category": "Hooks" },
+    { "path": "/manager", "label": "Hook: manager / NetworkManager", "category": "Hooks" },
+    { "path": "/routable", "label": "Hook: routable", "category": "Hooks" },
+    { "path": "/routes", "label": "Hook: routes", "category": "Hooks" },
+    { "path": "/config-yaml", "label": "Configuration YAML", "category": "Ops" },
+    { "path": "/prometheus", "label": "Prometheus metrics (:9091)", "category": "Ops" },
+    { "path": "/rest-api", "label": "REST API (:9090)", "category": "Ops" }
+  ]
+}

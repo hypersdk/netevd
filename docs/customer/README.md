@@ -5,7 +5,7 @@
 | You want to… | Open |
 |--------------|------|
 | Install and fire the first hook | [Getting Started](getting-started.md) |
-| Orient around hooks / CLI / API | [Using the Dashboard](using-the-dashboard.md) |
+| Orient around hooks / CLI / API | [Using the operator surfaces](using-the-dashboard.md) |
 | Screen-by-screen / command guides | [Page-by-page guides](pages/README.md) |
 | Look up hooks and CLI | [Complete page index](PAGE_INDEX.md) |
 | YAML, systemd, ports, security | [Admin basics](admin-basics.md) |
@@ -34,7 +34,18 @@ Output lands in [`pdf/`](pdf/):
   REST/API   →  :9090  (default bind 127.0.0.1)
   Metrics    →  :9091
   Unit       →  netevd.service
+  CLI        →  netevd status | list | show | events | validate | reload
 ```
+
+## Operate from CLI
+
+1. Install and enable: `sudo ./install.sh && sudo systemctl enable --now netevd`
+2. Validate config: `netevd validate`
+3. Inspect live state: `netevd status && netevd list interfaces`
+4. Watch events during a link test: `netevd events -f -i eth0`
+5. Fleet scrape: point Prometheus at `http://<host>:9091/metrics`
+
+Never publish lab IPs in runbooks — use `<host>` for remote targets.
 
 ---
 

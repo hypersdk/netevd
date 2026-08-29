@@ -26,7 +26,7 @@ function summaryOf(file) {
 const lines = [
   '# Page-by-page guides',
   '',
-  'Each guide follows: Purpose → When to use it → How to get there → Operate from the console (UX) → Related pages.',
+  `Each guide follows: Purpose → When to use it → How to get there → ${process.env.CUSTOMER_DOCS_PRODUCT === 'netevd' ? 'Operate from CLI' : 'Operate from the console (UX)'} → Related pages.`,
   '',
   'Every route is also listed in the [complete page index](../PAGE_INDEX.md).',
   '',

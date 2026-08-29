@@ -1,135 +1,984 @@
-<!DOCTYPE html><html><head><meta charset=utf-8><title>Page-by-Page Product Manual — netevd</title>
-<style>body{font-family:system-ui;line-height:1.55} .cover{background:#0d1b2a;color:#fff;padding:40px;border-radius:12px;margin-bottom:20px} pre{background:#0f172a;color:#e2e8f0;padding:12px;overflow:auto} table{border-collapse:collapse;width:100%} th,td{border:1px solid #ddd;padding:6px}</style></head><body>
-<section class=cover><h1>netevd</h1><div>Page-by-Page Product Manual</div></section><main><h1>events</h1>
-<h1>CLI: events</h1>
-<h2>Purpose</h2>
-<p>Tail normalized carrier / routable / routes / manager events.</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><title>Page-by-Page Product Manual — netevd</title>
+<style>
+@page{size:A4;margin:15mm 16mm}*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:'Segoe UI',system-ui,sans-serif;color:#1f2937;line-height:1.58;font-size:10.5pt}
+.cover{height:262mm;margin:-15mm -16mm 0;background:linear-gradient(135deg,#0c4a6e,#075985,#0d1b2a);color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;page-break-after:always;position:relative}
+.cover .kicker{letter-spacing:5px;text-transform:uppercase;opacity:.72;margin-bottom:1.4em}
+.cover h1{font-size:3.2em;font-weight:800;letter-spacing:-2px}
+.cover h1 span{color:#38bdf8}
+.cover .sub{font-size:1.3em;font-weight:300;opacity:.93;margin:1em 0;max-width:24em}
+.cover .badge{display:inline-block;background:rgba(96,165,250,.2);border:1px solid #38bdf8;padding:8px 22px;border-radius:20px;margin-top:2em}
+.cover .foot{position:absolute;bottom:34px;font-size:.82em;opacity:.6}
+h2{page-break-before:always;margin:0 0 .35em;font-size:1.55em;font-weight:750;color:#12203a;border-bottom:2px solid #e5edfb;padding-bottom:.28em}
+h2:first-of-type{page-break-before:avoid}
+h3{margin:1.1em 0 .4em;font-size:1.12em;font-weight:700}
+p,li{margin:.4em 0}ul,ol{margin:.5em 0 .9em 1.4em}
+a{color:#2563eb;text-decoration:none}
+code{background:#eef2f7;padding:1px 6px;border-radius:4px;font-size:.86em;font-family:ui-monospace,Menlo,monospace}
+pre{background:#0f172a;color:#e2e8f0;padding:12px 15px;border-radius:9px;overflow-x:auto;margin:.8em 0}
+table{width:100%;border-collapse:collapse;margin:.8em 0 1.1em;font-size:9.5pt}
+th,td{border:1px solid #e5e7eb;padding:6px 8px;text-align:left;vertical-align:top}th{background:#f1f5f9}
+hr{border:none;border-top:1px solid #e5e7eb;margin:1.2em 0}
+</style></head><body>
+<section class="cover"><div class="kicker">ZyvorAI Labs · Customer Documentation</div>
+<h1>net<span>evd</span></h1>
+<div class="sub">Page-by-Page Product Manual</div>
+<div class="badge">2026-08-29</div>
+<div class="foot">zyvor.dev · Confidential — for licensed customers</div></section>
+<main><h2>Page-by-page guides</h2>
+<p>Each guide follows: Purpose → When to use it → How to get there → Operate from CLI → Related pages.</p>
+<p>Every route is also listed in the <a href="../PAGE_INDEX.md">complete page index</a>.</p>
+<h3>Cli</h3>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="cli/events.md">CLI: events</a></td>
+<td>Tail normalized carrier, routable, routes, and manager events from the daemon API — the same stream hooks react to, but for operators debugging link flaps or missing scripts.</td>
+</tr>
+<tr>
+<td><a href="cli/list-show.md">CLI: list / show</a></td>
+<td>Inspect interfaces, routes, policy rules, and registered hook scripts — the same objects netevd tracks for hook dispatch and automatic policy routing.</td>
+</tr>
+<tr>
+<td><a href="cli/status.md">CLI: status</a></td>
+<td>Show daemon health, uptime, interface count, routing-rule count, and events processed — a single glance before you change hooks or YAML.</td>
+</tr>
+<tr>
+<td><a href="cli/validate-reload.md">CLI: validate / reload / test</a></td>
+<td>Validate YAML offline, request a config reload through the API, and dry-run hook scripts — the safe path before touching production networking.</td>
+</tr>
+</tbody></table>
+<h3>Hooks</h3>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="hooks/carrier.md">Hook: carrier / no-carrier</a></td>
+<td>Run scripts when the link layer goes UP (<code>carrier.d</code>) or DOWN (<code>no-carrier.d</code>) — cable plug, Wi‑Fi associate, or switch port flap — before L3 addresses exist.</td>
+</tr>
+<tr>
+<td><a href="hooks/manager.md">Hook: manager / NetworkManager</a></td>
+<td>React to NetworkManager device and manager state via <code>activated.d</code>, <code>disconnected.d</code>, and <code>manager.d</code> — the NM equivalent of systemd-networkd&#39;s configured/routable hooks.</td>
+</tr>
+<tr>
+<td><a href="hooks/routable.md">Hook: routable</a></td>
+<td>Fire when an interface has full L3 connectivity — addresses and a usable path — on systemd-networkd and dhclient backends. This is the most common hook directory for “start my service when the network is actually up.”</td>
+</tr>
+<tr>
+<td><a href="hooks/routes.md">Hook: routes</a></td>
+<td>React to routing-table changes via <code>/etc/netevd/routes.d/</code> — default-route moves, VPN injection, or policy-table updates that netevd detects through its route watcher.</td>
+</tr>
+</tbody></table>
+<h3>Ops</h3>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="ops/config-yaml.md">Configuration YAML</a></td>
+<td>Tune backend, monitored interfaces, policy routing, API/metrics bind, event filters, and audit logging — the control plane for every hook and CLI query.</td>
+</tr>
+<tr>
+<td><a href="ops/prometheus.md">Prometheus metrics (:9091)</a></td>
+<td>Scrape hook execution, event throughput, routing-rule counts, and netlink health for fleet observability — complementing REST status checks on <code>:9090</code>.</td>
+</tr>
+<tr>
+<td><a href="ops/rest-api.md">REST API (:9090)</a></td>
+<td>Query status, interfaces, routes, policy rules, and recent events over HTTP — the same data backing <code>netevd status</code>, <code>list</code>, <code>show</code>, and <code>events</code> without SSH or <code>ip(8)</code>.</td>
+</tr>
+</tbody></table>
+<hr>
+<p>11 guides. Regenerate: <code>node scripts/customer-docs/generate-guide-index.mjs</code>.</p>
+<hr>
+<h2>CLI: events</h2>
+<h3>Purpose</h3>
+<p>Tail normalized carrier, routable, routes, and manager events from the daemon API — the same stream hooks react to, but for operators debugging link flaps or missing scripts.</p>
+<h3>When to use it</h3>
+<ul>
+<li>A hook did not fire and you need to see whether netevd saw the event</li>
+<li>You are validating filters in <code>/etc/netevd/netevd.yaml</code> while bouncing an interface</li>
+<li>You want a live feed during a change window instead of parsing <code>journalctl</code></li>
+</ul>
+<h3>How to get there</h3>
+<ul>
+<li>Command: <code>netevd events</code></li>
+<li>Default API: <code>http://127.0.0.1:9090</code> (override with <code>--endpoint http://&lt;host&gt;:9090</code>)</li>
+<li>Requires <code>api.enabled: true</code> in <code>/etc/netevd/netevd.yaml</code> and a running <code>netevd.service</code></li>
+</ul>
+<h3>Operate from CLI</h3>
+<ol>
+<li>Confirm the daemon and API are up:</li>
+</ol>
+<pre><code class="language-bash">systemctl is-active netevd
+curl -sf http://127.0.0.1:9090/health | jq .
+</code></pre>
+<ol start="2">
+<li>Show the last 20 events (text table):</li>
+</ol>
+<pre><code class="language-bash">netevd events --tail 20
+</code></pre>
+<ol start="3">
+<li>Follow live events (like <code>tail -f</code>):</li>
+</ol>
 <pre><code class="language-bash">netevd events -f
-netevd events -f -i eth0 -t routable --tail 20
 </code></pre>
-<h2>Related</h2>
-<p><a href="status.md">status</a> · <a href="../hooks/routable.md">hooks</a></p>
-<h1>list-show</h1>
-<h1>CLI: list / show</h1>
-<h2>Purpose</h2>
-<p>Inspect interfaces, routes, and rules the daemon tracks.</p>
+<ol start="4">
+<li>Filter by interface and event type while testing a link bounce:</li>
+</ol>
+<pre><code class="language-bash">netevd events -f -i eth0 -t routable
+</code></pre>
+<ol start="5">
+<li>Machine-readable output for automation:</li>
+</ol>
+<pre><code class="language-bash">netevd events --tail 50 -f json --endpoint http://&lt;host&gt;:9090
+</code></pre>
+<ol start="6">
+<li>Cross-check hook side effects in the journal:</li>
+</ol>
+<pre><code class="language-bash">journalctl -u netevd -f
+</code></pre>
+<ol start="7">
+<li><p><strong>Empty / fail:</strong> API unreachable → check <code>api.enabled</code>, bind address, and firewall; events list empty → confirm <code>system.backend</code> matches the host (<code>systemd-networkd</code>, <code>NetworkManager</code>, or <code>dhclient</code>) and the interface is not ignored by a YAML filter.</p>
+</li>
+<li><p><strong>Success:</strong> Events appear within ~100 ms of a link or address change; filtered <code>-i</code>/<code>-t</code> flags narrow the stream to the interface under test.</p>
+</li>
+</ol>
+<h3>Related pages</h3>
+<ul>
+<li><a href="status.md">CLI: status</a></li>
+<li><a href="../hooks/routable.md">Hook: routable</a></li>
+<li><a href="../ops/rest-api.md">REST API</a></li>
+<li><a href="../../workflows.md">Common workflows</a></li>
+</ul>
+<hr>
+<h2>CLI: list / show</h2>
+<h3>Purpose</h3>
+<p>Inspect interfaces, routes, policy rules, and registered hook scripts — the same objects netevd tracks for hook dispatch and automatic policy routing.</p>
+<h3>When to use it</h3>
+<ul>
+<li>Multi-homed hosts: confirm per-interface routing tables after <code>routing.policy_rules</code> changes</li>
+<li>Debugging: compare <code>netevd list rules</code> with <code>ip rule list</code></li>
+<li>Inventory: see which hook scripts netevd knows about before a rollout</li>
+</ul>
+<h3>How to get there</h3>
+<ul>
+<li>Commands: <code>netevd list …</code>, <code>netevd show …</code></li>
+<li>Default API: <code>http://127.0.0.1:9090</code> (<code>--endpoint</code> for remote hosts)</li>
+<li>Config reference: <code>/etc/netevd/netevd.yaml</code></li>
+</ul>
+<h3>Operate from CLI</h3>
+<ol>
+<li>List tracked interfaces:</li>
+</ol>
 <pre><code class="language-bash">netevd list interfaces
-netevd list routes
-netevd list rules
-netevd show interface eth0
+netevd list interfaces -f json
 </code></pre>
-<h2>Related</h2>
-<p><a href="events.md">events</a> · <a href="../../workflows.md">Workflows</a></p>
-<h1>status</h1>
-<h1>CLI: status</h1>
-<h2>Purpose</h2>
-<p>Show daemon health via the REST API.</p>
+<ol start="2">
+<li>List kernel routes netevd is aware of:</li>
+</ol>
+<pre><code class="language-bash">netevd list routes
+</code></pre>
+<ol start="3">
+<li>List policy routing rules (multi-homed verification):</li>
+</ol>
+<pre><code class="language-bash">netevd list rules
+ip rule list
+ip route show table $((200 + $(cat /sys/class/net/eth1/ifindex)))
+</code></pre>
+<ol start="4">
+<li>List hook scripts discovered under <code>/etc/netevd/*.d/</code>:</li>
+</ol>
+<pre><code class="language-bash">netevd list scripts
+</code></pre>
+<ol start="5">
+<li>Drill into one interface:</li>
+</ol>
+<pre><code class="language-bash">netevd show interface eth0
+netevd show interface eth0 -f yaml --endpoint http://&lt;host&gt;:9090
+</code></pre>
+<ol start="6">
+<li><p><strong>Empty / fail:</strong> Lists empty but links exist → widen <code>monitoring.interfaces</code> (empty = all) or remove an overly broad <code>filters</code> ignore rule; API errors → see <a href="status.md">CLI: status</a>.</p>
+</li>
+<li><p><strong>Success:</strong> Interface count matches expectations; <code>list rules</code> shows <code>from</code>/<code>to</code> pairs for each address on policy-routed interfaces.</p>
+</li>
+</ol>
+<h3>Related pages</h3>
+<ul>
+<li><a href="events.md">CLI: events</a></li>
+<li><a href="../hooks/routes.md">Hook: routes</a></li>
+<li><a href="../ops/config-yaml.md">Configuration YAML</a></li>
+<li><a href="../../workflows.md">Multi-homed workflow</a></li>
+</ul>
+<hr>
+<h2>CLI: status</h2>
+<h3>Purpose</h3>
+<p>Show daemon health, uptime, interface count, routing-rule count, and events processed — a single glance before you change hooks or YAML.</p>
+<h3>When to use it</h3>
+<ul>
+<li>Post-install smoke test on a new host</li>
+<li>Change-window entry: confirm netevd is running before editing <code>/etc/netevd/</code></li>
+<li>Fleet checks from cron or a monitoring probe (JSON output)</li>
+</ul>
+<h3>How to get there</h3>
+<ul>
+<li>Command: <code>netevd status</code></li>
+<li>Equivalent HTTP: <code>GET http://127.0.0.1:9090/api/v1/status</code></li>
+<li>Unit: <code>systemctl status netevd</code></li>
+</ul>
+<h3>Operate from CLI</h3>
+<ol>
+<li>Quick text summary (default):</li>
+</ol>
 <pre><code class="language-bash">netevd status
-netevd status -f json --endpoint http://127.0.0.1:9090
 </code></pre>
-<h2>Related</h2>
-<p><a href="../ops/rest-api.md">rest-api</a></p>
-<h1>validate-reload</h1>
-<h1>CLI: validate / reload / test</h1>
-<h2>Purpose</h2>
-<p>Safe config checks and controlled reloads.</p>
+<ol start="2">
+<li>JSON for scripts and dashboards:</li>
+</ol>
+<pre><code class="language-bash">netevd status -f json
+netevd status -f json --endpoint http://&lt;host&gt;:9090 | jq &#39;.data&#39;
+</code></pre>
+<ol start="3">
+<li>YAML output:</li>
+</ol>
+<pre><code class="language-bash">netevd status -f yaml
+</code></pre>
+<ol start="4">
+<li>Cross-check systemd and health endpoint:</li>
+</ol>
+<pre><code class="language-bash">systemctl status netevd --no-pager
+curl -sf http://127.0.0.1:9090/health | jq .
+curl -sf http://127.0.0.1:9090/api/v1/status | jq .
+</code></pre>
+<ol start="5">
+<li><p><strong>Empty / fail:</strong> <code>Connection refused</code> → daemon down or <code>api.enabled: false</code>; status shows zero interfaces on a busy host → backend mismatch or netlink permission issue (check unit logs).</p>
+</li>
+<li><p><strong>Success:</strong> <code>status: running</code>, non-zero uptime, interface count matches <code>ip link</code>, routing-rule count matches policy-routed addresses.</p>
+</li>
+</ol>
+<h3>Related pages</h3>
+<ul>
+<li><a href="../ops/rest-api.md">REST API</a></li>
+<li><a href="../ops/prometheus.md">Prometheus metrics</a></li>
+<li><a href="../../admin-basics.md">Admin basics</a></li>
+</ul>
+<hr>
+<h2>CLI: validate / reload / test</h2>
+<h3>Purpose</h3>
+<p>Validate YAML offline, request a config reload through the API, and dry-run hook scripts — the safe path before touching production networking.</p>
+<h3>When to use it</h3>
+<ul>
+<li>Before every edit to <code>/etc/netevd/netevd.yaml</code></li>
+<li>After adding or renaming hook scripts (validate + restart/reload)</li>
+<li>When developing a new hook: preview environment variables without firing real events</li>
+</ul>
+<h3>How to get there</h3>
+<ul>
+<li>Commands: <code>netevd validate</code>, <code>netevd reload</code>, <code>netevd test</code>, <code>netevd version</code></li>
+<li>Config path: <code>/etc/netevd/netevd.yaml</code> (override with <code>-c</code> / <code>--config</code>)</li>
+<li>Global flags on the daemon binary: <code>--dry-run</code>, <code>-v</code> (verbose)</li>
+</ul>
+<h3>Operate from CLI</h3>
+<ol>
+<li>Validate the live config (default path):</li>
+</ol>
+<pre><code class="language-bash">sudo netevd validate
+</code></pre>
+<ol start="2">
+<li>Validate a staged file before install:</li>
+</ol>
+<pre><code class="language-bash">netevd validate -c /tmp/netevd.yaml
+</code></pre>
+<ol start="3">
+<li>Request reload via API (preferred when the daemon supports hot reload):</li>
+</ol>
+<pre><code class="language-bash">netevd reload --endpoint http://127.0.0.1:9090
+curl -X POST http://127.0.0.1:9090/api/v1/reload -H &#39;Content-Type: application/json&#39; -d &#39;{}&#39;
+</code></pre>
+<ol start="4">
+<li>When reload is not yet applied server-side, restart the unit (config + hook directory changes):</li>
+</ol>
+<pre><code class="language-bash">sudo systemctl restart netevd
+journalctl -u netevd -n 30 --no-pager
+</code></pre>
+<ol start="5">
+<li>Dry-run the daemon (no script execution, no routing mutations):</li>
+</ol>
+<pre><code class="language-bash">sudo netevd --dry-run -c /etc/netevd/netevd.yaml start -f
+</code></pre>
+<ol start="6">
+<li>Preview hook environment for a script under test:</li>
+</ol>
+<pre><code class="language-bash">netevd test /etc/netevd/routable.d/01-notify.sh -i eth0 -t routable --ip 192.168.1.10
+</code></pre>
+<ol start="7">
+<li>Print build/feature matrix:</li>
+</ol>
+<pre><code class="language-bash">netevd version --detailed
+</code></pre>
+<ol start="8">
+<li><p><strong>Empty / fail:</strong> Validation errors name the YAML key; reload returns <code>success: false</code> → fall back to <code>systemctl restart netevd</code>; test mode prints env but does not execute — confirm with a real link bounce + <code>journalctl</code>.</p>
+</li>
+<li><p><strong>Success:</strong> <code>✓ Configuration is valid</code> summary lists backend, interfaces, and policy rules; daemon restarts cleanly; test output shows expected <code>$LINK</code>, <code>$STATE</code>, <code>$ADDRESSES</code>.</p>
+</li>
+</ol>
+<h3>Related pages</h3>
+<ul>
+<li><a href="../ops/config-yaml.md">Configuration YAML</a></li>
+<li><a href="../../admin-basics.md">Admin basics</a></li>
+<li><a href="events.md">CLI: events</a></li>
+</ul>
+<hr>
+<h2>Hook: carrier / no-carrier</h2>
+<h3>Purpose</h3>
+<p>Run scripts when the link layer goes UP (<code>carrier.d</code>) or DOWN (<code>no-carrier.d</code>) — cable plug, Wi‑Fi associate, or switch port flap — before L3 addresses exist.</p>
+<h3>When to use it</h3>
+<ul>
+<li>Notify ops when a physical link returns (PDU cycle, switch maintenance)</li>
+<li>Trigger low-level diagnostics that do not need an IP yet</li>
+<li><strong>Not</strong> for “has an IP / default route” — use <a href="routable.md">Hook: routable</a> for L3</li>
+</ul>
+<h3>How to get there</h3>
+<ul>
+<li>Directories: <code>/etc/netevd/carrier.d/</code>, <code>/etc/netevd/no-carrier.d/</code></li>
+<li>Backends: all (<code>systemd-networkd</code>, NetworkManager, <code>dhclient</code>)</li>
+<li>Scripts must be executable; run in lexical order (<code>10-</code>, <code>20-</code>, …)</li>
+</ul>
+<h3>Operate from CLI</h3>
+<ol>
+<li>Install a carrier-up logger:</li>
+</ol>
+<pre><code class="language-bash">sudo tee /etc/netevd/carrier.d/10-link-up.sh &gt;/dev/null &lt;&lt;&#39;EOF&#39;
+#!/bin/bash
+logger -t netevd &quot;carrier UP on $LINK (index $LINKINDEX, backend $BACKEND)&quot;
+EOF
+sudo chmod +x /etc/netevd/carrier.d/10-link-up.sh
+</code></pre>
+<ol start="2">
+<li>Install a no-carrier handler:</li>
+</ol>
+<pre><code class="language-bash">sudo tee /etc/netevd/no-carrier.d/10-link-down.sh &gt;/dev/null &lt;&lt;&#39;EOF&#39;
+#!/bin/bash
+logger -t netevd &quot;carrier DOWN on $LINK&quot;
+EOF
+sudo chmod +x /etc/netevd/no-carrier.d/10-link-down.sh
+</code></pre>
+<ol start="3">
+<li>Validate config and bounce the link to test:</li>
+</ol>
+<pre><code class="language-bash">netevd validate
+sudo ip link set eth0 down &amp;&amp; sudo ip link set eth0 up
+netevd events -f -i eth0 -t carrier &amp;
+journalctl -u netevd -f
+</code></pre>
+<ol start="4">
+<li>Dry-run hook env without executing:</li>
+</ol>
+<pre><code class="language-bash">netevd test /etc/netevd/carrier.d/10-link-up.sh -i eth0 -t carrier
+</code></pre>
+<ol start="5">
+<li><p><strong>Empty / fail:</strong> Script never runs → missing <code>+x</code>, wrong directory, or YAML filter with <code>action: ignore</code> on <code>docker*</code>/pattern match; check <code>journalctl -u netevd</code> for exit codes (non-zero exits are logged, other scripts still run).</p>
+</li>
+<li><p><strong>Success:</strong> <code>logger</code> or script output appears on link up/down; <code>$LINK</code> and <code>$BACKEND</code> are set; carrier events visible in <code>netevd events</code>.</p>
+</li>
+</ol>
+<h3>Related pages</h3>
+<ul>
+<li><a href="routable.md">Hook: routable</a></li>
+<li><a href="../cli/events.md">CLI: events</a></li>
+<li><a href="../../admin-basics.md">Admin basics</a></li>
+</ul>
+<hr>
+<h2>Hook: manager / NetworkManager</h2>
+<h3>Purpose</h3>
+<p>React to NetworkManager device and manager state via <code>activated.d</code>, <code>disconnected.d</code>, and <code>manager.d</code> — the NM equivalent of systemd-networkd&#39;s configured/routable hooks.</p>
+<h3>When to use it</h3>
+<ul>
+<li>Hosts where NetworkManager is primary (<code>system.backend: NetworkManager</code>)</li>
+<li>VPN or Wi‑Fi profiles that activate/disconnect without classic netlink carrier semantics</li>
+<li>Manager-wide scripts (restart dependent services when NM reconnects)</li>
+</ul>
+<h3>How to get there</h3>
+<ul>
+<li>Directories: <code>/etc/netevd/activated.d/</code>, <code>/etc/netevd/disconnected.d/</code>, <code>/etc/netevd/manager.d/</code></li>
+<li>Config: set <code>system.backend: NetworkManager</code> in <code>/etc/netevd/netevd.yaml</code></li>
+<li>Requires NM D-Bus signals; unit starts after <code>NetworkManager.service</code></li>
+</ul>
+<h3>Operate from CLI</h3>
+<ol>
+<li>Confirm backend and restart:</li>
+</ol>
+<pre><code class="language-bash">grep backend /etc/netevd/netevd.yaml
+netevd validate
+sudo systemctl restart netevd
+</code></pre>
+<ol start="2">
+<li>Add an activation hook:</li>
+</ol>
+<pre><code class="language-bash">sudo tee /etc/netevd/activated.d/20-nm-up.sh &gt;/dev/null &lt;&lt;&#39;EOF&#39;
+#!/bin/bash
+logger -t netevd &quot;NM activated $LINK state=$STATE addrs=$ADDRESSES&quot;
+EOF
+sudo chmod +x /etc/netevd/activated.d/20-nm-up.sh
+</code></pre>
+<ol start="3">
+<li>Add a disconnect hook:</li>
+</ol>
+<pre><code class="language-bash">sudo tee /etc/netevd/disconnected.d/10-nm-down.sh &gt;/dev/null &lt;&lt;&#39;EOF&#39;
+#!/bin/bash
+logger -t netevd &quot;NM disconnected $LINK&quot;
+EOF
+sudo chmod +x /etc/netevd/disconnected.d/10-nm-down.sh
+</code></pre>
+<ol start="4">
+<li>Manager-level script (all interfaces / manager events):</li>
+</ol>
+<pre><code class="language-bash">sudo install -m755 ./my-manager-hook.sh /etc/netevd/manager.d/05-manager.sh
+</code></pre>
+<ol start="5">
+<li>Test with NM CLI while tailing events:</li>
+</ol>
+<pre><code class="language-bash">netevd events -f -t activated &amp;
+nmcli connection down my-wifi &amp;&amp; nmcli connection up my-wifi
+journalctl -u netevd -n 20 --no-pager
+</code></pre>
+<ol start="6">
+<li><p><strong>Empty / fail:</strong> Hooks silent on NM host → backend still <code>systemd-networkd</code>; NM device state changes but no scripts → check filters for <code>backend: NetworkManager</code> with <code>action: log</code> only.</p>
+</li>
+<li><p><strong>Success:</strong> Activation/disconnect logged; <code>$STATE</code> reflects NM normalized state; events appear in <code>netevd events -t activated</code>.</p>
+</li>
+</ol>
+<h3>Related pages</h3>
+<ul>
+<li><a href="../ops/config-yaml.md">Configuration YAML</a></li>
+<li><a href="routable.md">Hook: routable</a></li>
+<li><a href="../../admin-basics.md">Admin basics</a></li>
+</ul>
+<hr>
+<h2>Hook: routable</h2>
+<h3>Purpose</h3>
+<p>Fire when an interface has full L3 connectivity — addresses and a usable path — on systemd-networkd and dhclient backends. This is the most common hook directory for “start my service when the network is actually up.”</p>
+<h3>When to use it</h3>
+<ul>
+<li>Register DNS, announce presence, or start app stacks when <code>$ADDRESSES</code> is meaningful</li>
+<li>DHCP renewals on edge nodes (dhclient path)</li>
+<li>Consume rich <code>$JSON</code> from systemd-networkd (MTU, DNS, routes) when <code>emit_json: true</code></li>
+</ul>
+<h3>How to get there</h3>
+<ul>
+<li>Directory: <code>/etc/netevd/routable.d/</code></li>
+<li>Backends: <code>systemd-networkd</code>, <code>dhclient</code> (not NM — use <a href="manager.md">Hook: manager</a>)</li>
+<li>Example env: <code>$LINK</code>, <code>$ADDRESSES</code>, <code>$JSON</code> (networkd), <code>$DHCP_*</code> (dhclient)</li>
+</ul>
+<h3>Operate from CLI</h3>
+<ol>
+<li>Install the canonical first hook from <a href="../../getting-started.md">Getting Started</a>:</li>
+</ol>
+<pre><code class="language-bash">sudo tee /etc/netevd/routable.d/01-notify.sh &gt;/dev/null &lt;&lt;&#39;EOF&#39;
+#!/bin/bash
+logger -t netevd &quot;Interface $LINK is routable: $ADDRESSES (backend=$BACKEND)&quot;
+EOF
+sudo chmod +x /etc/netevd/routable.d/01-notify.sh
+</code></pre>
+<ol start="2">
+<li>Enable JSON payload for networkd scripts in YAML:</li>
+</ol>
+<pre><code class="language-bash">sudo sed -n &#39;/systemd_networkd:/,/networkmanager:/p&#39; /etc/netevd/netevd.yaml
+# ensure: emit_json: true under backends.systemd_networkd
+netevd validate &amp;&amp; sudo systemctl restart netevd
+</code></pre>
+<ol start="3">
+<li>Trigger a routable event (networkd host):</li>
+</ol>
+<pre><code class="language-bash">sudo networkctl renew eth0   # or reapply your .network unit
+netevd events -f -i eth0 -t routable
+</code></pre>
+<ol start="4">
+<li>dhclient host — renew lease:</li>
+</ol>
+<pre><code class="language-bash">sudo dhclient -r eth0 &amp;&amp; sudo dhclient eth0
+echo &quot;check \$DHCP_ADDRESS \$DHCP_GATEWAY in journal&quot;
+</code></pre>
+<ol start="5">
+<li>Inspect script inventory:</li>
+</ol>
+<pre><code class="language-bash">netevd list scripts
+ls -la /etc/netevd/routable.d/
+</code></pre>
+<ol start="6">
+<li><p><strong>Empty / fail:</strong> Hook runs on carrier but not routable → script is in wrong <code>*.d</code> dir; <code>$JSON</code> empty → <code>emit_json: false</code>; dhclient vars missing → event fired before lease parse completes.</p>
+</li>
+<li><p><strong>Success:</strong> <code>logger</code> shows addresses; dependent service starts; <code>netevd_script_executions_total</code> increments (see <a href="../ops/prometheus.md">Prometheus</a>).</p>
+</li>
+</ol>
+<h3>Related pages</h3>
+<ul>
+<li><a href="carrier.md">Hook: carrier</a></li>
+<li><a href="../../workflows.md">Common workflows</a></li>
+<li><a href="../cli/validate-reload.md">CLI: validate / reload</a></li>
+</ul>
+<hr>
+<h2>Hook: routes</h2>
+<h3>Purpose</h3>
+<p>React to routing-table changes via <code>/etc/netevd/routes.d/</code> — default-route moves, VPN injection, or policy-table updates that netevd detects through its route watcher.</p>
+<h3>When to use it</h3>
+<ul>
+<li>Audit when the default gateway shifts between uplinks</li>
+<li>Side effects after netevd installs per-interface policy tables (see <a href="../../workflows.md">Multi-homed workflow</a>)</li>
+<li>Integrate with SD-WAN or VPN clients that mutate <code>ip route</code> frequently</li>
+</ul>
+<h3>How to get there</h3>
+<ul>
+<li>Directory: <code>/etc/netevd/routes.d/</code></li>
+<li>Backends: all</li>
+<li>Complements automatic policy routing from <code>routing.policy_rules</code> in YAML</li>
+</ul>
+<h3>Operate from CLI</h3>
+<ol>
+<li>Install a route-change auditor:</li>
+</ol>
+<pre><code class="language-bash">sudo tee /etc/netevd/routes.d/30-audit-routes.sh &gt;/dev/null &lt;&lt;&#39;EOF&#39;
+#!/bin/bash
+logger -t netevd &quot;route change on $LINK state=$STATE backend=$BACKEND&quot;
+EOF
+sudo chmod +x /etc/netevd/routes.d/30-audit-routes.sh
+</code></pre>
+<ol start="2">
+<li>Enable policy routing for a secondary uplink in YAML:</li>
+</ol>
+<pre><code class="language-bash">grep -A5 &#39;^routing:&#39; /etc/netevd/netevd.yaml
+netevd validate
+sudo systemctl restart netevd
+</code></pre>
+<ol start="3">
+<li>Verify rules and routes after address acquisition:</li>
+</ol>
+<pre><code class="language-bash">netevd list rules
+netevd list routes
+ip route show table all | head -30
+</code></pre>
+<ol start="4">
+<li>Watch route events during a controlled change:</li>
+</ol>
+<pre><code class="language-bash">netevd events -f -t routes &amp;
+sudo ip route replace default via 192.168.1.1 dev eth1   # lab only
+</code></pre>
+<ol start="5">
+<li><p><strong>Empty / fail:</strong> No route hooks despite table changes → script not executable; route events filtered; compare with <code>journalctl -u netevd</code> for netlink errors.</p>
+</li>
+<li><p><strong>Success:</strong> Hook logs on table mutation; <code>list rules</code> reflects policy tables; traffic sourced from secondary IP uses correct table (<code>ip rule list</code>).</p>
+</li>
+</ol>
+<h3>Related pages</h3>
+<ul>
+<li><a href="../cli/list-show.md">CLI: list / show</a></li>
+<li><a href="../ops/config-yaml.md">Configuration YAML</a></li>
+<li><a href="../../workflows.md">Multi-homed workflow</a></li>
+</ul>
+<hr>
+<h2>Configuration YAML</h2>
+<h3>Purpose</h3>
+<p>Tune backend, monitored interfaces, policy routing, API/metrics bind, event filters, and audit logging — the control plane for every hook and CLI query.</p>
+<h3>When to use it</h3>
+<ul>
+<li>Initial install: copy from <code>config/netevd.example.yaml</code></li>
+<li>Multi-homed servers: list interfaces under <code>routing.policy_rules</code></li>
+<li>Noisy lab hosts: add <code>filters</code> to ignore <code>docker*</code>, <code>veth*</code>, <code>br-*</code></li>
+<li>Fleet scrape: enable metrics and optionally widen API bind on trusted networks</li>
+</ul>
+<h3>How to get there</h3>
+<ul>
+<li>Live file: <code>/etc/netevd/netevd.yaml</code></li>
+<li>Template: <code>config/netevd.example.yaml</code> in the repo or release tarball</li>
+<li>Validate before apply: <code>netevd validate</code></li>
+</ul>
+<h3>Operate from CLI</h3>
+<ol>
+<li>Copy the example and edit:</li>
+</ol>
+<pre><code class="language-bash">sudo install -Dm644 config/netevd.example.yaml /etc/netevd/netevd.yaml
+sudo ${EDITOR:-vi} /etc/netevd/netevd.yaml
+</code></pre>
+<ol start="2">
+<li>Set backend to match the host:</li>
+</ol>
+<pre><code class="language-yaml">system:
+  backend: &quot;systemd-networkd&quot;   # or NetworkManager | dhclient
+</code></pre>
+<ol start="3">
+<li>Limit monitoring scope (empty list = all interfaces):</li>
+</ol>
+<pre><code class="language-yaml">monitoring:
+  interfaces:
+    - eth0
+    - eth1
+</code></pre>
+<ol start="4">
+<li>Enable multi-homed policy routing:</li>
+</ol>
+<pre><code class="language-yaml">routing:
+  policy_rules:
+    - eth1
+</code></pre>
+<ol start="5">
+<li>Open API/metrics for fleet hosts (trusted network only):</li>
+</ol>
+<pre><code class="language-yaml">api:
+  enabled: true
+  bind_address: &quot;127.0.0.1&quot;   # use 0.0.0.0 only on isolated management nets
+  port: 9090
+metrics:
+  enabled: true
+  port: 9091
+</code></pre>
+<ol start="6">
+<li>Add a filter to ignore container interfaces:</li>
+</ol>
+<pre><code class="language-yaml">filters:
+  - match_rule:
+      interface_pattern: &quot;docker*&quot;
+    action: ignore
+</code></pre>
+<ol start="7">
+<li>Validate, apply, verify:</li>
+</ol>
 <pre><code class="language-bash">netevd validate -c /etc/netevd/netevd.yaml
-netevd reload --endpoint http://127.0.0.1:9090
-netevd test   # see --help for dry-run style checks
-netevd version --detailed
+sudo systemctl restart netevd
+netevd status -f json | jq .
+journalctl -u netevd -n 20 --no-pager
 </code></pre>
-<p>Global flags: <code>--dry-run</code>, <code>-v</code>, <code>-c /path/to/netevd.yaml</code>.</p>
-<h2>Related</h2>
-<p><a href="../ops/config-yaml.md">config-yaml</a> · <a href="../../admin-basics.md">Admin basics</a></p>
-<h1>carrier</h1>
-<h1>Hook: carrier / no-carrier</h1>
-<h2>Purpose</h2>
-<p>Run scripts when link layer goes UP (<code>carrier.d</code>) or DOWN (<code>no-carrier.d</code>).</p>
-<h2>When to use it</h2>
-<p>Cable plug / Wi‑Fi associate notifications. <strong>Not</strong> for “has an IP yet” — use <code>routable.d</code> for L3.</p>
-<h2>How to get there</h2>
-<pre><code class="language-bash">sudo install -m755 myscript.sh /etc/netevd/carrier.d/10-log.sh
+<ol start="8">
+<li><p><strong>Empty / fail:</strong> Parse error → validator prints the offending key; hooks stop firing → check filter <code>action: ignore</code>; API unreachable → <code>api.enabled: false</code> or bind still <code>127.0.0.1</code> on remote scrape.</p>
+</li>
+<li><p><strong>Success:</strong> Summary from <code>netevd validate</code> matches intent; daemon logs show chosen backend; hooks and <code>list rules</code> behave per YAML.</p>
+</li>
+</ol>
+<h3>Related pages</h3>
+<ul>
+<li><a href="../cli/validate-reload.md">CLI: validate / reload</a></li>
+<li><a href="../../admin-basics.md">Admin basics</a></li>
+<li><a href="rest-api.md">REST API</a></li>
+</ul>
+<hr>
+<h2>Prometheus metrics (:9091)</h2>
+<h3>Purpose</h3>
+<p>Scrape hook execution, event throughput, routing-rule counts, and netlink health for fleet observability — complementing REST status checks on <code>:9090</code>.</p>
+<h3>When to use it</h3>
+<ul>
+<li>Alert when <code>netevd_script_failures_total</code> rises after a hook deploy</li>
+<li>Dashboard event rates per interface/backend</li>
+<li>Detect silent daemon failure (uptime gauge flatlines)</li>
+</ul>
+<h3>How to get there</h3>
+<ul>
+<li>Metrics port: <code>metrics.port</code> in <code>/etc/netevd/netevd.yaml</code> (default <strong>9091</strong>)</li>
+<li>Enable: <code>metrics.enabled: true</code></li>
+<li>Endpoint: <code>http://&lt;host&gt;:9091/metrics</code> (Prometheus text exposition)</li>
+<li>Note: <code>/metrics</code> also exists on the API router at <code>:9090</code> when API is enabled; prefer the dedicated metrics port for scrape jobs</li>
+</ul>
+<h3>Operate from CLI</h3>
+<ol>
+<li>Confirm metrics are enabled:</li>
+</ol>
+<pre><code class="language-bash">grep -A3 &#39;^metrics:&#39; /etc/netevd/netevd.yaml
+curl -sf http://127.0.0.1:9091/metrics | head -20
 </code></pre>
-<h2>What you can do</h2>
-<ul>
-<li>Log or notify on link flaps</li>
-<li>Combine with <code>$LINK</code> / <code>$BACKEND</code></li>
-</ul>
-<h2>Related</h2>
-<p><a href="routable.md">routable</a> · <a href="../../admin-basics.md">Admin basics</a></p>
-<h1>manager</h1>
-<h1>Hook: manager / NetworkManager</h1>
-<h2>Purpose</h2>
-<p><code>activated.d</code>, <code>disconnected.d</code>, and <code>manager.d</code> cover NetworkManager device and manager state.</p>
-<h2>When to use it</h2>
-<p>Hosts where NM is the primary backend (<code>system.backend: NetworkManager</code>).</p>
-<h2>How to get there</h2>
-<p>Matching directories under <code>/etc/netevd/</code>.</p>
-<h2>Related</h2>
-<p><a href="../../admin-basics.md">Admin basics</a> · <a href="../ops/config-yaml.md">config-yaml</a></p>
-<h1>routable</h1>
-<h1>Hook: routable</h1>
-<h2>Purpose</h2>
-<p>Fire when an interface has full L3 connectivity (systemd-networkd + dhclient paths).</p>
-<h2>When to use it</h2>
-<p>Start dependent services, register DNS, notify when <code>$ADDRESSES</code> is meaningful.</p>
-<h2>How to get there</h2>
-<p><code>/etc/netevd/routable.d/</code> — executable scripts, lexical order.</p>
-<h2>What you can do</h2>
-<ul>
-<li>Read <code>$ADDRESSES</code>, <code>$JSON</code> (networkd), <code>$DHCP_*</code> (dhclient)</li>
-<li>Branch on <code>$BACKEND</code></li>
-</ul>
-<h2>Related</h2>
-<p><a href="carrier.md">carrier</a> · <a href="../../workflows.md">Workflows</a></p>
-<h1>routes</h1>
-<h1>Hook: routes</h1>
-<h2>Purpose</h2>
-<p>React to routing table changes (<code>routes.d</code>).</p>
-<h2>When to use it</h2>
-<p>Policy updates, VPN route injection side effects, auditing default-route changes.</p>
-<h2>How to get there</h2>
-<p><code>/etc/netevd/routes.d/</code></p>
-<h2>Related</h2>
-<p><a href="../../workflows.md">Multi-homed workflow</a> · <a href="../cli/list-show.md">list-show</a></p>
-<h1>config-yaml</h1>
-<h1>Configuration YAML</h1>
-<h2>Purpose</h2>
-<p>Tune backend, monitored interfaces, policy routing list, API/metrics, filters, audit.</p>
-<p>Path: <code>/etc/netevd/netevd.yaml</code> — start from <code>config/netevd.example.yaml</code>.</p>
-<h2>Highlights</h2>
-<ul>
-<li><code>system.backend</code> — systemd-networkd | NetworkManager | dhclient</li>
-<li><code>routing.policy_rules</code> — interfaces getting custom tables</li>
-<li><code>filters</code> — execute / ignore / log by interface pattern or event</li>
-<li><code>api</code> / <code>metrics</code> — bind and ports</li>
-</ul>
-<h2>Related</h2>
-<p><a href="../../admin-basics.md">Admin basics</a> · <a href="../cli/validate-reload.md">validate-reload</a></p>
-<h1>prometheus</h1>
-<h1>Prometheus metrics (:9091)</h1>
-<h2>Purpose</h2>
-<p>Fleet scrape for hook/event health.</p>
+<ol start="2">
+<li>Inspect key series locally:</li>
+</ol>
+<pre><code class="language-bash">curl -sf http://127.0.0.1:9091/metrics | grep -E &#39;^netevd_(info|events_total|script_|routing_rules)&#39;
+</code></pre>
+<ol start="3">
+<li>Prometheus scrape config (replace <code>&lt;host&gt;</code> with your edge/management target):</li>
+</ol>
 <pre><code class="language-yaml">scrape_configs:
   - job_name: netevd
+    scrape_interval: 30s
     static_configs:
-      - targets: ['edge-01:9091']
+      - targets: [&#39;&lt;host&gt;:9091&#39;]
+        labels:
+          role: network-events
 </code></pre>
-<h2>Related</h2>
-<p><a href="rest-api.md">rest-api</a> · <a href="../../workflows.md">Workflows</a></p>
-<h1>rest-api</h1>
-<h1>REST API (:9090)</h1>
-<h2>Purpose</h2>
-<p>Query status, interfaces, routes, rules, and events without SSH/<code>ip</code>.</p>
-<p>Default bind is <strong>localhost</strong> — open carefully for remote scrapers.</p>
-<h2>Related</h2>
-<p><a href="prometheus.md">prometheus</a> · <a href="../cli/status.md">status</a> · blog: Watching the Watcher</p>
-<h1>netevd — Complete page index</h1>
-<p>Every primary navigable dashboard route.</p>
-<p><em>Generated: 2026-08-29 · 0 routes</em></p>
-<p>Regenerate: <code>node scripts/customer-docs/generate-page-index.mjs</code></p>
-<h2>Related</h2>
+<ol start="4">
+<li>Example alert rules (hook failures):</li>
+</ol>
+<pre><code class="language-yaml">groups:
+  - name: netevd
+    rules:
+      - alert: NetevdHookFailures
+        expr: increase(netevd_script_failures_total[5m]) &gt; 0
+        for: 2m
+        labels:
+          severity: warning
+      - alert: NetevdDown
+        expr: absent(netevd_info)
+        for: 5m
+        labels:
+          severity: critical
+</code></pre>
+<ol start="5">
+<li>Remote check from your workstation:</li>
+</ol>
+<pre><code class="language-bash">curl -sf http://&lt;host&gt;:9091/metrics | grep netevd_uptime_seconds
+</code></pre>
+<ol start="6">
+<li><p><strong>Empty / fail:</strong> Connection refused → <code>metrics.enabled: false</code> or firewall; series missing → daemon just started or metrics init failed (see <code>journalctl -u netevd</code>).</p>
+</li>
+<li><p><strong>Success:</strong> <code>netevd_info{version=&quot;…&quot;}</code> present; counters increment when you bounce a link and routable hooks run.</p>
+</li>
+</ol>
+<h3>Related pages</h3>
 <ul>
-<li><a href="index.md">Customer docs home</a></li>
-<li><a href="pages/index.md">Page-by-page guides</a></li>
-</ul></main></body></html>
+<li><a href="rest-api.md">REST API</a></li>
+<li><a href="../cli/status.md">CLI: status</a></li>
+<li><a href="../../workflows.md">Fleet workflow</a></li>
+</ul>
+<hr>
+<h2>REST API (:9090)</h2>
+<h3>Purpose</h3>
+<p>Query status, interfaces, routes, policy rules, and recent events over HTTP — the same data backing <code>netevd status</code>, <code>list</code>, <code>show</code>, and <code>events</code> without SSH or <code>ip(8)</code>.</p>
+<h3>When to use it</h3>
+<ul>
+<li>Automation and config-management probes from a bastion</li>
+<li>Quick inspection when CLI is not installed on a jump host (curl only)</li>
+<li>Integrate with internal dashboards (JSON responses)</li>
+</ul>
+<h3>How to get there</h3>
+<ul>
+<li>Base URL: <code>http://127.0.0.1:9090</code> (default bind <strong>localhost</strong>)</li>
+<li>Config: <code>api.enabled</code>, <code>api.bind_address</code>, <code>api.port</code> in <code>/etc/netevd/netevd.yaml</code></li>
+<li>Remote access: tunnel or set <code>bind_address: &quot;0.0.0.0&quot;</code> only on trusted management networks</li>
+</ul>
+<h3>Operate from CLI</h3>
+<ol>
+<li>Health and version smoke test:</li>
+</ol>
+<pre><code class="language-bash">curl -sf http://127.0.0.1:9090/health | jq .
+curl -sf http://127.0.0.1:9090/api/v1/status | jq .
+</code></pre>
+<ol start="2">
+<li>List interfaces and drill into one:</li>
+</ol>
+<pre><code class="language-bash">curl -sf http://127.0.0.1:9090/api/v1/interfaces | jq .
+curl -sf http://127.0.0.1:9090/api/v1/interfaces/eth0 | jq .
+</code></pre>
+<ol start="3">
+<li>Routes and policy rules:</li>
+</ol>
+<pre><code class="language-bash">curl -sf http://127.0.0.1:9090/api/v1/routes | jq .
+curl -sf http://127.0.0.1:9090/api/v1/rules | jq .
+</code></pre>
+<ol start="4">
+<li>Recent events:</li>
+</ol>
+<pre><code class="language-bash">curl -sf &#39;http://127.0.0.1:9090/api/v1/events&#39; | jq .
+</code></pre>
+<ol start="5">
+<li>Request config reload (same as <code>netevd reload</code>):</li>
+</ol>
+<pre><code class="language-bash">curl -X POST http://127.0.0.1:9090/api/v1/reload \
+  -H &#39;Content-Type: application/json&#39; \
+  -d &#39;{&quot;force&quot;:false}&#39; | jq .
+</code></pre>
+<ol start="6">
+<li>Remote host via SSH tunnel (keeps API on localhost):</li>
+</ol>
+<pre><code class="language-bash">ssh -L 9090:127.0.0.1:9090 root@&lt;host&gt;
+curl -sf http://127.0.0.1:9090/api/v1/status | jq .
+</code></pre>
+<ol start="7">
+<li>CLI equivalents:</li>
+</ol>
+<pre><code class="language-bash">netevd status -f json
+netevd list interfaces -f json
+netevd events --tail 20 -f json
+</code></pre>
+<ol start="8">
+<li><p><strong>Empty / fail:</strong> <code>Connection refused</code> → unit down or <code>api.enabled: false</code>; empty event history → normal on fresh install until links change; reload returns <code>success: false</code> → restart with <code>systemctl restart netevd</code>.</p>
+</li>
+<li><p><strong>Success:</strong> JSON <code>success: true</code> with populated <code>data</code>; interface count matches <code>netevd list interfaces</code>; health reflects dbus/netlink/config checks.</p>
+</li>
+</ol>
+<h3>Endpoint reference</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Path</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET</td>
+<td><code>/health</code></td>
+<td>Liveness and subsystem checks</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/metrics</code></td>
+<td>Prometheus text (also on <code>:9091</code>)</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/status</code></td>
+<td>Daemon summary</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/interfaces</code></td>
+<td>All interfaces</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/interfaces/{name}</code></td>
+<td>One interface</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/routes</code></td>
+<td>Routing table</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/rules</code></td>
+<td>Policy rules</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/v1/events</code></td>
+<td>Event history</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/v1/reload</code></td>
+<td>Config reload request</td>
+</tr>
+</tbody></table>
+<h3>Related pages</h3>
+<ul>
+<li><a href="../cli/status.md">CLI: status</a></li>
+<li><a href="../cli/list-show.md">CLI: list / show</a></li>
+<li><a href="prometheus.md">Prometheus metrics</a></li>
+</ul>
+<hr>
+<h2>netevd — Complete page index</h2>
+<p>Every primary navigable dashboard route.</p>
+<p><em>Generated: 2026-08-29 · 11 routes</em></p>
+<p>Regenerate: <code>node scripts/customer-docs/generate-page-index.mjs</code></p>
+<h3>CLI</h3>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Route</th>
+<th>Purpose</th>
+<th>Guide</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CLI: events</td>
+<td><code>/events</code></td>
+<td>Tail normalized carrier, routable, routes, and manager events from the daemon API.</td>
+<td><a href="pages/cli/events.md">Open</a></td>
+</tr>
+<tr>
+<td>CLI: list / show</td>
+<td><code>/list-show</code></td>
+<td>Inspect interfaces, routes, policy rules, and registered hook scripts.</td>
+<td><a href="pages/cli/list-show.md">Open</a></td>
+</tr>
+<tr>
+<td>CLI: status</td>
+<td><code>/status</code></td>
+<td>Show daemon health, uptime, and counters via the REST API.</td>
+<td><a href="pages/cli/status.md">Open</a></td>
+</tr>
+<tr>
+<td>CLI: validate / reload / test</td>
+<td><code>/validate-reload</code></td>
+<td>Validate YAML offline; reload config or dry-run hook scripts safely.</td>
+<td><a href="pages/cli/validate-reload.md">Open</a></td>
+</tr>
+</tbody></table>
+<h3>Hooks</h3>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Route</th>
+<th>Purpose</th>
+<th>Guide</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Hook: carrier / no-carrier</td>
+<td><code>/carrier</code></td>
+<td>Run scripts when link layer goes UP (carrier.d) or DOWN (no-carrier.d).</td>
+<td><a href="pages/hooks/carrier.md">Open</a></td>
+</tr>
+<tr>
+<td>Hook: manager / NetworkManager</td>
+<td><code>/manager</code></td>
+<td>React to NetworkManager device activation, disconnect, and manager state.</td>
+<td><a href="pages/hooks/manager.md">Open</a></td>
+</tr>
+<tr>
+<td>Hook: routable</td>
+<td><code>/routable</code></td>
+<td>Fire when an interface has full L3 connectivity (systemd-networkd or dhclient).</td>
+<td><a href="pages/hooks/routable.md">Open</a></td>
+</tr>
+<tr>
+<td>Hook: routes</td>
+<td><code>/routes</code></td>
+<td>React to routing-table changes via routes.d hooks.</td>
+<td><a href="pages/hooks/routes.md">Open</a></td>
+</tr>
+</tbody></table>
+<h3>Ops</h3>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Route</th>
+<th>Purpose</th>
+<th>Guide</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Configuration YAML</td>
+<td><code>/config-yaml</code></td>
+<td>Tune backend, monitored interfaces, policy routing, API/metrics, filters, and audit.</td>
+<td><a href="pages/ops/config-yaml.md">Open</a></td>
+</tr>
+<tr>
+<td>Prometheus metrics (:9091)</td>
+<td><code>/prometheus</code></td>
+<td>Scrape hook and event health metrics for fleet observability.</td>
+<td><a href="pages/ops/prometheus.md">Open</a></td>
+</tr>
+<tr>
+<td>REST API (:9090)</td>
+<td><code>/rest-api</code></td>
+<td>Query status, interfaces, routes, rules, and events without SSH or ip(8).</td>
+<td><a href="pages/ops/rest-api.md">Open</a></td>
+</tr>
+</tbody></table>
+<h3>Related</h3>
+<ul>
+<li><a href="README.md">Customer docs home</a></li>
+<li><a href="pages/README.md">Page-by-page guides</a></li>
+</ul>
+</main></body></html>
