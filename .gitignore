@@ -23,3 +23,5 @@ bin/
 # Debian package build
 /.pc/
 /_build/
+
+.docs-tools/

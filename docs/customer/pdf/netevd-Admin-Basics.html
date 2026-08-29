@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><title>Admin Basics — netevd</title>
+<style>
+@page{size:A4;margin:15mm 16mm}*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:'Segoe UI',system-ui,sans-serif;color:#1f2937;line-height:1.58;font-size:10.5pt}
+.cover{height:262mm;margin:-15mm -16mm 0;background:linear-gradient(135deg,#0c4a6e,#075985,#0d1b2a);color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;page-break-after:always;position:relative}
+.cover .kicker{letter-spacing:5px;text-transform:uppercase;opacity:.72;margin-bottom:1.4em}
+.cover h1{font-size:3.2em;font-weight:800;letter-spacing:-2px}
+.cover h1 span{color:#38bdf8}
+.cover .sub{font-size:1.3em;font-weight:300;opacity:.93;margin:1em 0;max-width:24em}
+.cover .badge{display:inline-block;background:rgba(96,165,250,.2);border:1px solid #38bdf8;padding:8px 22px;border-radius:20px;margin-top:2em}
+.cover .foot{position:absolute;bottom:34px;font-size:.82em;opacity:.6}
+h2{page-break-before:always;margin:0 0 .35em;font-size:1.55em;font-weight:750;color:#12203a;border-bottom:2px solid #e5edfb;padding-bottom:.28em}
+h2:first-of-type{page-break-before:avoid}
+h3{margin:1.1em 0 .4em;font-size:1.12em;font-weight:700}
+p,li{margin:.4em 0}ul,ol{margin:.5em 0 .9em 1.4em}
+a{color:#2563eb;text-decoration:none}
+code{background:#eef2f7;padding:1px 6px;border-radius:4px;font-size:.86em;font-family:ui-monospace,Menlo,monospace}
+pre{background:#0f172a;color:#e2e8f0;padding:12px 15px;border-radius:9px;overflow-x:auto;margin:.8em 0}
+table{width:100%;border-collapse:collapse;margin:.8em 0 1.1em;font-size:9.5pt}
+th,td{border:1px solid #e5e7eb;padding:6px 8px;text-align:left;vertical-align:top}th{background:#f1f5f9}
+hr{border:none;border-top:1px solid #e5e7eb;margin:1.2em 0}
+</style></head><body>
+<section class="cover"><div class="kicker">ZyvorAI Labs · Customer Documentation</div>
+<h1>net<span>evd</span></h1>
+<div class="sub">Admin Basics</div>
+<div class="badge">2026-08-29</div>
+<div class="foot">zyvor.dev · Confidential — for licensed customers</div></section>
+<main><table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Config</td>
+<td><code>/etc/netevd/netevd.yaml</code> (see <code>config/netevd.example.yaml</code>)</td>
+</tr>
+<tr>
+<td>Hooks</td>
+<td><code>/etc/netevd/{carrier,no-carrier,configured,degraded,routable,activated,disconnected,manager,routes}.d/</code></td>
+</tr>
+<tr>
+<td>Unit</td>
+<td><code>netevd.service</code> — <code>systemctl enable --now netevd</code></td>
+</tr>
+<tr>
+<td>Logs</td>
+<td><code>journalctl -u netevd -f</code></td>
+</tr>
+<tr>
+<td>REST</td>
+<td><code>api.bind_address</code> + <code>api.port</code> (default <code>127.0.0.1:9090</code>)</td>
+</tr>
+<tr>
+<td>Metrics</td>
+<td><code>metrics.port</code> (default <code>9091</code>)</td>
+</tr>
+<tr>
+<td>Backend</td>
+<td><code>system.backend</code>: <code>systemd-networkd</code> · <code>NetworkManager</code> · <code>dhclient</code></td>
+</tr>
+<tr>
+<td>Privilege</td>
+<td>Drops to <code>netevd</code> user; retains <code>CAP_NET_ADMIN</code>; hooks inherit no caps</td>
+</tr>
+<tr>
+<td>Dry-run</td>
+<td><code>netevd --dry-run …</code> skips script execution / mutations</td>
+</tr>
+<tr>
+<td>Validate</td>
+<td><code>netevd validate</code> against the config file</td>
+</tr>
+<tr>
+<td>Reload</td>
+<td><code>netevd reload</code> (API) after config/hook changes when supported</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>See repo <code>SECURITY.md</code>; restrict YAML permissions</td>
+</tr>
+</tbody></table>
+<h2>Hook environment (common)</h2>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>$LINK</code></td>
+<td>Interface name</td>
+</tr>
+<tr>
+<td><code>$LINKINDEX</code></td>
+<td>Kernel ifindex</td>
+</tr>
+<tr>
+<td><code>$STATE</code></td>
+<td>Normalized event state</td>
+</tr>
+<tr>
+<td><code>$BACKEND</code></td>
+<td>Source backend</td>
+</tr>
+<tr>
+<td><code>$ADDRESSES</code></td>
+<td>Address / gateway / DNS summary</td>
+</tr>
+<tr>
+<td><code>$JSON</code></td>
+<td>Full payload (systemd-networkd when enabled)</td>
+</tr>
+<tr>
+<td><code>$DHCP_*</code></td>
+<td>dhclient lease fields</td>
+</tr>
+</tbody></table>
+<h2>Support</h2>
+<p><a href="https://github.com/zyvorai/netevd/issues">GitHub issues</a> · <a href="/contact">Contact Zyvor</a> for Enterprise</p>
+</main></body></html>
