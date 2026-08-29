@@ -1,139 +1,37 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><title>Page-by-Page Product Manual — netevd</title>
-<style>
-@page{size:A4;margin:15mm 16mm}*{margin:0;padding:0;box-sizing:border-box}
-html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-body{font-family:'Segoe UI',system-ui,sans-serif;color:#1f2937;line-height:1.58;font-size:10.5pt}
-.cover{height:262mm;margin:-15mm -16mm 0;background:linear-gradient(135deg,#0c4a6e,#075985,#0d1b2a);color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;page-break-after:always;position:relative}
-.cover .kicker{letter-spacing:5px;text-transform:uppercase;opacity:.72;margin-bottom:1.4em}
-.cover h1{font-size:3.2em;font-weight:800;letter-spacing:-2px}
-.cover h1 span{color:#38bdf8}
-.cover .sub{font-size:1.3em;font-weight:300;opacity:.93;margin:1em 0;max-width:24em}
-.cover .badge{display:inline-block;background:rgba(96,165,250,.2);border:1px solid #38bdf8;padding:8px 22px;border-radius:20px;margin-top:2em}
-.cover .foot{position:absolute;bottom:34px;font-size:.82em;opacity:.6}
-h2{page-break-before:always;margin:0 0 .35em;font-size:1.55em;font-weight:750;color:#12203a;border-bottom:2px solid #e5edfb;padding-bottom:.28em}
-h2:first-of-type{page-break-before:avoid}
-h3{margin:1.1em 0 .4em;font-size:1.12em;font-weight:700}
-p,li{margin:.4em 0}ul,ol{margin:.5em 0 .9em 1.4em}
-a{color:#2563eb;text-decoration:none}
-code{background:#eef2f7;padding:1px 6px;border-radius:4px;font-size:.86em;font-family:ui-monospace,Menlo,monospace}
-pre{background:#0f172a;color:#e2e8f0;padding:12px 15px;border-radius:9px;overflow-x:auto;margin:.8em 0}
-table{width:100%;border-collapse:collapse;margin:.8em 0 1.1em;font-size:9.5pt}
-th,td{border:1px solid #e5e7eb;padding:6px 8px;text-align:left;vertical-align:top}th{background:#f1f5f9}
-hr{border:none;border-top:1px solid #e5e7eb;margin:1.2em 0}
-</style></head><body>
-<section class="cover"><div class="kicker">ZyvorAI Labs · Customer Documentation</div>
-<h1>net<span>evd</span></h1>
-<div class="sub">Page-by-Page Product Manual</div>
-<div class="badge">2026-08-29</div>
-<div class="foot">zyvor.dev · Confidential — for licensed customers</div></section>
-<main><h2>Page-by-page guides</h2>
-<p>Each guide follows: Purpose → When to use it → How to get there → Operate from the console (UX) → Related pages.</p>
-<p>Every route is also listed in the <a href="../PAGE_INDEX.md">complete page index</a>.</p>
-<h3>Cli</h3>
-<table>
-<thead>
-<tr>
-<th>Page</th>
-<th>What it covers</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><a href="cli/events.md">CLI: events</a></td>
-<td>Tail normalized carrier / routable / routes / manager events.</td>
-</tr>
-<tr>
-<td><a href="cli/list-show.md">CLI: list / show</a></td>
-<td>Inspect interfaces, routes, and rules the daemon tracks.</td>
-</tr>
-<tr>
-<td><a href="cli/status.md">CLI: status</a></td>
-<td>Show daemon health via the REST API.</td>
-</tr>
-<tr>
-<td><a href="cli/validate-reload.md">CLI: validate / reload / test</a></td>
-<td>Safe config checks and controlled reloads.</td>
-</tr>
-</tbody></table>
-<h3>Hooks</h3>
-<table>
-<thead>
-<tr>
-<th>Page</th>
-<th>What it covers</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><a href="hooks/carrier.md">Hook: carrier / no-carrier</a></td>
-<td>Run scripts when link layer goes UP (<code>carrier.d</code>) or DOWN (<code>no-carrier.d</code>).</td>
-</tr>
-<tr>
-<td><a href="hooks/manager.md">Hook: manager / NetworkManager</a></td>
-<td><code>activated.d</code>, <code>disconnected.d</code>, and <code>manager.d</code> cover NetworkManager device and manager state.</td>
-</tr>
-<tr>
-<td><a href="hooks/routable.md">Hook: routable</a></td>
-<td>Fire when an interface has full L3 connectivity (systemd-networkd + dhclient paths).</td>
-</tr>
-<tr>
-<td><a href="hooks/routes.md">Hook: routes</a></td>
-<td>React to routing table changes (<code>routes.d</code>).</td>
-</tr>
-</tbody></table>
-<h3>Ops</h3>
-<table>
-<thead>
-<tr>
-<th>Page</th>
-<th>What it covers</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><a href="ops/config-yaml.md">Configuration YAML</a></td>
-<td>Tune backend, monitored interfaces, policy routing list, API/metrics, filters, audit.</td>
-</tr>
-<tr>
-<td><a href="ops/prometheus.md">Prometheus metrics (:9091)</a></td>
-<td>Fleet scrape for hook/event health.</td>
-</tr>
-<tr>
-<td><a href="ops/rest-api.md">REST API (:9090)</a></td>
-<td>Query status, interfaces, routes, rules, and events without SSH/<code>ip</code>.</td>
-</tr>
-</tbody></table>
-<hr>
-<p>11 guides. Regenerate: <code>node scripts/customer-docs/generate-guide-index.mjs</code>.</p>
-<hr>
-<h2>CLI: events</h2>
-<h3>Purpose</h3>
+<!DOCTYPE html><html><head><meta charset=utf-8><title>Page-by-Page Product Manual — netevd</title>
+<style>body{font-family:system-ui;line-height:1.55} .cover{background:#0d1b2a;color:#fff;padding:40px;border-radius:12px;margin-bottom:20px} pre{background:#0f172a;color:#e2e8f0;padding:12px;overflow:auto} table{border-collapse:collapse;width:100%} th,td{border:1px solid #ddd;padding:6px}</style></head><body>
+<section class=cover><h1>netevd</h1><div>Page-by-Page Product Manual</div></section><main><h1>events</h1>
+<h1>CLI: events</h1>
+<h2>Purpose</h2>
 <p>Tail normalized carrier / routable / routes / manager events.</p>
 <pre><code class="language-bash">netevd events -f
 netevd events -f -i eth0 -t routable --tail 20
 </code></pre>
-<h3>Related</h3>
+<h2>Related</h2>
 <p><a href="status.md">status</a> · <a href="../hooks/routable.md">hooks</a></p>
-<hr>
-<h2>CLI: list / show</h2>
-<h3>Purpose</h3>
+<h1>list-show</h1>
+<h1>CLI: list / show</h1>
+<h2>Purpose</h2>
 <p>Inspect interfaces, routes, and rules the daemon tracks.</p>
 <pre><code class="language-bash">netevd list interfaces
 netevd list routes
 netevd list rules
 netevd show interface eth0
 </code></pre>
-<h3>Related</h3>
+<h2>Related</h2>
 <p><a href="events.md">events</a> · <a href="../../workflows.md">Workflows</a></p>
-<hr>
-<h2>CLI: status</h2>
-<h3>Purpose</h3>
+<h1>status</h1>
+<h1>CLI: status</h1>
+<h2>Purpose</h2>
 <p>Show daemon health via the REST API.</p>
 <pre><code class="language-bash">netevd status
 netevd status -f json --endpoint http://127.0.0.1:9090
 </code></pre>
-<h3>Related</h3>
+<h2>Related</h2>
 <p><a href="../ops/rest-api.md">rest-api</a></p>
-<hr>
-<h2>CLI: validate / reload / test</h2>
-<h3>Purpose</h3>
+<h1>validate-reload</h1>
+<h1>CLI: validate / reload / test</h1>
+<h2>Purpose</h2>
 <p>Safe config checks and controlled reloads.</p>
 <pre><code class="language-bash">netevd validate -c /etc/netevd/netevd.yaml
 netevd reload --endpoint http://127.0.0.1:9090
@@ -141,99 +39,97 @@ netevd test   # see --help for dry-run style checks
 netevd version --detailed
 </code></pre>
 <p>Global flags: <code>--dry-run</code>, <code>-v</code>, <code>-c /path/to/netevd.yaml</code>.</p>
-<h3>Related</h3>
+<h2>Related</h2>
 <p><a href="../ops/config-yaml.md">config-yaml</a> · <a href="../../admin-basics.md">Admin basics</a></p>
-<hr>
-<h2>Hook: carrier / no-carrier</h2>
-<h3>Purpose</h3>
+<h1>carrier</h1>
+<h1>Hook: carrier / no-carrier</h1>
+<h2>Purpose</h2>
 <p>Run scripts when link layer goes UP (<code>carrier.d</code>) or DOWN (<code>no-carrier.d</code>).</p>
-<h3>When to use it</h3>
+<h2>When to use it</h2>
 <p>Cable plug / Wi‑Fi associate notifications. <strong>Not</strong> for “has an IP yet” — use <code>routable.d</code> for L3.</p>
-<h3>How to get there</h3>
+<h2>How to get there</h2>
 <pre><code class="language-bash">sudo install -m755 myscript.sh /etc/netevd/carrier.d/10-log.sh
 </code></pre>
-<h3>What you can do</h3>
+<h2>What you can do</h2>
 <ul>
 <li>Log or notify on link flaps</li>
 <li>Combine with <code>$LINK</code> / <code>$BACKEND</code></li>
 </ul>
-<h3>Related</h3>
+<h2>Related</h2>
 <p><a href="routable.md">routable</a> · <a href="../../admin-basics.md">Admin basics</a></p>
-<hr>
-<h2>Hook: manager / NetworkManager</h2>
-<h3>Purpose</h3>
+<h1>manager</h1>
+<h1>Hook: manager / NetworkManager</h1>
+<h2>Purpose</h2>
 <p><code>activated.d</code>, <code>disconnected.d</code>, and <code>manager.d</code> cover NetworkManager device and manager state.</p>
-<h3>When to use it</h3>
+<h2>When to use it</h2>
 <p>Hosts where NM is the primary backend (<code>system.backend: NetworkManager</code>).</p>
-<h3>How to get there</h3>
+<h2>How to get there</h2>
 <p>Matching directories under <code>/etc/netevd/</code>.</p>
-<h3>Related</h3>
+<h2>Related</h2>
 <p><a href="../../admin-basics.md">Admin basics</a> · <a href="../ops/config-yaml.md">config-yaml</a></p>
-<hr>
-<h2>Hook: routable</h2>
-<h3>Purpose</h3>
+<h1>routable</h1>
+<h1>Hook: routable</h1>
+<h2>Purpose</h2>
 <p>Fire when an interface has full L3 connectivity (systemd-networkd + dhclient paths).</p>
-<h3>When to use it</h3>
+<h2>When to use it</h2>
 <p>Start dependent services, register DNS, notify when <code>$ADDRESSES</code> is meaningful.</p>
-<h3>How to get there</h3>
+<h2>How to get there</h2>
 <p><code>/etc/netevd/routable.d/</code> — executable scripts, lexical order.</p>
-<h3>What you can do</h3>
+<h2>What you can do</h2>
 <ul>
 <li>Read <code>$ADDRESSES</code>, <code>$JSON</code> (networkd), <code>$DHCP_*</code> (dhclient)</li>
 <li>Branch on <code>$BACKEND</code></li>
 </ul>
-<h3>Related</h3>
+<h2>Related</h2>
 <p><a href="carrier.md">carrier</a> · <a href="../../workflows.md">Workflows</a></p>
-<hr>
-<h2>Hook: routes</h2>
-<h3>Purpose</h3>
+<h1>routes</h1>
+<h1>Hook: routes</h1>
+<h2>Purpose</h2>
 <p>React to routing table changes (<code>routes.d</code>).</p>
-<h3>When to use it</h3>
+<h2>When to use it</h2>
 <p>Policy updates, VPN route injection side effects, auditing default-route changes.</p>
-<h3>How to get there</h3>
+<h2>How to get there</h2>
 <p><code>/etc/netevd/routes.d/</code></p>
-<h3>Related</h3>
+<h2>Related</h2>
 <p><a href="../../workflows.md">Multi-homed workflow</a> · <a href="../cli/list-show.md">list-show</a></p>
-<hr>
-<h2>Configuration YAML</h2>
-<h3>Purpose</h3>
+<h1>config-yaml</h1>
+<h1>Configuration YAML</h1>
+<h2>Purpose</h2>
 <p>Tune backend, monitored interfaces, policy routing list, API/metrics, filters, audit.</p>
 <p>Path: <code>/etc/netevd/netevd.yaml</code> — start from <code>config/netevd.example.yaml</code>.</p>
-<h3>Highlights</h3>
+<h2>Highlights</h2>
 <ul>
 <li><code>system.backend</code> — systemd-networkd | NetworkManager | dhclient</li>
 <li><code>routing.policy_rules</code> — interfaces getting custom tables</li>
 <li><code>filters</code> — execute / ignore / log by interface pattern or event</li>
 <li><code>api</code> / <code>metrics</code> — bind and ports</li>
 </ul>
-<h3>Related</h3>
+<h2>Related</h2>
 <p><a href="../../admin-basics.md">Admin basics</a> · <a href="../cli/validate-reload.md">validate-reload</a></p>
-<hr>
-<h2>Prometheus metrics (:9091)</h2>
-<h3>Purpose</h3>
+<h1>prometheus</h1>
+<h1>Prometheus metrics (:9091)</h1>
+<h2>Purpose</h2>
 <p>Fleet scrape for hook/event health.</p>
 <pre><code class="language-yaml">scrape_configs:
   - job_name: netevd
     static_configs:
-      - targets: [&#39;edge-01:9091&#39;]
+      - targets: ['edge-01:9091']
 </code></pre>
-<h3>Related</h3>
+<h2>Related</h2>
 <p><a href="rest-api.md">rest-api</a> · <a href="../../workflows.md">Workflows</a></p>
-<hr>
-<h2>REST API (:9090)</h2>
-<h3>Purpose</h3>
+<h1>rest-api</h1>
+<h1>REST API (:9090)</h1>
+<h2>Purpose</h2>
 <p>Query status, interfaces, routes, rules, and events without SSH/<code>ip</code>.</p>
 <p>Default bind is <strong>localhost</strong> — open carefully for remote scrapers.</p>
-<h3>Related</h3>
+<h2>Related</h2>
 <p><a href="prometheus.md">prometheus</a> · <a href="../cli/status.md">status</a> · blog: Watching the Watcher</p>
-<hr>
-<h2>netevd — Complete page index</h2>
+<h1>netevd — Complete page index</h1>
 <p>Every primary navigable dashboard route.</p>
 <p><em>Generated: 2026-08-29 · 0 routes</em></p>
 <p>Regenerate: <code>node scripts/customer-docs/generate-page-index.mjs</code></p>
-<h3>Related</h3>
+<h2>Related</h2>
 <ul>
-<li><a href="README.md">Customer docs home</a></li>
-<li><a href="pages/README.md">Page-by-page guides</a></li>
-</ul>
-</main></body></html>
+<li><a href="index.md">Customer docs home</a></li>
+<li><a href="pages/index.md">Page-by-page guides</a></li>
+</ul></main></body></html>

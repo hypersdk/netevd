@@ -1,32 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><title>Getting Started — netevd</title>
-<style>
-@page{size:A4;margin:15mm 16mm}*{margin:0;padding:0;box-sizing:border-box}
-html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
-body{font-family:'Segoe UI',system-ui,sans-serif;color:#1f2937;line-height:1.58;font-size:10.5pt}
-.cover{height:262mm;margin:-15mm -16mm 0;background:linear-gradient(135deg,#0c4a6e,#075985,#0d1b2a);color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;page-break-after:always;position:relative}
-.cover .kicker{letter-spacing:5px;text-transform:uppercase;opacity:.72;margin-bottom:1.4em}
-.cover h1{font-size:3.2em;font-weight:800;letter-spacing:-2px}
-.cover h1 span{color:#38bdf8}
-.cover .sub{font-size:1.3em;font-weight:300;opacity:.93;margin:1em 0;max-width:24em}
-.cover .badge{display:inline-block;background:rgba(96,165,250,.2);border:1px solid #38bdf8;padding:8px 22px;border-radius:20px;margin-top:2em}
-.cover .foot{position:absolute;bottom:34px;font-size:.82em;opacity:.6}
-h2{page-break-before:always;margin:0 0 .35em;font-size:1.55em;font-weight:750;color:#12203a;border-bottom:2px solid #e5edfb;padding-bottom:.28em}
-h2:first-of-type{page-break-before:avoid}
-h3{margin:1.1em 0 .4em;font-size:1.12em;font-weight:700}
-p,li{margin:.4em 0}ul,ol{margin:.5em 0 .9em 1.4em}
-a{color:#2563eb;text-decoration:none}
-code{background:#eef2f7;padding:1px 6px;border-radius:4px;font-size:.86em;font-family:ui-monospace,Menlo,monospace}
-pre{background:#0f172a;color:#e2e8f0;padding:12px 15px;border-radius:9px;overflow-x:auto;margin:.8em 0}
-table{width:100%;border-collapse:collapse;margin:.8em 0 1.1em;font-size:9.5pt}
-th,td{border:1px solid #e5e7eb;padding:6px 8px;text-align:left;vertical-align:top}th{background:#f1f5f9}
-hr{border:none;border-top:1px solid #e5e7eb;margin:1.2em 0}
-</style></head><body>
-<section class="cover"><div class="kicker">ZyvorAI Labs · Customer Documentation</div>
-<h1>net<span>evd</span></h1>
-<div class="sub">Getting Started</div>
-<div class="badge">2026-08-29</div>
-<div class="foot">zyvor.dev · Confidential — for licensed customers</div></section>
-<main><h2>Prerequisites</h2>
+<!DOCTYPE html><html><head><meta charset=utf-8><title>Getting Started — netevd</title>
+<style>body{font-family:system-ui;line-height:1.55} .cover{background:#0d1b2a;color:#fff;padding:40px;border-radius:12px;margin-bottom:20px} pre{background:#0f172a;color:#e2e8f0;padding:12px;overflow:auto} table{border-collapse:collapse;width:100%} th,td{border:1px solid #ddd;padding:6px}</style></head><body>
+<section class=cover><h1>netevd</h1><div>Getting Started</div></section><main><h1>Getting started</h1>
+<h2>Prerequisites</h2>
 <ul>
 <li>Linux host with Netlink</li>
 <li>One of: <code>systemd-networkd</code>, NetworkManager, or <code>dhclient</code></li>
@@ -49,7 +24,7 @@ sudo install -Dm644 config/netevd.example.yaml /etc/netevd/netevd.yaml
 sudo systemctl enable --now netevd
 </code></pre>
 <h2>2. First hook</h2>
-<pre><code class="language-bash">sudo tee /etc/netevd/routable.d/01-notify.sh &gt;/dev/null &lt;&lt;&#39;EOF&#39;
+<pre><code class="language-bash">sudo tee /etc/netevd/routable.d/01-notify.sh &gt;/dev/null &lt;&lt;'EOF'
 #!/bin/bash
 logger -t netevd &quot;Interface $LINK is routable: $ADDRESSES&quot;
 EOF
@@ -70,7 +45,8 @@ curl -s http://127.0.0.1:9090/status | head
 <th>Check</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>Hook never fires</td>
 <td>Executable bit; correct <code>*.d</code> directory; filters in YAML</td>
 </tr>
@@ -82,14 +58,15 @@ curl -s http://127.0.0.1:9090/status | head
 <td>No events</td>
 <td>Backend matches host (<code>systemd-networkd</code> vs NM vs dhclient)</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <h2>Next</h2>
 <ul>
 <li><a href="using-the-dashboard.md">Using the Dashboard</a></li>
 <li><a href="admin-basics.md">Admin basics</a></li>
 <li><a href="workflows.md">Workflows</a></li>
 </ul>
-<hr>
+<h1>Using the operator surfaces</h1>
 <p>netevd has <strong>no browser console</strong>. Day-2 work uses hooks, the CLI, REST/Prometheus, and journals.</p>
 <h2>Mental model</h2>
 <pre><code class="language-text">Kernel / managers  →  netevd watchers  →  NetworkState
@@ -109,7 +86,8 @@ curl -s http://127.0.0.1:9090/status | head
 <th>Role</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>/etc/netevd/*.d/</code></td>
 <td>Event scripts (primary UX)</td>
 </tr>
@@ -118,7 +96,7 @@ curl -s http://127.0.0.1:9090/status | head
 <td>Backend, filters, API bind, metrics</td>
 </tr>
 <tr>
-<td><code>netevd status|list|show|events</code></td>
+<td><code>netevd status\|list\|show\|events</code></td>
 <td>Live inspection via API</td>
 </tr>
 <tr>
@@ -129,7 +107,8 @@ curl -s http://127.0.0.1:9090/status | head
 <td><code>:9090</code> / <code>:9091</code></td>
 <td>Fleet scrape / status</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <h2>Tips</h2>
 <ol>
 <li>Start with one <code>routable.d</code> logger before complex automation.</li>
@@ -137,8 +116,8 @@ curl -s http://127.0.0.1:9090/status | head
 <li>On multi-homed hosts, confirm policy rules with <code>netevd list rules</code> or <code>ip rule</code>.</li>
 <li>Keep hooks small and executable; non-zero exits are logged and do not stop other scripts.</li>
 </ol>
-<p>Next: <a href="pages/README.md">Page-by-page guides</a> · <a href="workflows.md">Workflows</a></p>
-<hr>
+<p>Next: <a href="pages/index.md">Page-by-page guides</a> · <a href="workflows.md">Workflows</a></p>
+<h1>Common workflows</h1>
 <h2>A. First routable notify</h2>
 <ol>
 <li>Install and start <code>netevd</code>.</li>
@@ -156,7 +135,7 @@ curl -s http://127.0.0.1:9090/status | head
 ip rule list
 ip route show table $((200 + ifindex))
 </code></pre>
-<p>Traffic sourced from an address on <code>eth1</code> should leave via <code>eth1</code>&#39;s gateway.</p>
+<p>Traffic sourced from an address on <code>eth1</code> should leave via <code>eth1</code>'s gateway.</p>
 <h2>C. Watch events live</h2>
 <pre><code class="language-bash">netevd events -f
 # or filter:
@@ -164,7 +143,7 @@ netevd events -f -i eth0 -t routable
 </code></pre>
 <h2>D. Fleet observability</h2>
 <ol>
-<li>Set <code>api.bind_address: &quot;0.0.0.0&quot;</code> only on trusted networks (or scrape via localhost exporter).</li>
+<li>Set <code>api.bind_address: "0.0.0.0"</code> only on trusted networks (or scrape via localhost exporter).</li>
 <li>Point Prometheus at <code>:9091</code> (metrics) and/or use REST <code>:9090</code> for status.</li>
 <li>Alert when hook execution counters go quiet (daemon likely down).</li>
 </ol>
@@ -174,5 +153,4 @@ sudo systemctl reload netevd   # or netevd reload if API reload is enabled
 journalctl -u netevd -n 50 --no-pager
 </code></pre>
 <h2>F. Ignore noisy interfaces</h2>
-<p>Add a YAML filter with <code>action: ignore</code> for <code>docker*</code>, <code>veth*</code>, etc. (see example config).</p>
-</main></body></html>
+<p>Add a YAML filter with <code>action: ignore</code> for <code>docker*</code>, <code>veth*</code>, etc. (see example config).</p></main></body></html>
