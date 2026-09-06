@@ -1,3 +1,5 @@
+# Copyright 2026 Zyvor AI Labs · https://zyvor.dev
+# SPDX-License-Identifier: Apache-2.0
 # Debian-based Docker image for netevd
 # Larger size but better compatibility
 

@@ -1,5 +1,6 @@
-# shellcheck shell=bash
+# Copyright 2026 Zyvor AI Labs · https://zyvor.dev
 # SPDX-License-Identifier: Apache-2.0
+# shellcheck shell=bash
 # Assemble netevd customer tarball (GitHub release / local pack).
 #
 # Usage: package_netevd_client_bundle STAGE BUILD_DIR VERSION
