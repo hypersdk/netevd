@@ -7,7 +7,7 @@ import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..')
-const PAGES = resolve(ROOT, 'docs/customer/pages')
+const PAGES = resolve(ROOT, 'docs/user/pages')
 const OUT = join(PAGES, 'README.md')
 
 function titleOf(file) {
@@ -29,7 +29,7 @@ function summaryOf(file) {
 const lines = [
   '# Page-by-page guides',
   '',
-  `Each guide follows: Purpose → When to use it → How to get there → ${process.env.CUSTOMER_DOCS_PRODUCT === 'netevd' ? 'Operate from CLI' : 'Operate from the console (UX)'} → Related pages.`,
+  `Each guide follows: Purpose → When to use it → How to get there → ${process.env.USER_DOCS_PRODUCT === 'netevd' ? 'Operate from CLI' : 'Operate from the console (UX)'} → Related pages.`,
   '',
   'Every route is also listed in the [complete page index](../PAGE_INDEX.md).',
   '',
@@ -56,6 +56,6 @@ if (existsSync(PAGES)) {
   }
 }
 
-lines.push('---', '', `${total} guides. Regenerate: \`node scripts/customer-docs/generate-guide-index.mjs\`.`, '')
+lines.push('---', '', `${total} guides. Regenerate: \`node scripts/user-docs/generate-guide-index.mjs\`.`, '')
 writeFileSync(OUT, lines.join('\n'))
 console.log(`Wrote ${OUT} (${total} guides)`)

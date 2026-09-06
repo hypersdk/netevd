@@ -1,4 +1,4 @@
-# netevd — Customer Documentation
+# netevd — User Documentation
 
 **netevd** is a Netlink-first Linux network event daemon (Rust). It watches carrier, address, route, and manager state — then runs your scripts with rich context. It also maintains per-interface policy routing on multi-homed hosts and exposes REST + Prometheus on `:9090` / `:9091`.
 
@@ -16,12 +16,12 @@
 ## Printable PDFs
 
 ```bash
-node scripts/customer-docs/build-customer-pdfs.mjs
+node scripts/user-docs/build-user-pdfs.mjs
 ```
 
 Output lands in [`pdf/`](pdf/):
 
-- `netevd-Customer-README.pdf`
+- `netevd-User-README.pdf`
 - `netevd-Getting-Started.pdf`
 - `netevd-Page-by-Page.pdf`
 - `netevd-Admin-Basics.pdf`

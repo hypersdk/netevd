@@ -13,13 +13,13 @@
 | Layer | Governs |
 |-------|---------|
 | **[LICENSE](LICENSE)** | netevd **software** — Apache-2.0 (Community Edition; open source) |
-| **This document** | **Zyvor-branded** builds, binaries, customer bundles, and zyvor.dev distribution |
+| **This document** | **Zyvor-branded** builds, binaries, user bundles, and zyvor.dev distribution |
 
 You must comply with **both**. The Apache license controls use of the **Community Edition software**; this document covers **brand, distribution, and commercial relationship** with Zyvor.
 
 ## 2. Acceptance
 
-By downloading, building, deploying, installing, or using netevd binaries or customer bundles from Zyvor (including `./scripts/package-binary-remote.sh` or `./install.sh` where provided), you agree to these Company Terms.
+By downloading, building, deploying, installing, or using netevd binaries or user bundles from Zyvor (including `./scripts/package-binary-remote.sh` or `./install.sh` where provided), you agree to these Company Terms.
 
 ## 3. Company identity
 

@@ -8,16 +8,16 @@ import { fileURLToPath } from 'node:url'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '../..')
 try {
-  const envText = readFileSync(resolve(ROOT, 'scripts/customer-docs/product.env'), 'utf8')
+  const envText = readFileSync(resolve(ROOT, 'scripts/user-docs/product.env'), 'utf8')
   for (const line of envText.split('\n')) {
     const m = line.match(/^([A-Z0-9_]+)=(.*)$/)
     if (m) process.env[m[1]] = m[2].replace(/^['"]|['"]$/g, '')
   }
 } catch {}
-const PAGES = resolve(ROOT, 'docs/customer/pages')
-const { routes } = JSON.parse(readFileSync(resolve(ROOT, 'scripts/customer-docs/routes.json'), 'utf8'))
-const purposes = JSON.parse(readFileSync(resolve(ROOT, 'scripts/customer-docs/page-purposes.json'), 'utf8'))
-const PRODUCT = process.env.CUSTOMER_DOCS_PRODUCT || 'Product'
+const PAGES = resolve(ROOT, 'docs/user/pages')
+const { routes } = JSON.parse(readFileSync(resolve(ROOT, 'scripts/user-docs/routes.json'), 'utf8'))
+const purposes = JSON.parse(readFileSync(resolve(ROOT, 'scripts/user-docs/page-purposes.json'), 'utf8'))
+const PRODUCT = process.env.USER_DOCS_PRODUCT || 'Product'
 
 function catDir(category) {
   return category.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'other'

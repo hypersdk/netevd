@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Copyright 2026 Zyvor AI Labs · https://zyvor.dev
 # SPDX-License-Identifier: Apache-2.0
-# Build netevd and assemble customer tarball (local / GitHub Actions).
+# Build netevd and assemble user tarball (local / GitHub Actions).
 # Usage: ./scripts/package-binary-release.sh [--build] [--target TRIPLE] [--out-dir DIR]
 
 set -euo pipefail
@@ -34,7 +34,7 @@ case "${TARGET:-x86_64-unknown-linux-gnu}" in
     x86_64-unknown-linux-gnu|"") ARCH_SUFFIX="linux-amd64" ;;
     aarch64-unknown-linux-gnu) ARCH_SUFFIX="linux-arm64" ;;
     *)
-        echo "Unsupported target for customer bundle: ${TARGET}" >&2
+        echo "Unsupported target for user bundle: ${TARGET}" >&2
         exit 1
         ;;
 esac
@@ -69,7 +69,7 @@ source "${SCRIPT_DIR}/lib/package-netevd-client-bundle.sh"
 STAGE="${OUT_DIR}/${ARTIFACT}"
 export NETEVD_BINARY="${BINARY}"
 
-echo "Assemble customer bundle → ${OUT_DIR}/${ARTIFACT}.tar.gz"
+echo "Assemble user bundle → ${OUT_DIR}/${ARTIFACT}.tar.gz"
 package_netevd_client_bundle "${STAGE}" "${REPO_DIR}" "${VERSION}"
 package_netevd_client_tarball "${OUT_DIR}" "${ARTIFACT}" "${STAGE}"
 ls -lh "${BINARY}"

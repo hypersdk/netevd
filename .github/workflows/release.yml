@@ -76,7 +76,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-cargo-${{ matrix.arch_suffix }}-
 
-      - name: Build and package customer bundle
+      - name: Build and package user bundle
         env:
           NETEVD_PACKAGE_VERSION: ${{ needs.create-release.outputs.version }}
           NETEVD_BUILD_PROFILE: ci

@@ -1,7 +1,7 @@
 # Copyright 2026 Zyvor AI Labs · https://zyvor.dev
 # SPDX-License-Identifier: Apache-2.0
 # shellcheck shell=bash
-# Assemble netevd customer tarball (GitHub release / local pack).
+# Assemble netevd user tarball (GitHub release / local pack).
 #
 # Usage: package_netevd_client_bundle STAGE BUILD_DIR VERSION
 
@@ -117,7 +117,7 @@ README_EOF
         fi
     done
 
-    echo "Customer bundle OK"
+    echo "User bundle OK"
 }
 
 package_netevd_client_tarball() {
